@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import FacebookAuth from './components/Facebook';
 import logo from './logo.svg';
 import './App.css';
+import GoogleAuth from './components/Gmail';
 
 const fbLogo = require('./assets/fb-logo.svg');
 const gmailLogo = require('./assets/gmail-logo.svg');
-
 const notificationIcon = require('./assets/notification-icon.png');
 const messageIcon = require('./assets/message-icon.png');
 
@@ -19,6 +20,8 @@ class App extends Component {
         <NotifMsgMediaBox icon={fbLogo} mediaName="Facebook"/>
         <NotifMediaBox icon={gmailLogo} mediaName="Gmail"/>
         <NotifMediaBox icon={logo} mediaName="These are all classes"/>
+        <FacebookAuth />
+        <GoogleAuth />
       </div>
     );
   }
