@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import FacebookAuth from './components/Facebook';
 import logo from './logo.svg';
 import './App.css';
 import GoogleAuth from './components/Gmail';
-import FacebookNotification from './components/Facebook';
+import { FacebookAuth, FacebookNotification } from './components/Facebook';
 
 const fbLogo = require('./assets/fb-logo.svg');
 const gmailLogo = require('./assets/gmail-logo.svg');

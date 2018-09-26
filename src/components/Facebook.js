@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+const request = require('request');
 
-export default class FacebookNotification extends Component {
-
+export class FacebookAuth extends Component {
     render() {
         // make this dependent on if already logged in
         const fbLogin = (
@@ -22,5 +22,30 @@ export default class FacebookNotification extends Component {
                 {fbLogin}
             </div>
         )
+    }
+}
+
+export class FacebookNotification extends Component {
+    constructor() {
+        super();
+        this.getNotifications = this.getNotifications.bind(this);
+        this.count = 0;
+        this.state = {};
+    }
+
+    getNotifications() {
+        request('https://notification-hub-facebook.herokuapp.com/facebook/new-notifications', { json: true }, (err, res, body) => {
+            if (err) { return console.log(err); }
+            this.count = body.length;
+            console.log(this.count);
+        });
+    }
+
+    render() {
+        this.getNotifications();
+        return ( 
+            <div>
+            </div>
+        );
     }
 }

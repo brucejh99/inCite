@@ -9,7 +9,8 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-google-login": "^3.2.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "request": "^2.88.0"
   },
   "scripts": {
     "start": "react-scripts start",
