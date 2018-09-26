@@ -1,38 +1,25 @@
 import React, { Component } from 'react';
-import FacebookLogin from 'react-facebook-login';
 
-export default class FacebookAuth extends Component {
-    state = {
-        isLoggedIn: false,
-        userID: '',
-        name: '',
-        email: '',
-        picture: '',
-    }
-
-    redirect = () => {
-        
-    }
-    responseFacebook = response => {
-        console.log(response);
-    }
+export default class FacebookNotification extends Component {
 
     render() {
-        let fbContent;
-
-        if (this.state.isLoggedIn) {
-            fbContent = null;
-        } else {
-            fbContent = (<FacebookLogin
-                appId="2277506699194006"
-                autoLoad={true}
-                fields="name,email,picture"
-                onClick={this.redirect}
-                callback={this.responseFacebook} />);
-        }
+        // make this dependent on if already logged in
+        const fbLogin = (
+            <form>
+                <label>
+                    Username:
+                    <input type="text" name="name" />
+                </label>
+                <label>
+                    Password:
+                    <input type="text" password="password" />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
         return (
             <div>
-                {fbContent}
+                {fbLogin}
             </div>
         )
     }

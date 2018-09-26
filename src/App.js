@@ -3,6 +3,7 @@ import FacebookAuth from './components/Facebook';
 import logo from './logo.svg';
 import './App.css';
 import GoogleAuth from './components/Gmail';
+import FacebookNotification from './components/Facebook';
 
 const fbLogo = require('./assets/fb-logo.svg');
 const gmailLogo = require('./assets/gmail-logo.svg');
@@ -20,8 +21,7 @@ class App extends Component {
         <NotifMsgMediaBox icon={fbLogo} mediaName="Facebook"/>
         <NotifMediaBox icon={gmailLogo} mediaName="Gmail"/>
         <NotifMediaBox icon={logo} mediaName="These are all classes"/>
-        <FacebookAuth />
-        <GoogleAuth />
+        <FacebookNotification />
       </div>
     );
   }
