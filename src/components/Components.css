@@ -1,0 +1,33 @@
+.login-form {
+    width: 300px;
+    margin: 0;
+    background-color: #3B5998;
+}
+
+.form-title {
+    margin: 0%;
+    padding: 10px;
+    color: white;
+    font: bold;
+}
+
+.field-name {
+    width: 80px;
+    margin: 0px;
+    padding-right: 5px;
+    color: white;
+}
+
+.field {
+    width: 200px;
+    margin: 10px;
+    border: none;
+}
+
+.submit-button {
+    align-content: center;
+    width: 80px;
+    margin-left: 110px;
+    margin-right: 110px;
+    margin-bottom: 10px;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Components.css';
 
 export class AuthenticationForm extends Component {
     constructor(props) {
@@ -13,18 +14,18 @@ export class AuthenticationForm extends Component {
 
     render() {
         const loginForm = (
-            <div>
-                <h3>{this.mediaName} Login:</h3>
+            <div className="login-form">
+                <h3 className="form-title">{this.mediaName} Login:</h3>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Username:
-                        <input type="text" name="name" />
+                        <h3 className="field-name">Username: </h3>
+                        <input className="field" type="text" name="name" />
                     </label>
                     <label>
-                        Password:
-                        <input type="text" password="password" />
+                        <h3 className="field-name">Password: </h3>
+                        <input className="field" type="text" password="password" />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input className="submit-button" type="submit" value="Submit" />
                 </form>
             </div>
         );
