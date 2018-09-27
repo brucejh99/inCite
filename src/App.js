@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { AuthenticationForm, AddRemoveMedia } from './components/AddRemoveMedia';
 import GoogleAuth from './components/Gmail';
 import { FacebookAuth, FacebookNotification } from './components/Facebook';
 
@@ -20,7 +21,6 @@ class App extends Component {
         <NotifMsgMediaBox icon={fbLogo} mediaName="Facebook"/>
         <NotifMediaBox icon={gmailLogo} mediaName="Gmail"/>
         <NotifMediaBox icon={logo} mediaName="These are all classes"/>
-        <FacebookNotification />
       </div>
     );
   }

@@ -9,10 +9,7 @@ export default class GoogleAuth extends Component {
         email: '',
         picture: '',
     }
-
-    redirect = () => {
-        
-    }
+    
     responseGoogle = response => {
         console.log(response);
     }
