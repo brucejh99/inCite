@@ -10,6 +10,8 @@ const fbLogo = require('./assets/fb-logo.svg');
 const gmailLogo = require('./assets/gmail-logo.svg');
 const notificationIcon = require('./assets/notification-icon.png');
 const messageIcon = require('./assets/message-icon.png');
+const addIcon = require('./assets/add-icon.png');
+const settingsIcon = require('./assets/settings-icon.png');
 
 class App extends Component {
   render() {
@@ -19,12 +21,43 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h1 className="App-title">Notification Hub</h1>
         </header>
+        <CustomizeBar />
         <NotifMsgMediaBox icon={fbLogo} mediaName="Facebook"/>
         <NotifMediaBox icon={gmailLogo} mediaName="Gmail"/>
         <NotifMediaBox icon={logo} mediaName="These are all classes"/>
         <AuthenticationForm mediaName="Facebook" />
       </div>
     );
+  }
+}
+
+class CustomizeBar extends Component {
+  constructor() {
+    super();
+    this.active = false;
+  }
+  render() {
+    return (
+      <div className="customize-bar">
+        <CustomizeIcon icon={addIcon} handleClick={() => console.log('Add media page here')}/>
+        <CustomizeIcon icon={settingsIcon} handleClick={() => console.log('Edit settings page here')}/>
+      </div>
+    )
+  }
+}
+
+class CustomizeIcon extends Component {
+  constructor(props) {
+    super(props);
+    this.icon = props.icon
+    this.handleClick = props.handleClick
+  }
+  render() {
+    return (
+      <button className="customize-button" onClick={this.handleClick}>
+          <img src={this.icon} className="customize-button" alt="add-icon" />
+        </button>
+    )
   }
 }
 

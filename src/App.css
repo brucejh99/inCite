@@ -18,6 +18,21 @@
   font-size: 1.5em;
 }
 
+.customize-bar {
+  height: 15px;
+  width: 300px;
+  align-content: right;
+}
+
+.customize-button {
+  height: 15px;
+  width: 15px;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  background: white;
+}
+
 .media-box {
   background-color: #eaeaea;
   height: 50px;
