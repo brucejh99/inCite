@@ -31,3 +31,13 @@
     margin-right: 110px;
     margin-bottom: 10px;
 }
+
+.customize-button {
+    height: 15px;
+    width: 15px;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    display: inline-block;
+    background: white;
+  }

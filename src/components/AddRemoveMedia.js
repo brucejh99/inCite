@@ -47,18 +47,9 @@ export class AddRemoveMedia extends Component {
     }
 
     render() {
-        let facebookAuth;
-        let gmailAuth;
-
-        if(this.state.usingFacebook) {
-            facebookAuth = <button onClick={this.handleLogout} />
-        } else {
-            facebookAuth = <button onClick={this.handleLogin} />
-        }
-
         return (
             <div>
-
+                AddRemoveMedia goes here
             </div>
         )
     }
