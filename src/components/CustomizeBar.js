@@ -28,7 +28,7 @@ export default class CustomizeBar extends Component {
       return (
         <div className="customize-bar">
           <CustomizeButton icon={homeIcon} handleClick={ () => console.log('Home') } />
-          <CustomizeButton icon={addIcon} handleClick={ this.renderAuth } />
+          <CustomizeButton icon={addIcon} handleClick={ () => console.log('Add social media') } />
           <CustomizeButton icon={settingsIcon} handleClick={ () => console.log('Settings') } />
         </div>
       )
