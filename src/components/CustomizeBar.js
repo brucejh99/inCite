@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
-import { AddRemoveMedia } from './AddRemoveMedia';
+import { AuthenticationForm, AddRemoveMedia } from './AddRemoveMedia';
 import './Components.css';
 
+const homeIcon = require('../assets/home-icon.png')
 const addIcon = require('../assets/add-icon.png');
 const settingsIcon = require('../assets/settings-icon.png');
 
 export default class CustomizeBar extends Component {
     constructor() {
       super();
-      this.active = false;
+      this.renderAuth = this.renderAuth.bind(this);
+      this.state = {
+        homeActive: true,
+        customizeActive: false,
+        settingsActive: false,
+      }
     }
+
+    renderAuth() {
+      this.setState({ homeActive: true });
+      return (
+        <AuthenticationForm mediaName="Authentication Form" />
+      );
+    }
+
     render() {
       return (
         <div className="customize-bar">
-          <CustomizeButton icon={addIcon} />
-          <CustomizeButton icon={settingsIcon} />
+          <CustomizeButton icon={homeIcon} handleClick={ () => console.log('Home') } />
+          <CustomizeButton icon={addIcon} handleClick={ this.renderAuth } />
+          <CustomizeButton icon={settingsIcon} handleClick={ () => console.log('Settings') } />
         </div>
       )
     }
@@ -24,21 +39,14 @@ export default class CustomizeBar extends Component {
     constructor(props) {
       super(props);
       this.icon = props.icon;
-      this.handleClick = this.handleClick.bind(this);
-      this.state = {
-          active: false,
-      }
-    }
-
-    handleClick() {
-        console.log('Clicked');
+      this.handleClick = props.handleClick.bind(this);
     }
 
     render() {
       return (
-        <div className="customize-button" onClick={this.handleClick}>
+        <button className="customize-button" onClick={this.handleClick}>
             <img src={this.icon} className="customize-button" alt="add-icon" />
-        </div>
+        </button>
       )
     }
   }

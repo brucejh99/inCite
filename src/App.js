@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
 import CustomizeBar from './components/CustomizeBar';
-import { AuthenticationForm, AddRemoveMedia } from './components/AddRemoveMedia';
-import { NotifMediaBox, NotifMsgMediaBox } from './components/MediaBox';
-import GoogleAuth from './components/Gmail';
-import { FacebookAuth, FacebookNotification } from './components/Facebook';
 
-const fbLogo = require('./assets/fb-logo.svg');
-const gmailLogo = require('./assets/gmail-logo.svg');
+import Home from './components/Home';
+// import Settings from './components/Settings';
+// import Customize from './components/AddRemoveMedia';
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      home: true,
+      settings: false,
+      customize: false,
+    }
+  }
+  
+  clickHandler() {
+    if(this.state.home) {
+      // this.currentPage = Home;
+    } else if(this.state.settings) {
+      // this.currentPage = Settings;
+    } else {
+      // this.currentPage = Customize;
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title">Notification Hub</h1>
-        </header>
+      <div>
         <CustomizeBar />
-        <NotifMsgMediaBox icon={fbLogo} mediaName="Facebook"/>
-        <NotifMediaBox icon={gmailLogo} mediaName="Gmail"/>
-        <NotifMediaBox icon={logo} mediaName="These are all classes"/>
-        <AuthenticationForm mediaName="Facebook" />
+        <Home />
       </div>
     );
   }
