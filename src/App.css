@@ -18,6 +18,16 @@
   font-size: 1.5em;
 }
 
+.customize-button {
+  height: 15px;
+  width: 15px;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  display: inline-block;
+  background: white;
+}
+
 .customize-bar {
   height: 15px;
   width: 300px;
