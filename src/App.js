@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Home from './components/Home';
-// import Settings from './components/Settings';
+import Settings from './components/Settings';
 // import Customize from './components/AddRemoveMedia';
 
 const homeIcon = require('./assets/home-icon.png')
@@ -13,6 +13,7 @@ const settingsIcon = require('./assets/settings-icon.png');
 export default class App extends Component {
   constructor() {
     super();
+    this.loadSettings = this.loadSettings.bind(this);
     this.state = {
       home: true,
       settings: false,
@@ -20,16 +21,13 @@ export default class App extends Component {
     }
   }
 
-  currentPage = <Home />;
-  
-  clickHandler() {
-    if(this.state.home) {
-      this.currentPage = <Home />;
-    } else if(this.state.settings) {
-      // this.currentPage = <Settings />;
-    } else {
-      // this.currentPage = <Customize />;
-    }
+  loadSettings() {
+    this.setState({
+      home: false,
+      settings: true,
+      customize: false,
+    });
+    console.log(this);
   }
 
   render() {
@@ -37,10 +35,12 @@ export default class App extends Component {
       <div>
         <div className="customize-bar">
           <CustomizeButton icon={homeIcon} handleClick={ () => console.log('Home') } />
-          <CustomizeButton icon={addIcon} handleClick={ () => console.log('Add social media') } />
-          <CustomizeButton icon={settingsIcon} handleClick={ () => console.log('Settings') } />
+          <CustomizeButton icon={addIcon} handleClick={ () => console.log('Add') } />
+          <button className="customize-button" onClick={this.loadSettings}>
+              <img src={settingsIcon} className="customize-button" alt="add-icon" />
+          </button>
         </div>
-        {this.currentPage}
+        {this.state.home ? <Home /> : <Settings />}
       </div>
     );
   }
@@ -50,7 +50,7 @@ class CustomizeButton extends Component {
   constructor(props) {
     super(props);
     this.icon = props.icon;
-    this.handleClick = props.handleClick.bind(this);
+    this.handleClick = props.handleClick;
   }
 
   render() {

@@ -1,3 +1,8 @@
+.test-page {
+    width: 300px;
+    background-color: lightblue;
+}
+
 .login-form {
     width: 300px;
     margin: 0;
