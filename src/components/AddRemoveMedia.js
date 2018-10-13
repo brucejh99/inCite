@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Components.css';
 
-export class AuthenticationForm extends Component {
+export default class AuthenticationForm extends Component {
     constructor(props) {
         super(props);
         this.mediaName = props.mediaName;
