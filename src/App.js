@@ -13,10 +13,12 @@ export default class App extends Component {
     this.updateName = this.updateName.bind(this);
     this.homePage = this.homePage.bind(this);
     this.customizePage = this.customizePage.bind(this);
+    this.updateStyle = this.updateStyle.bind(this);
     this.state = {
       bibName: null,
       citation: true,
       bibliography: false,
+      style: null,
     }
   }
 
@@ -24,9 +26,16 @@ export default class App extends Component {
     if(e.key === 'Enter') {
       this.setState({
         bibName: e.target.value,
-      })
+      });
       console.log(`Updated name to ${e.target.value}`);
     }
+  }
+
+  updateStyle(newStyle) {
+    this.setState({
+      style: newStyle,
+    })
+    console.log(`Style updated to ${newStyle}`);
   }
 
   homePage() {
@@ -57,7 +66,10 @@ export default class App extends Component {
               <img src={addIcon} className="customize-button" alt="add-icon" />
           </button>
         </div>
-        {this.state.bibName === null ? <Launch updateName={this.updateName} value={this.bibName} /> : (this.state.citation ? <Citation /> : <Bibliography />)}
+        {(this.state.bibName === null) || (this.state.style === null) ?
+          <Launch updateName={this.updateName} value={this.bibName} updateStyle={this.updateStyle}/> :
+            (this.state.citation ? <Citation /> : <Bibliography />)}
+          <p>{`Current style: ${this.state.style} (for development purposes, remove on release)`}</p>
       </div>
     );
   }

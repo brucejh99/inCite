@@ -1,3 +1,12 @@
+.splash {
+    width: 360px;
+    margin: 0px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    background-color: rgb(96, 178, 255);
+}
+
 .input-field {
     height: 30px;
     width: 280px;
@@ -26,13 +35,20 @@
 .style-button-selected {
     height: 20px;
     width: 80px;
-    background-color: white;
+    background-color: rgb(96, 178, 255);
+    color: white;
+    border: none;
     text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .style-button-default {
     height: 20px;
     width: 80px;
-    background-color: grey;
+    background-color: white;
+    border: none;
     text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
