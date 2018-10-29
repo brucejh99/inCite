@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Launch from './components/Launch';
 import Citation from './components/Citation';
-import Bibliography from './components/Bibliography'
+import Bibliography from './components/Bibliography';
 
 const addIcon = require('./assets/add-icon.png');
 
@@ -12,6 +13,7 @@ export default class App extends Component {
     this.homePage = this.homePage.bind(this);
     this.customizePage = this.customizePage.bind(this);
     this.state = {
+      bibName: null,
       citation: true,
       bibliography: false,
     }
@@ -42,7 +44,7 @@ export default class App extends Component {
               <img src={addIcon} className="customize-button" alt="add-icon" />
           </button>
         </div>
-        {this.state.citation ? <Citation /> : <Bibliography />}
+        {this.state.bibName ? <Launch /> : (this.state.citation ? <Citation /> : <Bibliography />)}
       </div>
     );
   }
