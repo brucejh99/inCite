@@ -1,0 +1,38 @@
+.input-field {
+    height: 30px;
+    width: 280px;
+    margin: 30px;
+    padding: 5px;
+}
+
+.input-box {
+    height: 100px;
+    width: 350px;
+    background-color: grey;
+    margin: 25px;
+}
+
+.button-container {
+    width: 350px;
+    margin-left: 25px;
+    margin-right: 25px;
+    display: flex;
+}
+
+.button-container.space-between {  
+    justify-content: space-between;
+}
+
+.style-button-selected {
+    height: 20px;
+    width: 80px;
+    background-color: white;
+    text-align: center;
+}
+
+.style-button-default {
+    height: 20px;
+    width: 80px;
+    background-color: grey;
+    text-align: center;
+}
