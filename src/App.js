@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import Home from './components/Home';
-import AuthenticationForm from './components/AddRemoveMedia';
+import Citation from './components/Citation';
+import Bibliography from './components/Bibliography'
 
-const homeIcon = require('./assets/home-icon.png')
 const addIcon = require('./assets/add-icon.png');
 
 export default class App extends Component {
@@ -14,22 +12,22 @@ export default class App extends Component {
     this.homePage = this.homePage.bind(this);
     this.customizePage = this.customizePage.bind(this);
     this.state = {
-      home: true,
-      customize: false,
+      citation: true,
+      bibliography: false,
     }
   }
 
   homePage() {
     this.setState({
-      home: true,
-      customize: false,
+      citation: true,
+      bibliography: false,
     });
   }
 
   customizePage() {
     this.setState({
-      home: false,
-      customize: true,
+      citation: false,
+      bibliography: true,
     });
   }
 
@@ -38,13 +36,13 @@ export default class App extends Component {
       <div>
         <div className="customize-bar">
           <button className="customize-button" onClick={this.homePage}>
-              <img src={homeIcon} className="customize-button" alt="add-icon" />
+              <img src={addIcon} className="customize-button" alt="add-icon" />
           </button>
           <button className="customize-button" onClick={this.customizePage}>
               <img src={addIcon} className="customize-button" alt="add-icon" />
           </button>
         </div>
-        {this.state.home ? <Home /> : <AuthenticationForm />}
+        {this.state.citation ? <Citation /> : <Bibliography />}
       </div>
     );
   }
