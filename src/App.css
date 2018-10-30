@@ -4,7 +4,6 @@
   margin: 0px;
   padding: 0px;
   border: none;
-  display: inline-block;
   background: white;
 }
 
@@ -12,4 +11,5 @@
   height: 15px;
   width: 400px;
   margin: 0px;
+  display: flex;
 }

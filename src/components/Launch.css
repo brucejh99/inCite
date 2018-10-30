@@ -23,6 +23,7 @@
 
 .button-container {
     width: 350px;
+    margin-top: 25px;
     margin-left: 25px;
     margin-right: 25px;
     display: flex;
@@ -41,6 +42,9 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(96, 178, 255);
 }
 
 .style-button-default {
@@ -51,4 +55,7 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(96, 178, 255);
 }

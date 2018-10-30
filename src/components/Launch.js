@@ -58,14 +58,14 @@ export default class Launch extends Component {
     return (
       <div>
         <h1 className="splash">inCite</h1>
-        <div className="input-box">
-            <input className="input-field" value={this.value} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
-        </div>
         <div className="button-container space-between">
             <StyleButton styleName="MLA" selected={this.state.MLA} selectStyleMethod={() => this.selectStyle("MLA")}/>
             <StyleButton styleName="APA" selected={this.state.APA} selectStyleMethod={() => this.selectStyle("APA")}/>
             <StyleButton styleName="Chicago" selected={this.state.Chicago} selectStyleMethod={() => this.selectStyle("Chicago")}/>
             <StyleButton styleName="Harvard" selected={this.state.Harvard} selectStyleMethod={() => this.selectStyle("Harvard")}/>
+        </div>
+        <div className="input-box">
+            <input className="input-field" value={this.value} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
         </div>
       </div>
     );

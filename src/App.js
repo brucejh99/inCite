@@ -10,15 +10,17 @@ const addIcon = require('./assets/add-icon.png');
 export default class App extends Component {
   constructor() {
     super();
+    this.launchPage = this.launchPage.bind(this);
+    this.citationPage = this.citationPage.bind(this);
+    this.bibliographyPage = this.bibliographyPage.bind(this);
     this.updateName = this.updateName.bind(this);
-    this.homePage = this.homePage.bind(this);
-    this.customizePage = this.customizePage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.state = {
       bibName: null,
-      citation: true,
-      bibliography: false,
       style: null,
+      launchPage: false,
+      citationPage: true,
+      bibliographyPage: false,
     }
   }
 
@@ -34,21 +36,31 @@ export default class App extends Component {
   updateStyle(newStyle) {
     this.setState({
       style: newStyle,
-    })
+    });
     console.log(`Style updated to ${newStyle}`);
   }
 
-  homePage() {
+  launchPage() {
     this.setState({
-      citation: true,
-      bibliography: false,
+      launchPage: true,
+      citationPage: false,
+      bibliographyPage: false,
     });
   }
 
-  customizePage() {
+  citationPage() {
     this.setState({
-      citation: false,
-      bibliography: true,
+      launchPage: false,
+      citationPage: true,
+      bibliographyPage: false,
+    });
+  }
+
+  bibliographyPage() {
+    this.setState({
+      launchPage: false,
+      citationPage: false,
+      bibliographyPage: true,
     });
   }
 
@@ -56,21 +68,33 @@ export default class App extends Component {
     return (
       <div>
         <div className="customize-bar">
-          <button className="customize-button" onClick={this.homePage}>
-              <img src={addIcon} className="customize-button" alt="add-icon" />
-          </button>
-          <button className="customize-button" onClick={this.customizePage}>
-              <img src={addIcon} className="customize-button" alt="add-icon" />
-          </button>
-          <button className="customize-button" onClick={this.customizePage}>
-              <img src={addIcon} className="customize-button" alt="add-icon" />
-          </button>
+          <PageButton icon={addIcon} onClickMethod={this.launchPage} />
+          <PageButton icon={addIcon} onClickMethod={this.citationPage} />
+          <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
         </div>
-        {(this.state.bibName === null) || (this.state.style === null) ?
+        {(this.state.bibName === null) || (this.state.style === null) || this.state.launchPage ?
           <Launch updateName={this.updateName} value={this.bibName} updateStyle={this.updateStyle}/> :
-            (this.state.citation ? <Citation /> : <Bibliography />)}
-          <p>{`Current style: ${this.state.style} (for development purposes, remove on release)`}</p>
+            (this.state.citationPage ? <Citation /> : <Bibliography />)}
+          <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
       </div>
     );
+  }
+}
+
+class PageButton extends Component {
+  constructor(props) {
+    super(props);
+    this.icon = props.icon;
+    this.onClickMethod = props.onClickMethod;
+  }
+  
+  render() {
+    return (
+      <div>
+        <button className="customize-button" onClick={this.onClickMethod}>
+              <img src={this.icon} className="customize-button" alt="add-icon" />
+          </button>
+      </div>
+    )
   }
 }

@@ -1,11 +1,14 @@
 {
-  "short_name": "Notif Hub",
-  "name": "Notification Hub",
+  "short_name": "iC",
+  "name": "inCite",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "browser_action": {
     "default_popup": "index.html",
-    "default_title": "Notification Hub"
+    "default_title": "inCite"
   },
+  "permissions": [
+    "storage"
+  ],
   "version": "1.0"
 }
