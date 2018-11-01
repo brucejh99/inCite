@@ -4,7 +4,7 @@ import './Launch.css';
 export default class Launch extends Component {
   constructor(props) {
     super(props);
-    this.value = props.value;
+    this.bibName = props.bibName;
     this.updateName = props.updateName;
     this.selectStyle = this.selectStyle.bind(this);
     this.updateStyleGlobal = props.updateStyle;
@@ -17,6 +17,7 @@ export default class Launch extends Component {
     this.setState({
       style: styleName
     });
+    this.updateStyleGlobal(styleName);
   }
 
   render() {
@@ -30,7 +31,7 @@ export default class Launch extends Component {
             <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")}/>
         </div>
         <div className="input-box">
-            <input className="input-field" value={this.value} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
+            <input className="input-field" value={this.bibName} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
         </div>
       </div>
     );
