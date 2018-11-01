@@ -31,7 +31,7 @@ export default class Launch extends Component {
             <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")}/>
         </div>
         <div className="input-box">
-            <input className="input-field" value={this.bibName} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
+            <input className="input-field" type="text" value={this.value} onKeyPress={this.updateName} placeholder="Bibliography Name" />
         </div>
       </div>
     );
