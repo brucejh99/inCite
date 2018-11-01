@@ -8,7 +8,10 @@
     "default_title": "inCite"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
   ],
   "version": "1.0"
 }

@@ -9,49 +9,14 @@ export default class Launch extends Component {
     this.selectStyle = this.selectStyle.bind(this);
     this.updateStyleGlobal = props.updateStyle;
     this.state = {
-      MLA: false,
-      APA: false,
-      Chicago: false,
-      Harvard: false,
+      style: props.style
     }
   }
 
   selectStyle(styleName) {
-    if(styleName === "MLA") {
-      this.setState({
-        MLA: true,
-        APA: false,
-        Chicago: false,
-        Harvard: false,
-      });
-      this.updateStyleGlobal("MLA");
-    } else if(styleName === "APA") {
-      this.setState({
-        MLA: false,
-        APA: true,
-        Chicago: false,
-        Harvard: false,
-      });
-      this.updateStyleGlobal("APA");
-    } else if(styleName === "Chicago") {
-      this.setState({
-        MLA: false,
-        APA: false,
-        Chicago: true,
-        Harvard: false,
-      });
-      this.updateStyleGlobal("Chicago");
-    } else if(styleName === "Harvard") {
-      this.setState({
-        MLA: false,
-        APA: false,
-        Chicago: false,
-        Harvard: true,
-      });
-      this.updateStyleGlobal("Harvard");
-    } else {
-      console.error('Error: invalid styleName provided');
-    }
+    this.setState({
+      style: styleName
+    });
   }
 
   render() {
@@ -59,10 +24,10 @@ export default class Launch extends Component {
       <div>
         <h1 className="splash">inCite</h1>
         <div className="button-container space-between">
-            <StyleButton styleName="MLA" selected={this.state.MLA} selectStyleMethod={() => this.selectStyle("MLA")}/>
-            <StyleButton styleName="APA" selected={this.state.APA} selectStyleMethod={() => this.selectStyle("APA")}/>
-            <StyleButton styleName="Chicago" selected={this.state.Chicago} selectStyleMethod={() => this.selectStyle("Chicago")}/>
-            <StyleButton styleName="Harvard" selected={this.state.Harvard} selectStyleMethod={() => this.selectStyle("Harvard")}/>
+            <StyleButton styleName="MLA" selected={this.state.style === "MLA" ? true : false} selectStyleMethod={() => this.selectStyle("MLA")}/>
+            <StyleButton styleName="APA" selected={this.state.style === "APA" ? true : false} selectStyleMethod={() => this.selectStyle("APA")}/>
+            <StyleButton styleName="Chicago" selected={this.state.style === "Chicago" ? true : false} selectStyleMethod={() => this.selectStyle("Chicago")}/>
+            <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")}/>
         </div>
         <div className="input-box">
             <input className="input-field" value={this.value} onKeyPress={this.updateName} type="text" placeholder="Bibliography Name" />
