@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import './Citation.css';
 
 export default class Citation extends Component {

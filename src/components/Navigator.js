@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState } from '../Storage';
+import { getOrSetState, updateState } from '../services/Storage';
 import Launch from './Launch';
 import Citation from './Citation';
 import Bibliography from './Bibliography';
