@@ -7,6 +7,9 @@ import Bibliography from './Bibliography';
 
 const addIcon = require('../assets/add-icon.png');
 
+/**
+ * Class that provides a taskbar to navigate between pages and render pages.
+ */
 export default class Navigator extends Component {
   constructor() {
     super();
@@ -18,6 +21,10 @@ export default class Navigator extends Component {
     this.state = getOrSetState();
   }
 
+  /**
+   * Event listener to update bibliography name in state and local storage when 'Enter' is pressed
+   * @param {Event} e 
+   */
   updateName(e) {
     if(e.key === 'Enter') {
       this.setState({
@@ -27,11 +34,18 @@ export default class Navigator extends Component {
     }
   }
 
+  /**
+   * Updates style type in state and local storage
+   * @param {String} newStyle 
+   */
   updateStyle(newStyle) {
     this.setState({ style: newStyle }, () => { updateState(this.state) });
     console.log(`Style updated to ${newStyle}`);
   }
 
+  /**
+   * Renders launch page and updates state to launchPage in state and local storage
+   */
   launchPage() {
     this.setState({
       launchPage: true,
@@ -40,6 +54,9 @@ export default class Navigator extends Component {
     }, () => { updateState(this.state) });
   }
 
+  /**
+   * Renders citation page and updates state to citationPage in state and local storage
+   */
   citationPage() {
     this.setState({
       launchPage: false,
@@ -48,6 +65,9 @@ export default class Navigator extends Component {
     }, () => { updateState(this.state) });
   }
 
+  /**
+   * Renders bibliography page and updates state to bibliographyPage in state and local storage
+   */
   bibliographyPage() {
     this.setState({
       launchPage: false,
@@ -76,6 +96,11 @@ export default class Navigator extends Component {
   }
 }
 
+/**
+ * Button class to that navigate between pages
+ * @prop {Image} icon Image displayed on button
+ * @prop {Function} onClickMethod Function called when the button is clicked
+ */
 class PageButton extends Component {
   constructor(props) {
     super(props);

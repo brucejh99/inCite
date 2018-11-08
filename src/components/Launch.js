@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import './Launch.css';
 
+/**
+ * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
+ * @prop {String} bibName Name of bibliography
+ * @prop {String} style Currently selected bibliography style
+ * @prop {Function} updateName Update name of bibliography
+ * @prop {Function} updateStyle Method to update selected style globally
+ */
 export default class Launch extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +20,10 @@ export default class Launch extends Component {
     }
   }
 
+  /**
+   * Method to select a new style and update state globally
+   * @param {String} styleName Currently selected style
+   */
   selectStyle(styleName) {
     this.setState({
       style: styleName
@@ -38,6 +49,11 @@ export default class Launch extends Component {
   }
 }
 
+/**
+ * Button to select bibliography style
+ * @prop {String} styleName Name of currently selected citation style
+ * @prop {Function} selectStyleMethod Function to update selected style 
+ */
 class StyleButton extends Component {
   constructor(props) {
     super(props);
