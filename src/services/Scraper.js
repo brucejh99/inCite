@@ -1,6 +1,6 @@
 /* global chrome */
-
 const requestPromise = require('request-promise');
+const { extract } = require('article-parser');
 
 function getUrl() {
     let url;
@@ -11,8 +11,8 @@ function getUrl() {
     return url;
 }
 
-function getPage(url) {
-    const content = requestPromise(url)
+async function getPage(url) {
+    const content = await requestPromise(url)
         .then(function(html) {
             console.log(html);
             return html;
@@ -23,4 +23,21 @@ function getPage(url) {
         })
     console.log(content);
     return content;
+}
+
+function getData(url) {
+    const data = extract(url).then((articleData) => {
+        data = articleData;
+        console.log(data);
+    }).catch((err) => {
+        console.error(err);
+        data = null;
+    });
+    return data;
+}
+
+function parseActivePage() {
+    const url = getUrl();
+    const data = getData(url);
+    return data;
 }
