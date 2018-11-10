@@ -11,13 +11,14 @@ const addIcon = require('../assets/add-icon.png');
  * Class that provides a taskbar to navigate between pages and render pages.
  */
 export default class Navigator extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.launchPage = this.launchPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
     this.bibliographyPage = this.bibliographyPage.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
+    this.url = props.url;
     this.state = getOrSetState();
   }
 
@@ -87,10 +88,11 @@ export default class Navigator extends Component {
         </div> : <div />
         }
         {(this.state.bibName === "") || (this.state.style === null) || this.state.launchPage ?
-          <Launch updateName={this.updateName} updateStyle={this.updateStyle} bibName={this.state.bibName}style={this.state.style} /> :
+          <Launch updateName={this.updateName} updateStyle={this.updateStyle} bibName={this.state.bibName} style={this.state.style} /> :
             (this.state.citationPage ? <Citation /> : <Bibliography />)}
           <p>{`Current name: ${this.state.bibName} (we should put this somewhere else after)`}</p>
           <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
+          <p>{`Current URL: ${this.url}`}</p>
       </div>
     );
   }

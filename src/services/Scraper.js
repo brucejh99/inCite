@@ -1,16 +1,15 @@
 /* global chrome */
-const requestPromise = require('request-promise');
-const { extract } = require('article-parser');
+// const requestPromise = require('request-promise');
+// const { extract } = require('article-parser');
 
-function getUrl() {
-    let url;
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-        url = tabs[0].url;
+export default function getUrl() {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
         console.log(`Url: ${tabs[0].url}`);
+        const url = tabs[0].url;
     });
-    return url;
 }
 
+/*
 async function getPage(url) {
     const content = await requestPromise(url)
         .then(function(html) {
@@ -26,9 +25,10 @@ async function getPage(url) {
 }
 
 function getData(url) {
-    const data = extract(url).then((articleData) => {
+    let data;
+    extract(url).then((articleData) => {
         data = articleData;
-        console.log(data);
+        console.log(articleData);
     }).catch((err) => {
         console.error(err);
         data = null;
@@ -36,8 +36,9 @@ function getData(url) {
     return data;
 }
 
-function parseActivePage() {
+export default function pageScraper() {
     const url = getUrl();
     const data = getData(url);
     return data;
 }
+*/
