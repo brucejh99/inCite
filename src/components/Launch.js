@@ -3,7 +3,6 @@ import './Launch.css';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
- * @prop {String} bibName Name of bibliography
  * @prop {String} style Currently selected bibliography style
  * @prop {Function} updateName Update name of bibliography
  * @prop {Function} updateStyle Method to update selected style globally
@@ -11,7 +10,6 @@ import './Launch.css';
 export default class Launch extends Component {
   constructor(props) {
     super(props);
-    this.bibName = props.bibName;
     this.updateName = props.updateName;
     this.selectStyle = this.selectStyle.bind(this);
     this.updateStyleGlobal = props.updateStyle;

@@ -88,8 +88,8 @@ export default class Navigator extends Component {
         </div> : <div />
         }
         {(this.state.bibName === "") || (this.state.style === null) || this.state.launchPage ?
-          <Launch updateName={this.updateName} updateStyle={this.updateStyle} bibName={this.state.bibName} style={this.state.style} /> :
-            (this.state.citationPage ? <Citation /> : <Bibliography />)}
+          <Launch updateName={this.updateName} updateStyle={this.updateStyle} style={this.state.style} /> :
+            (this.state.citationPage ? <Citation style={this.state.style}/> : <Bibliography style={this.state.style} bibName={this.state.bibName} />)}
           <p>{`Current name: ${this.state.bibName} (we should put this somewhere else after)`}</p>
           <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
           <p>{`Current URL: ${this.url}`}</p>
