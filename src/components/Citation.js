@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import './Citation.css';
 
 export default class Citation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      style: props.style
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Format: MLA</h1>
+          <h1>Format: {this.state.style}</h1>
         </header>
 
         <div className="body">
