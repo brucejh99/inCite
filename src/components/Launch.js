@@ -33,7 +33,7 @@ export default class Launch extends Component {
     return (
       <div>
         <h1 className="splash">inCite</h1>
-        <div className="button-container space-between">
+        <div className="button-container">
             <StyleButton styleName="MLA" selected={this.state.style === "MLA" ? true : false} selectStyleMethod={() => this.selectStyle("MLA")}/>
             <StyleButton styleName="APA" selected={this.state.style === "APA" ? true : false} selectStyleMethod={() => this.selectStyle("APA")}/>
             <StyleButton styleName="Chicago" selected={this.state.style === "Chicago" ? true : false} selectStyleMethod={() => this.selectStyle("Chicago")}/>
@@ -62,7 +62,7 @@ class StyleButton extends Component {
   render() {
     return (
       <div>
-          <button className={this.props.selected ? "style-button-selected" : "style-button-default"} onClick={this.selectStyleMethod}>
+          <button className={this.props.selected ? "selected style-button" : "default style-button"} onClick={this.selectStyleMethod}>
             {this.styleName}
           </button>
       </div>

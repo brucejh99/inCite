@@ -27,17 +27,12 @@
     margin-left: 25px;
     margin-right: 25px;
     display: flex;
-}
-
-.button-container.space-between {  
     justify-content: space-between;
 }
 
-.style-button-selected {
+.style-button {
     height: 20px;
     width: 80px;
-    background-color: rgb(96, 178, 255);
-    color: white;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -47,15 +42,12 @@
     border-color: rgb(96, 178, 255);
 }
 
-.style-button-default {
-    height: 20px;
-    width: 80px;
+.default.style-button {
     background-color: white;
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: solid;
-    border-width: 1px;
-    border-color: rgb(96, 178, 255);
+    color: rgb(96, 178, 255);
+}
+
+.selected.style-button {
+    background-color: rgb(96, 178, 255);
+    color: white;
 }
