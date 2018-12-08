@@ -3,18 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "article-parser": "^2.4.0",
+    "article-extractor": "^1.0.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.1.1",
-    "request": "^2.88.0"
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run post-build",
+    "build": "react-scripts build && npm run uninline",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "post-build": "node ./bin/uninline.js build/index.html build/asset-manifest.json"
+    "uninline": "node ./bin/uninline.js build/index.html build/asset-manifest.json"
   },
   "browserslist": {
     "development": [

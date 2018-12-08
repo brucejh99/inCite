@@ -1,8 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
 import Navigator from './components/Navigator';
-import request from 'request';
-// import { extract } from 'article-parser';
+import extractor from 'article-extractor';
 
 export default class App extends Component {
   componentDidMount() {
@@ -11,14 +10,17 @@ export default class App extends Component {
       const url = tabs[0].url;
       theApp.setState({ page: url });
       console.log(`Url: ${tabs[0].url}`);
-      request(url, { timeout: 5000 }, (err, res, body) => {
+      extractor.extractData(url, function(err, data) {
+        console.log(data);
+      });
+      /* request(url, { timeout: 5000 }, (err, res, body) => {
         if(!err) {
           theApp.setState({ content: body }); // process and break down before passing in to Navigator?
           console.log(body);
         } else {
           console.log(err);
         }
-      });
+      }); */
     });
   }
   
