@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Navigator from './components/Navigator';
 import request from 'request';
+// import { extract } from 'article-parser';
 
 export default class App extends Component {
 
