@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "article-parser": "^2.4.0",
-    "cheerio": "^1.0.0-rc.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.1.1",
