@@ -11,10 +11,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run post-build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "uninline": "./bin/uninline_scripts.js build/index.html build/asset-manifest.json"
+    "post-build": "node ./bin/uninline.js build/index.html build/asset-manifest.json"
   },
   "browserslist": {
     "development": [
