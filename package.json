@@ -13,7 +13,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "uninline": "./bin/uninline_scripts.js build/index.html build/asset-manifest.json"
   },
   "browserslist": {
     "development": [
