@@ -3,10 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "article-extractor": "^1.0.2",
+    "metascraper": "^4.7.0",
+    "metascraper-author": "^4.7.0",
+    "metascraper-date": "^4.7.0",
+    "metascraper-description": "^4.7.0",
+    "metascraper-publisher": "^4.7.0",
+    "metascraper-title": "^4.7.0",
+    "metascraper-url": "^4.7.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "request": "^2.88.0"
   },
   "scripts": {
     "start": "react-scripts start",

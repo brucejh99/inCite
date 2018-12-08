@@ -1,7 +1,20 @@
 /* global chrome */
 import React, { Component } from 'react';
 import Navigator from './components/Navigator';
-import extractor from 'article-extractor';
+import request from 'request';
+
+const metascraper = require('metascraper')([
+  require('metascraper-author')(),
+  require('metascraper-date')(),
+  require('metascraper-description')(),
+  require('metascraper-publisher')(),
+  require('metascraper-title')(),
+  require('metascraper-url')()
+]);
+
+// import request from 'request';
+// const extractor = require('unfluff/lib/extractor');
+// import extractor from 'article-extractor'; maybe an alternative. Provides less information but potentially more accurate? Let's test.
 
 export default class App extends Component {
   componentDidMount() {
@@ -10,17 +23,18 @@ export default class App extends Component {
       const url = tabs[0].url;
       theApp.setState({ page: url });
       console.log(`Url: ${tabs[0].url}`);
-      extractor.extractData(url, function(err, data) {
+      /* extractor.extractData(url, function(err, data) {
         console.log(data);
-      });
-      /* request(url, { timeout: 5000 }, (err, res, body) => {
+      }); */
+      request(url, async (err, res, html) => {
         if(!err) {
-          theApp.setState({ content: body }); // process and break down before passing in to Navigator?
-          console.log(body);
+          const metadata = await metascraper({ html, url });
+          console.log(metadata);
+          theApp.setState({ content: metadata }); // process and break down before passing in to Navigator?
         } else {
           console.log(err);
         }
-      }); */
+      });
     });
   }
   
