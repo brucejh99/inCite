@@ -10,7 +10,6 @@ export default class Bibliography extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h1 className="App-title">inCite</h1>
         </header>
-
       </div>
     );
   }

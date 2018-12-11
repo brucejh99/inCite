@@ -18,7 +18,7 @@ export default class Navigator extends Component {
     this.bibliographyPage = this.bibliographyPage.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
-    this.url = props.url;
+    this.metadata = props.metadata;
     this.state = getOrSetState();
   }
 
@@ -85,14 +85,14 @@ export default class Navigator extends Component {
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
           <PageButton icon={addIcon} onClickMethod={this.citationPage} />
           <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
-        </div> : <div />
+        </div> : null
         }
         {(this.state.bibName === "") || (this.state.style === null) || this.state.launchPage ?
           <Launch updateName={this.updateName} updateStyle={this.updateStyle} style={this.state.style} /> :
             (this.state.citationPage ? <Citation style={this.state.style}/> : <Bibliography style={this.state.style} bibName={this.state.bibName} />)}
           <p>{`Current name: ${this.state.bibName} (we should put this somewhere else after)`}</p>
           <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
-          <p>{`Current URL: ${this.url}`}</p>
+          <p>{`Current injected metadata: ${this.metadata.url}, ${this.metadata.title}, ${this.metadata.author}, ${this.metadata.date}, ${this.metadata.publisher}`}</p>
       </div>
     );
   }

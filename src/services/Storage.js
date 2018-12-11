@@ -1,5 +1,4 @@
 /* global localStorage */
-// Careful developing here. Linter likely won't pick up when missing 'state' or 'localStorage' declaration
 
 const defaultState = {
     bibName: "",
