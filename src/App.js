@@ -12,24 +12,43 @@ const metascraper = require('metascraper')([
   require('metascraper-url')()
 ]);
 
+const makeUndefined = (url) => {
+  const undefinedData = {
+    success: false,
+    title: null,
+    author: null,
+    publisher: null,
+    date: null,
+    url
+  }
+  return undefinedData;
+}
+
 export default class App extends Component {
   constructor() {
     super();
-    this.state = { metadata: null }
+    this.state = {
+      metadata: null,
+      success: undefined
+    }
   }
 
   componentDidMount() {
     const self = this;
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-      // move this into citations so we only have to load and render the loading screen when necessary (or better yet, pull in background while on other pages?)
+      // TODO: move this into citations so we only have to load and render the loading screen when necessary (or better yet, pull in background while on other pages?)
       const url = tabs[0].url;
-      request(tabs[0], async function(err, res, html) {
-        if(!err) {
+      request({ uri: url, timeout: 10000 }, async function(err, res, html) {
+        if(html === undefined || err) {
+          console.log('Took too long to read!');
+          self.setState({ 
+            metadata: makeUndefined(url),
+          });
+        } else {
           const metadata = await metascraper({ html, url });
+          metadata.success = true;
           console.log(metadata);
           self.setState({ metadata });
-        } else {
-          console.log(err);
         }
       });
     });
