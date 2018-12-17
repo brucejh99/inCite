@@ -1,7 +1,6 @@
 /* global localStorage */
 
 const defaultState = {
-    bibName: "",
     style: null,
     launchPage: false,
     citationPage: true,

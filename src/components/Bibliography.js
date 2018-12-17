@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import logo from '../assets/logo.svg';
 import './Bibliography.css';
+import { getOrSetBibliography, resetBibliography } from '../services/Storage';
 
 export default class Bibliography extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      style: props.style,
+      bibliography: getOrSetBibliography()
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title">inCite</h1>
+      <div className="body">
+        <header className="splash">
+          <h1 className="title">Bibliography</h1>
         </header>
+        <body>
+
+        </body>
       </div>
     );
   }

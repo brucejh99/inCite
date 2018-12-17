@@ -4,13 +4,11 @@ import './Launch.css';
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {String} style Currently selected bibliography style
- * @prop {Function} updateName Update name of bibliography
  * @prop {Function} updateStyle Method to update selected style globally
  */
 export default class Launch extends Component {
   constructor(props) {
     super(props);
-    this.updateName = props.updateName;
     this.selectStyle = this.selectStyle.bind(this);
     this.updateStyleGlobal = props.updateStyle;
     this.state = {
@@ -38,9 +36,6 @@ export default class Launch extends Component {
             <StyleButton styleName="APA" selected={this.state.style === "APA" ? true : false} selectStyleMethod={() => this.selectStyle("APA")}/>
             <StyleButton styleName="Chicago" selected={this.state.style === "Chicago" ? true : false} selectStyleMethod={() => this.selectStyle("Chicago")}/>
             <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")}/>
-        </div>
-        <div className="input-box">
-            <input className="input-field" type="text" value={this.value} onKeyPress={this.updateName} placeholder="Bibliography Name (press Enter to submit)" />
         </div>
       </div>
     );
