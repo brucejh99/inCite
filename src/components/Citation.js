@@ -1,12 +1,57 @@
+/* global chrome */
+
 import React, { Component } from 'react';
 import './Citation.css';
+import request from 'request';
+import LoadingPage from './Loading';
+
+const metascraper = require('metascraper')([
+  require('metascraper-author')(),
+  require('metascraper-date')(),
+  require('metascraper-publisher')(),
+  require('metascraper-title')(),
+  require('metascraper-url')()
+]);
+
+const makeUndefined = (url) => {
+  const undefinedData = {
+    success: false,
+    title: '',
+    author: '',
+    publisher: '',
+    date: null,
+    url
+  }
+  return undefinedData;
+}
 
 export default class Citation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      style: props.style
+      metadata: null
     }
+  }
+
+  componentDidMount() {
+    const self = this;
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+      // TODO: move this into citations so we only have to load and render the loading screen when necessary (or better yet, pull in background while on other pages?)
+      const url = tabs[0].url;
+      request({ uri: url, timeout: 10000 }, async function(err, res, html) {
+        if(html === undefined || err) {
+          console.log('Could not read the page! We should display this somewhere.');
+          self.setState({ 
+            metadata: makeUndefined(url),
+          });
+        } else {
+          const metadata = await metascraper({ html, url });
+          metadata.success = true;
+          console.log(metadata);
+          self.setState({ metadata });
+        }
+      });
+    });
   }
 
   render() {
@@ -17,6 +62,7 @@ export default class Citation extends Component {
         </header>
 
         <div className="body">
+        { this.state.metadata ?
           <form>
             <div className="table">
               <FormField fieldName="Website Name" inputType="text" />
@@ -31,12 +77,13 @@ export default class Citation extends Component {
                     name="author-last-name" placeholder="Last Name"/>
                 </span>
               </label>
-              
               <FormField fieldName="Date Published" inputType="date" />
               <FormField fieldName="Sponsor" inputType="text" />
             </div>
             <div className="add-citation"><input type="submit" value="Add Citation" /></div>
           </form>
+          :
+        <LoadingPage />}
         </div>
       </div>
     );
