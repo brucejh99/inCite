@@ -15,9 +15,9 @@ const metascraper = require('metascraper')([
 const makeUndefined = (url) => {
   const undefinedData = {
     success: false,
-    title: null,
-    author: null,
-    publisher: null,
+    title: '',
+    author: '',
+    publisher: '',
     date: null,
     url
   }
@@ -40,7 +40,7 @@ export default class App extends Component {
       const url = tabs[0].url;
       request({ uri: url, timeout: 10000 }, async function(err, res, html) {
         if(html === undefined || err) {
-          console.log('Took too long to read!');
+          console.log('Could not read the page!');
           self.setState({ 
             metadata: makeUndefined(url),
           });
