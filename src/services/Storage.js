@@ -22,7 +22,7 @@ export function getOrSetState() {
         console.log('getOrSetState(): State reset to default');
     }
     const state = JSON.parse(localStorage.getItem("state"));
-    console.log(`getOrSetState(): fetched state: ${state}`)
+    console.log(`getOrSetState(): fetched state: ${state}`);
     return state;
 }
 
@@ -31,13 +31,13 @@ export function getOrSetState() {
  */
 export function getState() {
     const state = JSON.parse(localStorage.getItem("state"));
-    console.log(`getState(): fetched state ${state}`)
+    console.log(`getState(): fetched state ${state}`);
     return state;
 }
 
 /**
  * Updates state item in local storage
- * @param {Object} state 
+ * @param {Object} state
  */
 export function updateState(state) {
     localStorage.setItem("state", JSON.stringify(state));
@@ -54,7 +54,13 @@ export function getOrSetBibliography() {
         console.log('getOrSetBibliography(): Bibliography reset to default');
     }
     const bib = JSON.parse(localStorage.getItem("bibliography"));
-    console.log(`getOrSetBibliography(): fetched bibliography ${bib}`)
+    console.log(`getOrSetBibliography(): fetched bibliography ${bib}`);
+    return bib;
+}
+
+export function getBibliography() {
+    const bib = JSON.parse(localStorage.getItem("bibliography"));
+    console.log(`getOrSetBibliography(): fetched bibliography ${bib}`);
     return bib;
 }
 
@@ -69,8 +75,9 @@ export async function resetBibliography() {
 
 /**
  * Returns a bibliography object from local storage
- * @param {Object} bibliography 
+ * @param {Object} bibliography
  */
 export function updateBibliography(bibliography) {
-    console.log('Should update bibliography');
+    localStorage.setItem("bibliography", JSON.stringify(bibliography));
+    console.log(`State updated to ${bibliography}`);
 }

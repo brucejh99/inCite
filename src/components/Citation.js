@@ -19,19 +19,9 @@ export default class Citation extends Component {
         <div className="body">
           <form>
             <div className="table">
-              <FormField fieldName="Website Name" inputType="text" />
-              <FormField fieldName="Article Name" inputType="text" />
-
-              <label className="tr">
-                <span className="td table-name">Author</span>
-                <span className="td table-field">
-                  <input className="author-name-input author-first-name" type="text"
-                    name="author-first-name" placeholder="First Name"/>
-                  <input className="author-name-input" type="text"
-                    name="author-last-name" placeholder="Last Name"/>
-                </span>
-              </label>
-              
+              <FormField fieldName="Website" inputType="text" />
+              <FormField fieldName="Article" inputType="text" />
+              <AuthorField />
               <FormField fieldName="Date Published" inputType="date" />
               <FormField fieldName="Sponsor" inputType="text" />
             </div>
@@ -62,6 +52,26 @@ class FormField extends Component {
         <span className="td table-field">
           <input className={this.inputName} type={this.inputType}
             name="name-input" placeholder={this.fieldName}/>
+        </span>
+      </label>
+    )
+  }
+}
+
+class AuthorField extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  render() {
+    return (
+      <label className="tr">
+        <span className="td table-name">Author</span>
+        <span className="td table-field">
+          <input className="author-name-input author-first-name" type="text"
+            name="author-first-name" placeholder="First"/>
+          <input className="author-name-input" type="text"
+            name="author-last-name" placeholder="Last"/>
         </span>
       </label>
     )
