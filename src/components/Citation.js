@@ -13,45 +13,63 @@ const metascraper = require('metascraper')([
   require('metascraper-url')()
 ]);
 
-const makeUndefined = (url) => {
-  const undefinedData = {
-    success: false,
-    title: '',
-    author: '',
-    publisher: '',
-    date: null,
-    url
-  }
-  return undefinedData;
-}
-
 export default class Citation extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      metadata: null
+      complete: false,
+      success: false,
+      article: null,
+      author: null,
+      publisher: null,
+      datePublished: null,
+      dateRetrieved: new Date(),
+      url: null
     }
+
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     const self = this;
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-      // TODO: move this into citations so we only have to load and render the loading screen when necessary (or better yet, pull in background while on other pages?)
       const url = tabs[0].url;
       request({ uri: url, timeout: 10000 }, async function(err, res, html) {
         if(html === undefined || err) {
           console.log('Could not read the page! We should display this somewhere.');
           self.setState({
-            metadata: makeUndefined(url),
+            url: url,
           });
         } else {
           const metadata = await metascraper({ html, url });
           metadata.success = true;
           console.log(metadata);
-          self.setState({ metadata });
+          self.setState({
+            complete: true,
+            success: true,
+            article: metadata.title,
+            author: metadata.author,
+            website: metadata.publisher,
+            datePublished: new Date(metadata.date),
+            url: url
+          });
         }
       });
     });
+  }
+
+  onChange(field, value) {
+    this.setState({
+      [field]: value
+    }, function () {
+      console.log(field + ": " + this.state[field]);
+    });
+  }
+
+  toHTMLDate(date) {
+    const dateString = date.toISOString().split("T")[0];
+    return dateString;
   }
 
   render() {
@@ -62,15 +80,21 @@ export default class Citation extends Component {
         </header>
 
         <div className="body">
-        { this.state.metadata ?
-          <form>
+        { this.state.complete ?
+          <form >
             <div className="table">
-
-              <FormField fieldName="Website" inputType="text" />
-              <FormField fieldName="Article" inputType="text" />
-              <AuthorField />
-              <FormField fieldName="Date Published" inputType="date" />
-              <FormField fieldName="Sponsor" inputType="text" />
+              <FormField fieldName="Website" inputType="text" name="website"
+                value = {this.state.website} onChange={this.onChange}/>
+              <FormField fieldName="Article" inputType="text" name="article"
+                value={this.state.article} onChange={this.onChange}/>
+              <FormField fieldName="Author" inputType="text" name="author"
+                value={this.state.author} onChange={this.onChange}/>
+              <FormField fieldName="Date Published" inputType="date" name="datePublished"
+                value={this.toHTMLDate(this.state.datePublished)} onChange={this.onChange}/>
+              <FormField fieldName="Date Retrieved" inputType="date" name="dateRetrieved"
+                value={this.toHTMLDate(this.state.dateRetrieved)} onChange={this.onChange}/>
+              <FormField fieldName="URL" inputType="text" name="url"
+                value={this.state.url} onChange={this.onChange}/>
             </div>
             <div className="add-citation"><input type="submit" value="Add Citation" /></div>
           </form>
@@ -90,37 +114,31 @@ export default class Citation extends Component {
 class FormField extends Component {
   constructor(props) {
     super(props);
-    this.fieldName = props.fieldName;
-    this.inputType = props.inputType;
+
+    this.onFieldChange = this.onFieldChange.bind(this);
+  }
+
+  onFieldChange(event) {
+    const fieldName = event.target.name;
+    var fieldValue = event.target.value;
+
+    console.log(fieldValue);
+    if (fieldName == "datePublished" || fieldName == "dateRetrieved") {
+      fieldValue = new Date(fieldValue);
+    }
+    console.log(fieldValue);
+
+    this.props.onChange(fieldName, fieldValue);
   }
 
   render() {
     return (
       <label className="tr">
-        <span className="td table-name">{this.fieldName}</span>
+        <span className="td table-name">{this.props.fieldName}</span>
         <span className="td table-field">
-          <input className={this.inputName} type={this.inputType}
-            name="name-input" placeholder={this.fieldName}/>
-        </span>
-      </label>
-    )
-  }
-}
-
-class AuthorField extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <label className="tr">
-        <span className="td table-name">Author</span>
-        <span className="td table-field">
-          <input className="author-name-input author-first-name" type="text"
-            name="author-first-name" placeholder="First"/>
-          <input className="author-name-input" type="text"
-            name="author-last-name" placeholder="Last"/>
+          <input className={this.props.fieldName} type={this.props.inputType}
+            name={this.props.name} placeholder={this.props.fieldName}
+            value={this.props.value} onChange={this.onFieldChange}/>
         </span>
       </label>
     )
