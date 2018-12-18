@@ -1,0 +1,17 @@
+.body {
+    width: 400px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.splash {
+    width: 360px;
+    margin: 0px;
+    text-align: center;
+    color: white;
+    background-color: rgb(96, 178, 255);
+}
+
+.title {
+    font-size: 1.5em;
+}

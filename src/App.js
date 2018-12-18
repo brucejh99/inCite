@@ -1,4 +1,3 @@
-/* global chrome */
 import React, { Component } from 'react';
 import Navigator from './components/Navigator';
 

@@ -16,22 +16,8 @@ export default class Navigator extends Component {
     this.launchPage = this.launchPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
     this.bibliographyPage = this.bibliographyPage.bind(this);
-    this.updateName = this.updateName.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.state = getOrSetState();
-  }
-
-  /**
-   * Event listener to update bibliography name in state and local storage when 'Enter' is pressed
-   * @param {Event} e 
-   */
-  updateName(e) {
-    if(e.key === 'Enter') {
-      this.setState({
-        bibName: e.target.value,
-      }, () => { updateState(this.state) });
-      console.log(`Updated name to ${e.target.value}`);
-    }
   }
 
   /**
@@ -79,17 +65,16 @@ export default class Navigator extends Component {
   render() {
     return (
       <div>
-        {this.state.bibName !== "" && this.state.style !== null ?
+        {this.state.style !== null ?
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
           <PageButton icon={addIcon} onClickMethod={this.citationPage} />
           <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
         </div> : null
         }
-        {(this.state.bibName === "") || (this.state.style === null) || this.state.launchPage ?
-          <Launch updateName={this.updateName} updateStyle={this.updateStyle} style={this.state.style} /> :
-            (this.state.citationPage ? <Citation style={this.state.style}/> : <Bibliography style={this.state.style} bibName={this.state.bibName} />)}
-          <p>{`Current name: ${this.state.bibName} (we should put this somewhere else after)`}</p>
+        {(this.state.style === null) || this.state.launchPage ?
+          <Launch updateStyle={this.updateStyle} style={this.state.style} /> :
+            (this.state.citationPage ? <Citation style={this.state.style}/> : <Bibliography style={this.state.style} />)}
           <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
       </div>
     );

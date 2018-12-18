@@ -1,16 +1,13 @@
 /* global localStorage */
 
 const defaultState = {
-    bibName: "",
     style: null,
     launchPage: false,
     citationPage: true,
     bibliographyPage: false,
 }
 
-const defaultBibliography = {
-    // bibliography info goes here
-};
+const defaultBibliography = [];
 
 /**
  * Returns current state from local storage or sets it to default values if it is null and returns default values
