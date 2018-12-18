@@ -28,8 +28,6 @@ export default class Bibliography extends Component {
   }
 }
 
-// TODO: fix so that copy doesn't copy HTML itself
-
 class CopyClipboard extends Component {
   constructor(props) {
     super(props);
@@ -50,10 +48,7 @@ class CopyClipboard extends Component {
     return (
       <div>
         <form>
-          <textarea
-            ref={(textarea) => this.textArea = textarea}
-            value={this.state.bibliography}
-          />
+          <textarea ref={(textarea) => this.textArea = textarea} value={this.state.bibliography} />
         </form>
         {
          document.queryCommandSupported('copy') &&
