@@ -14,8 +14,8 @@ const metascraper = require('metascraper')([
 ]);
 
 export default class Citation extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     
     this.state = {
       complete: false,

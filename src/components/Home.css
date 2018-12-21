@@ -7,20 +7,6 @@
     background-color: rgb(96, 178, 255);
 }
 
-.input-field {
-    height: 30px;
-    width: 280px;
-    margin: 30px;
-    padding: 5px;
-}
-
-.input-box {
-    height: 100px;
-    width: 350px;
-    background-color: grey;
-    margin: 25px;
-}
-
 .button-container {
     width: 350px;
     margin-top: 25px;

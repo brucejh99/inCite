@@ -15,3 +15,10 @@
 .title {
     font-size: 1.5em;
 }
+
+.display {
+    width: 350px;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
+}

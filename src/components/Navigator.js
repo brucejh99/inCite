@@ -57,7 +57,7 @@ export default class Navigator extends Component {
         </div> : null
         }
         {(this.state.style === null) || this.state.launchPage ?
-        <Home updateStyle={this.updateStyle} style={this.state.style} /> : <Citation style={this.state.style}/>}
+        <Home updateStyle={this.updateStyle} style={this.state.style} /> : <Citation />}
       </div>
     );
   }

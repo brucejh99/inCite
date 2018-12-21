@@ -56,7 +56,7 @@ class CopyClipboard extends Component {
     return (
       <div>
         <form>
-          <textarea ref={(textarea) => this.textArea = textarea} value={this.state.bibliography} />
+          <textarea className="display" ref={(textarea) => this.textArea = textarea} value={this.state.bibliography} />
         </form>
         {
          document.queryCommandSupported('copy') &&
