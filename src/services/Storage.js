@@ -4,7 +4,7 @@ const defaultState = {
     style: null,
     launchPage: false,
     citationPage: true,
-    bibliographyPage: false,
+    bibliographyPage: false
 }
 
 const defaultBibliography = [];

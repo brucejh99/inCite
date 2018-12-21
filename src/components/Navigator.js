@@ -4,10 +4,10 @@ import { getOrSetState, updateState } from '../services/Storage';
 import Home from './Home';
 import Citation from './Citation';
 
-const addIcon = require('../assets/add-icon.png');
+const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
 /**
- * Class that provides a taskbar to navigate between pages and render pages.
+ * Class that provides a taskbar and wrapper to render different pages
  */
 export default class Navigator extends Component {
   constructor() {
@@ -57,7 +57,7 @@ export default class Navigator extends Component {
         </div> : null
         }
         {(this.state.style === null) || this.state.launchPage ?
-        <Home updateStyle={this.updateStyle} style={this.state.style} /> : <Citation />}
+        <Home updateStyle={this.updateStyle} /> : <Citation />}
       </div>
     );
   }
