@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './Navigator.css';
 import { getOrSetState, updateState } from '../services/Storage';
-import Launch from './Launch';
+import Home from './Home';
 import Citation from './Citation';
-import Bibliography from './Bibliography';
 
 const addIcon = require('../assets/add-icon.png');
 
@@ -15,7 +14,6 @@ export default class Navigator extends Component {
     super();
     this.launchPage = this.launchPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
-    this.bibliographyPage = this.bibliographyPage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.state = getOrSetState();
   }
@@ -35,8 +33,7 @@ export default class Navigator extends Component {
   launchPage() {
     this.setState({
       launchPage: true,
-      citationPage: false,
-      bibliographyPage: false,
+      citationPage: false
     }, () => { updateState(this.state) });
   }
 
@@ -46,19 +43,7 @@ export default class Navigator extends Component {
   citationPage() {
     this.setState({
       launchPage: false,
-      citationPage: true,
-      bibliographyPage: false,
-    }, () => { updateState(this.state) });
-  }
-
-  /**
-   * Renders bibliography page and updates state to bibliographyPage in state and local storage
-   */
-  bibliographyPage() {
-    this.setState({
-      launchPage: false,
-      citationPage: false,
-      bibliographyPage: true,
+      citationPage: true
     }, () => { updateState(this.state) });
   }
 
@@ -69,13 +54,10 @@ export default class Navigator extends Component {
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
           <PageButton icon={addIcon} onClickMethod={this.citationPage} />
-          <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
         </div> : null
         }
         {(this.state.style === null) || this.state.launchPage ?
-          <Launch updateStyle={this.updateStyle} style={this.state.style} /> :
-            (this.state.citationPage ? <Citation style={this.state.style}/> : <Bibliography style={this.state.style} />)}
-          <p>{`Current style: ${this.state.style} (this text is for development purposes)`}</p>
+        <Home updateStyle={this.updateStyle} style={this.state.style} /> : <Citation style={this.state.style}/>}
       </div>
     );
   }

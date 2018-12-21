@@ -6,23 +6,31 @@ import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 export default class Bibliography extends Component {
   constructor(props) {
     super(props);
+    this.generateCitations = this.generateCitations.bind(this);
     this.state = {
       style: props.style,
       bibliography: getOrSetBibliography()
     }
   }
 
-  // TODO: loop through bibliography array and convert based on type
+  generateCitations() {
+    if(this.state.style === 'APA') {
+      this.bibliography.forEach(metadata => toAPA(metadata));
+    } else if(this.state.style === 'MLA') {
+      this.bibliography.forEach(metadata => toMLA(metadata));
+    } else if(this.state.style === 'Chicago') {
+      this.bibliography.forEach(metadata => toChicago(metadata));
+    } else if(this.state.style === 'Harvard') {
+      this.bibliography.forEach(metadata => toHarvard(metadata));
+    } else {
+      console.log('Invalid style.');
+    }
+  }
 
   render() {
     return (
       <div className="body">
-        <header className="splash">
-          <h1 className="title">Bibliography</h1>
-        </header>
-        <body>
-          <CopyClipboard bibliography={this.state.bibliography} />
-        </body>
+        <CopyClipboard bibliography={this.state.bibliography} />
       </div>
     );
   }
@@ -53,7 +61,7 @@ class CopyClipboard extends Component {
         {
          document.queryCommandSupported('copy') &&
           <div>
-            <button onClick={this.copyToClipboard}>Copy</button> 
+            <button onClick={this.copyToClipboard}>Copy</button> <br />
             {this.state.copySuccess}
           </div>
         }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import './Launch.css';
+import './Home.css';
+import Bibliography from './Bibliography';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {String} style Currently selected bibliography style
  * @prop {Function} updateStyle Method to update selected style globally
  */
-export default class Launch extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.selectStyle = this.selectStyle.bind(this);
@@ -37,6 +38,7 @@ export default class Launch extends Component {
             <StyleButton styleName="Chicago" selected={this.state.style === "Chicago" ? true : false} selectStyleMethod={() => this.selectStyle("Chicago")}/>
             <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")}/>
         </div>
+        <Bibliography style={this.state.style} />
       </div>
     );
   }
