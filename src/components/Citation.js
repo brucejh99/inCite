@@ -69,7 +69,12 @@ export default class Citation extends Component {
   }
 
   toHTMLDate(date) {
-    const dateString = date.toISOString().split("T")[0];
+    let dateString;
+    try {
+      dateString = date.toISOString().split("T")[0];
+    } catch {
+      dateString = '';
+    }
     return dateString;
   }
 
