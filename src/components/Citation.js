@@ -40,6 +40,7 @@ export default class Citation extends Component {
           console.log('Could not read the page! We should display this somewhere.');
           self.setState({
             url: url,
+            complete: true
           });
         } else {
           const metadata = await metascraper({ html, url });
