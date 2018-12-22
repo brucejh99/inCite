@@ -14,10 +14,16 @@
     "react-scripts": "2.1.1",
     "request": "^2.88.0"
   },
+  "devDependencies": {
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "esm": "^3.0.84",
+    "mocha": "^5.2.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && npm run post-install",
-    "test": "react-scripts test --env=jsdom",
+    "test": "mocha -r esm ./test/**/*.spec.js",
     "eject": "react-scripts eject",
     "uninline": "node ./bin/uninline.js build/index.html build/asset-manifest.json",
     "post-install": "npm run uninline"
