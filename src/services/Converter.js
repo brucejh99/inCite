@@ -9,7 +9,7 @@ export function toAPA(data) {
     const date = data.date || undefined;
     const publisher = data.publisher || undefined;
     const title = data.title || undefined;
-    const dateAccessed = data.dateAccessed || undefined;
+    const dateAccessed = data.dateRetrieved || undefined;
     const url = data.url; // must be there, even if they provide it as an empty string?
     // APA-style name
     if(author) {
@@ -26,13 +26,17 @@ export function toAPA(data) {
             }
         }
     }
+    if(!author && title) {
+        const italicizedTitle = title.italics();
+        citation += `${italicizedTitle}. `;
+    }
     // APA-style date
     if(date) {
         const longDate = new Date(date);
-        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDay()}). `;
+        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}). `;
     }
     // article title
-    if(title) {
+    if(author && title) {
         const italicizedTitle = title.italics();
         citation += `${italicizedTitle}. `;
     }
@@ -43,12 +47,11 @@ export function toAPA(data) {
     citation += 'Retrieved ';
     // date the resource was accessed
     if(dateAccessed) {
-        const longDate = new Date(dateAccessed);
-        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDay()}). `;
+        const longDate = dateAccessed;
+        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}), `;
     }
-    // 
+    // TODO: decide how to handle non-existent url
     citation += `from ${url}.`;
-    console.log(citation);
     return citation;
 }
 
