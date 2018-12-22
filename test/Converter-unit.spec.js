@@ -59,3 +59,48 @@ describe('Unit tests for APA converter', function() {
         citation.should.equal(expectedResult);
     });
 });
+
+describe('Unit tests for MLA converter', function() {
+    xit('Should generate correct citations with full metadata', function() {
+        const metadata = makeData(true, true, true, true, true, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should generate correct citations with no title', function() {
+        const metadata = makeData(false, true, true, true, true, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should generate correct citations with no author', function() {
+        const metadata = makeData(true, false, true, true, true, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should generate correct citations with no date published', function() {
+        const metadata = makeData(true, true, false, true, true, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should generate correct citations with no publisher', function() {
+        const metadata = makeData(true, true, true, false, true, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should do something with no url', function() {
+        const metadata = makeData(true, true, true, true, false, true, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+    xit('Should generate correct citations with no date retrieved', function() {
+        const metadata = makeData(true, true, true, true, true, false, true);
+        const expectedResult = '';
+        const citation = toMLA(metadata);
+        citation.should.equal(expectedResult);
+    });
+});
