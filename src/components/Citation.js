@@ -45,6 +45,8 @@ export default class Citation extends Component {
         } else {
           const metadata = await metascraper({ html, url });
           metadata.success = true;
+          let dateString = metadata.date;
+          if(dateString) dateString = new Date(dateString);
           console.log(metadata);
           self.setState({
             complete: true,
@@ -52,7 +54,7 @@ export default class Citation extends Component {
             article: metadata.title,
             author: metadata.author,
             website: metadata.publisher,
-            datePublished: new Date(metadata.date),
+            datePublished: dateString,
             url: url
           });
         }
