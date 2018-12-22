@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../assets/logo.svg';
+import loadCircle from '../assets/loading-circle.png';
 import './Loading.css';
 
 export default class LoadingPage extends Component {
@@ -7,7 +7,7 @@ export default class LoadingPage extends Component {
     return (
       <div className="body">
         <header>
-          <img src={logo} className="load-image" />
+          <img src={loadCircle} className="load-image" />
           <h1>Pulling data...</h1>
         </header>
       </div>
