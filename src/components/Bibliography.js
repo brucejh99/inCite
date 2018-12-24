@@ -41,14 +41,16 @@ export default class Bibliography extends Component {
   }
   
   copy() {
-    console.log(this.state.citationList);
     this.handleCopyCitation(this.state.citationList);
+    this.setState({ copySuccess: 'Copied!' });
   }
 
   render() {
     return (
       <div className="body">
-        <textarea className="display" ref={(textarea) => this.textArea = textarea} value={this.state.citationList} />
+      <div className="display">
+        <div dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
+      </div>
         {
          document.queryCommandSupported('copy') &&
           <div>
