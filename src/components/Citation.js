@@ -25,7 +25,7 @@ export default class Citation extends Component {
       author: null,
       publisher: null,
       datePublished: null,
-      dateRetrieved: new Date(),
+      dateRetrieved: this.getCorrectedCurrentDate(),
       url: null,
       added: ''
     }
@@ -63,10 +63,18 @@ export default class Citation extends Component {
     });
   }
 
+  getCorrectedCurrentDate() { // correct the date for timezone differences
+    let date = new Date();
+    date = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+
+    return date;
+  }
+
   onChange(field, value) {
     this.setState({
       [field]: value
-    }, function () {
+    },
+    function () { // testing
       console.log(field + ": " + this.state[field]);
     });
   }
@@ -83,7 +91,7 @@ export default class Citation extends Component {
 
   addToBibliography(e) {
     e.preventDefault();
-    var bibliography = getOrSetBibliography();
+    let bibliography = getOrSetBibliography();
     const metadata = {
       article: this.state.article,
       author: this.state.author,
@@ -154,7 +162,7 @@ class FormField extends Component {
 
   onFieldChange(event) {
     const fieldName = event.target.name;
-    var fieldValue = event.target.value;
+    let fieldValue = event.target.value;
 
     console.log(fieldValue);
     if (fieldName == "datePublished" || fieldName == "dateRetrieved") {
