@@ -6,9 +6,9 @@ const monthName = ["January", "February", "March", "April", "May", "June",
 export function toAPA(data) {
     let citation = '';
     const author = data.author || undefined;
-    const date = data.date || undefined;
+    const date = data.datePublished || undefined;
     const publisher = data.publisher || undefined;
-    const title = data.title || undefined;
+    const title = data.article || undefined;
     const dateAccessed = data.dateRetrieved || undefined;
     const url = data.url; // must be there, even if they provide it as an empty string?
     // APA-style name
@@ -47,7 +47,7 @@ export function toAPA(data) {
     citation += 'Retrieved ';
     // date the resource was accessed
     if(dateAccessed) {
-        const longDate = dateAccessed;
+        const longDate = new Date(dateAccessed);
         citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}), `;
     }
     // TODO: decide how to handle non-existent url

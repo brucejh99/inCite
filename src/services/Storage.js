@@ -15,7 +15,7 @@ export function getOrSetState() {
     var currState = localStorage.getItem("state");
     if(currState === null) {
         localStorage.setItem("state", JSON.stringify(defaultState));
-        console.log('getOrSetState(): State reset to default');
+        console.log('getOrSetState(): State set to default');
     }
     const state = JSON.parse(localStorage.getItem("state"));
     console.log(`getOrSetState(): fetched state: ${state}`);
@@ -47,7 +47,7 @@ export function getOrSetBibliography() {
     var currBib = localStorage.getItem("bibliography");
     if(currBib === null) {
         localStorage.setItem("bibliography", JSON.stringify(defaultBibliography));
-        console.log('getOrSetBibliography(): Bibliography reset to default');
+        console.log('getOrSetBibliography(): Bibliography set to default');
     }
     const bib = JSON.parse(localStorage.getItem("bibliography"));
     console.log(`getOrSetBibliography(): fetched bibliography ${bib}`);
