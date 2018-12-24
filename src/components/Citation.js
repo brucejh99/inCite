@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import './Citation.css';
 import request from 'request';
 import LoadingPage from './Loading';
+import { getOrSetBibliography, updateBibliography } from '../services/Storage';
 
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
@@ -16,7 +17,7 @@ const metascraper = require('metascraper')([
 export default class Citation extends Component {
   constructor() {
     super();
-    
+    this.addToBibliography = this.addToBibliography.bind(this);
     this.state = {
       complete: false,
       success: false,
@@ -25,9 +26,9 @@ export default class Citation extends Component {
       publisher: null,
       datePublished: null,
       dateRetrieved: new Date(),
-      url: null
+      url: null,
+      added: ''
     }
-
     this.onChange = this.onChange.bind(this);
   }
 
@@ -35,7 +36,7 @@ export default class Citation extends Component {
     const self = this;
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
       const url = tabs[0].url;
-      request({ uri: url, timeout: 10000 }, async function(err, res, html) {
+      request({ uri: url, timeout: 5000 }, async function(err, res, html) {
         if(html === undefined || err) {
           console.log('Could not read the page! We should display this somewhere.');
           self.setState({
@@ -80,6 +81,30 @@ export default class Citation extends Component {
     return dateString;
   }
 
+  addToBibliography(e) {
+    e.preventDefault();
+    var bibliography = getOrSetBibliography();
+    const metadata = {
+      article: this.state.article,
+      author: this.state.author,
+      website: this.state.website,
+      datePublished: this.state.datePublished,
+      dateRetrieved: this.state.dateRetrieved,
+      publisher: this.state.publisher,
+      url: this.state.url
+    }
+    bibliography.push(metadata); // for testing
+    updateBibliography(bibliography); // for testing
+    if(this.state.author) {
+      // insert into to bibliography by order of last name alphabetically
+    } else if(this.state.article) {
+      // add with same rules but using article first name vs. other things' first letters
+    } else {
+      // no author or article name? Just add to the end I guess
+    }
+    this.setState({ added: 'Added to bibliography!' });
+  }
+
   render() {
     return (
       <div className="App">
@@ -89,25 +114,26 @@ export default class Citation extends Component {
 
         <div className="body">
         { this.state.complete ?
-          <form >
+          <form onSubmit={this.addToBibliography}>
             <div className="table">
-              <FormField fieldName="Website" inputType="text" name="website"
-                value = {this.state.website} onChange={this.onChange}/>
+              <FormField fieldName="Source" inputType="text" name="website"
+                value = {this.state.website} onChange={this.onChange} />
               <FormField fieldName="Article" inputType="text" name="article"
-                value={this.state.article} onChange={this.onChange}/>
+                value={this.state.article} onChange={this.onChange} />
               <FormField fieldName="Author" inputType="text" name="author"
-                value={this.state.author} onChange={this.onChange}/>
+                value={this.state.author} onChange={this.onChange} />
               <FormField fieldName="Date Published" inputType="date" name="datePublished"
-                value={this.toHTMLDate(this.state.datePublished)} onChange={this.onChange}/>
+                value={this.toHTMLDate(this.state.datePublished)} onChange={this.onChange} />
               <FormField fieldName="Date Retrieved" inputType="date" name="dateRetrieved"
-                value={this.toHTMLDate(this.state.dateRetrieved)} onChange={this.onChange}/>
+                value={this.toHTMLDate(this.state.dateRetrieved)} onChange={this.onChange} />
               <FormField fieldName="URL" inputType="text" name="url"
-                value={this.state.url} onChange={this.onChange}/>
+                value={this.state.url} onChange={this.onChange} />
             </div>
-            <div className="add-citation"><input type="submit" value="Add Citation" /></div>
+            <div className="add-citation"><input type="submit" value="Add Citation" /><br />
+            {this.state.added} </div>
           </form>
           :
-        <LoadingPage />}
+        <LoadingPage /> }
         </div>
       </div>
     );

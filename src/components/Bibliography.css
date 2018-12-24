@@ -18,7 +18,16 @@
 
 .display {
     width: 350px;
+    height: 350px;
     margin-top: 25px;
     margin-left: 25px;
     margin-right: 25px;
+    font-family: 'Times New Roman', Times, serif;
 }
+
+#copyArea {
+    position:fixed;
+    left:-10000px;
+    top:-10000px;
+    white-space: pre;
+  }
