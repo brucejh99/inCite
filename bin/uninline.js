@@ -8,8 +8,8 @@ if (!assetsFile) throw new Error("missing asset file argument");
 const html = fs.readFileSync(htmlFile, "utf8");
 const assets = JSON.parse(fs.readFileSync(assetsFile, "utf8"));
 
-const occurances = (html.match(/<script>.*?<\/script>/) || []).length;
-if (occurances !== 1) throw new Error(`Not sure how to deal that! (${occurances} oncurrances)`);
+const occurrences = (html.match(/<script>.*?<\/script>/) || []).length;
+if (occurrences !== 1) throw new Error(`Not sure how to deal that! (${occurrences} occurrences)`);
 const uri = assets["runtime~main.js"];
 const newHtml = html.replace(
   /<script>.*?<\/script>/,
