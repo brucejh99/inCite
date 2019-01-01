@@ -66,7 +66,6 @@ export default class Citation extends Component {
   getCorrectedCurrentDate() { // correct the date for timezone differences
     let date = new Date();
     date = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
-
     return date;
   }
 
@@ -94,9 +93,7 @@ export default class Citation extends Component {
     let bibliography = getOrSetBibliography();
     const metadata = {
       article: this.state.article || undefined,
-      firstName: this.state.author ? this.getFirstName(this.state.author) : undefined,
-      middleNames: this.state.author ? this.getMiddleNames(this.state.author) : undefined,
-      lastName: this.state.author ? this.getLastName(this.state.author) : undefined,
+      author: this.state.author || undefined,
       website: this.state.website,
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
