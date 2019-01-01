@@ -1,4 +1,4 @@
-// used to reading months
+// used for reading months
 const monthName = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -56,7 +56,13 @@ export function toAPA(data) {
 }
 
 export function toMLA(data) {
-
+    let citation = '';
+    const author = data.author || undefined;
+    const date = data.datePublished || undefined;
+    const publisher = data.publisher || undefined;
+    const title = data.article || undefined;
+    const dateAccessed = data.dateRetrieved || undefined;
+    const url = data.url; // must be there, even if they provide it as an empty string?
 }
 
 export function toChicago(data) {

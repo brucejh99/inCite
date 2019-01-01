@@ -89,38 +89,6 @@ export default class Citation extends Component {
     return dateString;
   }
 
-  getFirstName(author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length == 1) {
-      return undefined;
-    } else {
-      return nameArr[0];
-    }
-  }
-
-  getMiddleNames(author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length == 1) {
-      return undefined;
-    } else {
-      let middleNames = '';
-      for(var i = 1; i < nameArr.length - 1; ++i) {
-        const currMiddleName = nameArr[i];
-        middleNames += `${currMiddleName} `;
-      }
-      return middleNames;
-    }
-  }
-
-  getLastName(author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length == 1) {
-      return nameArr[0];
-    } else {
-      return nameArr[nameArr.length - 1];
-    }
-  }
-
   addToBibliography(e) {
     e.preventDefault();
     let bibliography = getOrSetBibliography();
@@ -135,45 +103,7 @@ export default class Citation extends Component {
       url: this.state.url
     }
 
-    let arrayLength = bibliography.length;
-
-    // TODO: -- Don't add a citation if the url is the same as a previous one? to prevent duplicate entries
-
-    if (arrayLength == 0) { // if no elements, insert first
-      bibliography.push(metadata);
-    } else if (metadata.lastName) { // insert into to bibliography by order of last name alphabetically
-      for (let i = 0; i < arrayLength; i++) {
-        if (metadata.lastName < bibliography[i].lastName) { // compare last name
-          bibliography.splice(i, 0, metadata);
-          break;
-        } else if (metadata.lastName == bibliography[i].lastName) {
-          if (metadata.firstName < bibliography[i].firstName) { // compare first name
-            bibliography.splice(i, 0, metadata);
-            break;
-          } else if (metadata.firstName == bibliography[i].firstName) {
-            if (metadata.article < bibliography[i].article) { // compare article name
-              bibliography.splice(i, 0, metadata);
-              break;
-            }
-          }
-        }
-        if (i == arrayLength - 1) { // citation goes at end if all cases fail
-          bibliography.push(metadata);
-        }
-      }
-    } else if (metadata.article) { // add with same rules but using article first name vs. other things' first letters
-      /*for (let i = 0; i < arrayLength; i++) {
-        if (metadata.article < bibliography[i].article) { // compare article name
-          bibliography.splice(i, 0, metadata);
-          break;
-        }
-        if (i == arrayLength - 1) { // citation goes at end if all cases fail
-          bibliography.push(metadata);
-        }
-      }*/
-    } else { // no author or article name? Just add to the end I guess
-      bibliography.push(metadata);
-    }
+    bibliography.push(metadata);
     console.log(bibliography);
     updateBibliography(bibliography);
     this.setState({ added: 'Added to bibliography!' });

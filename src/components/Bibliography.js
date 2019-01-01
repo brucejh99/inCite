@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Bibliography.css';
 import { getOrSetBibliography, resetBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
+import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
 
 export default class Bibliography extends Component {
   constructor(props) {
@@ -15,22 +16,25 @@ export default class Bibliography extends Component {
   }
 
   componentDidMount() {
-    const bibliography = getOrSetBibliography();
+    var bibliography = getOrSetBibliography();
     var list = '';
     if(this.state.style === 'APA') {
+      bibliography.sort(APASort);
       bibliography.forEach(metadata => list += toAPA(metadata) + '\n');
     } else if(this.state.style === 'MLA') {
-      bibliography.forEach(metadata => toMLA(metadata));
+      bibliography.sort(MLASort);
+      bibliography.forEach(metadata => list += toMLA(metadata) + '\n');
     } else if(this.state.style === 'Chicago') {
-      bibliography.forEach(metadata => toChicago(metadata));
+      bibliography.sort(ChicagoSort);
+      bibliography.forEach(metadata => list += toChicago(metadata) + '\n');
     } else if(this.state.style === 'Harvard') {
-      bibliography.forEach(metadata => toHarvard(metadata));
+      bibliography.sort(HarvardSort);
+      bibliography.forEach(metadata => list += toHarvard(metadata) + '\n');
     } else {
       console.log('Invalid style.');
     }
     this.setState({ citationList: list });
   }
-
 
   handleCopyCitation(citationText) {
     let copyArea = document.getElementById("copyArea");
