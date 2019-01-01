@@ -19,15 +19,18 @@
 .display {
     width: 350px;
     height: 350px;
+    max-width: 350px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: auto;
+    margin-right: auto;
     border-style: solid;
     border-color: black;
     border-width: 1px;
     padding: 5px;
     text-align: left;
+    word-wrap: break-word;
+    white-space: pre-line;
 }
 
 #copyArea {
@@ -37,4 +40,4 @@
     left:-10000px;
     top:-10000px;
     white-space: pre;
-  }
+}

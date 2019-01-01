@@ -52,9 +52,7 @@ export default class Bibliography extends Component {
   render() {
     return (
       <div className="body">
-      <div className="display">
-        <div dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
-      </div>
+      <div className="display" dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
         {
          document.queryCommandSupported('copy') &&
           <div>
