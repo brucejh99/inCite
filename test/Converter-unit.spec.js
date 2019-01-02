@@ -5,9 +5,9 @@ chai.should();
 
 function makeData(title, author, date, publisher, url, dateRetrieved, success) {
     var metadata = {};
-    if(title) metadata.title = 'Title';
+    if(title) metadata.article = 'Title';
     if(author) metadata.author = 'FirstName MiddleName LastName';
-    if(date) metadata.date = '2017-12-21T15:00:01.069Z';
+    if(date) metadata.datePublished = '2017-12-21T15:00:01.069Z';
     if(publisher) metadata.publisher = 'Publisher';
     if(url) metadata.url = 'www.url.com/test/';
     if(dateRetrieved) metadata.dateRetrieved = new Date('2018-12-25T15:00:01.069Z');
