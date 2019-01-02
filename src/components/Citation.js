@@ -54,7 +54,7 @@ export default class Citation extends Component {
             success: true,
             article: metadata.title,
             author: metadata.author,
-            website: metadata.publisher,
+            publisher: metadata.publisher,
             datePublished: dateString,
             url: url
           });
@@ -94,7 +94,7 @@ export default class Citation extends Component {
     const metadata = {
       article: this.state.article || undefined,
       author: this.state.author || undefined,
-      website: this.state.website,
+      publisher: this.state.publisher,
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
       url: this.state.url
@@ -117,8 +117,8 @@ export default class Citation extends Component {
         { this.state.complete ?
           <form onSubmit={this.addToBibliography}>
             <div className="table">
-              <FormField fieldName="Source" inputType="text" name="website"
-                value = {this.state.website} onChange={this.onChange} />
+              <FormField fieldName="Publisher" inputType="text" name="publisher"
+                value = {this.state.publisher} onChange={this.onChange} />
               <FormField fieldName="Article" inputType="text" name="article"
                 value={this.state.article} onChange={this.onChange} />
               <FormField fieldName="Author" inputType="text" name="author"
