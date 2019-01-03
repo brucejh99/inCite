@@ -147,7 +147,6 @@ export default class Citation extends Component {
 class FormField extends Component {
   constructor(props) {
     super(props);
-
     this.onFieldChange = this.onFieldChange.bind(this);
   }
 

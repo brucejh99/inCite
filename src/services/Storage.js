@@ -54,10 +54,9 @@ export function getBibliography() {
 }
 
 /**
- * Resets bibliography item in local storage to ""
+ * Resets bibliography item in local storage to an empty array
  */
 export async function resetBibliography() {
-    localStorage.setItem("state", JSON.stringify(defaultState));
     localStorage.setItem("bibliography", JSON.stringify(defaultBibliography));
 }
 

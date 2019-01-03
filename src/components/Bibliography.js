@@ -8,10 +8,11 @@ export default class Bibliography extends Component {
   constructor(props) {
     super(props);
     this.copy = this.copy.bind(this);
+    this.reset = this.reset.bind(this);
     this.state = {
       style: props.style,
       citationList: '',
-      copySuccess: ''
+      message: ''
     }
   }
 
@@ -31,7 +32,7 @@ export default class Bibliography extends Component {
       bibliography.sort(HarvardSort);
       bibliography.forEach(metadata => list += toHarvard(metadata) + '\n');
     } else {
-      console.log('Invalid style.');
+      this.setState({ message: 'Select a style to begin.'});
     }
     this.setState({ citationList: list });
   }
@@ -46,7 +47,21 @@ export default class Bibliography extends Component {
   
   copy() {
     this.handleCopyCitation(this.state.citationList);
-    this.setState({ copySuccess: 'Copied!' });
+    this.setState({ message: 'Copied!' });
+  }
+
+  reset() {
+    try {
+      resetBibliography();
+      this.setState({
+        citationList: '',
+        message: 'Cleared bibliography!'
+      });
+    } catch(err) {
+      this.setState({
+        message: 'Failed to clear bibliography!'
+      });
+    }
   }
 
   render() {
@@ -56,8 +71,11 @@ export default class Bibliography extends Component {
         {
          document.queryCommandSupported('copy') &&
           <div>
-            <button onClick={this.copy}>Copy</button> <br />
-            {this.state.copySuccess}
+            <div className="button-container">
+              <button onClick={this.copy}>Copy</button>
+              <button onClick={this.reset}>Clear</button>
+            </div>
+            {this.state.message}
           </div>
         }
         <div id="copyArea" contenteditable="true"></div>

@@ -41,3 +41,10 @@
     top:-10000px;
     white-space: pre;
 }
+
+.button-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+}
