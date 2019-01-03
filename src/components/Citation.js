@@ -48,7 +48,6 @@ export default class Citation extends Component {
           metadata.success = true;
           let dateString = metadata.date;
           if(dateString) dateString = new Date(dateString);
-          console.log(metadata);
           self.setState({
             complete: true,
             success: true,
@@ -101,7 +100,6 @@ export default class Citation extends Component {
     }
 
     bibliography.push(metadata);
-    console.log(bibliography);
     updateBibliography(bibliography);
     this.setState({ added: 'Added to bibliography!' });
   }
@@ -157,11 +155,9 @@ class FormField extends Component {
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
 
-    console.log(fieldValue);
     if (fieldName == "datePublished" || fieldName == "dateRetrieved") {
       fieldValue = new Date(fieldValue);
     }
-    console.log(fieldValue);
 
     this.props.onChange(fieldName, fieldValue);
   }

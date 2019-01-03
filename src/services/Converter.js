@@ -10,7 +10,7 @@ export function toAPA(data) {
     const publisher = data.publisher || undefined;
     const title = data.article || undefined;
     const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url; // must be there, even if they provide it as an empty string?
+    const url = data.url || '';
     // APA-style name
     if(author) {
         const nameArr = author.split(' ');
@@ -50,7 +50,6 @@ export function toAPA(data) {
         const longDate = new Date(dateAccessed);
         citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}), `;
     }
-    // TODO: decide how to handle non-existent url
     citation += `from ${url}.`;
     return citation;
 }
@@ -62,7 +61,8 @@ export function toMLA(data) {
     const publisher = data.publisher || undefined;
     const title = data.article || undefined;
     const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url; // must be there, even if they provide it as an empty string?
+    const url = data.url || ''; // must be there, even if they provide it as an empty string?
+    return citation;
 }
 
 export function toChicago(data) {

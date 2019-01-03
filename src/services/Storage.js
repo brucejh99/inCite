@@ -15,10 +15,8 @@ export function getOrSetState() {
     var currState = localStorage.getItem("state");
     if(currState === null) {
         localStorage.setItem("state", JSON.stringify(defaultState));
-        console.log('getOrSetState(): State set to default');
     }
     const state = JSON.parse(localStorage.getItem("state"));
-    console.log(`getOrSetState(): fetched state: ${state}`);
     return state;
 }
 
@@ -27,7 +25,6 @@ export function getOrSetState() {
  */
 export function getState() {
     const state = JSON.parse(localStorage.getItem("state"));
-    console.log(`getState(): fetched state ${state}`);
     return state;
 }
 
@@ -37,7 +34,6 @@ export function getState() {
  */
 export function updateState(state) {
     localStorage.setItem("state", JSON.stringify(state));
-    console.log(`State updated to ${state}`);
 }
 
 /**
@@ -47,16 +43,13 @@ export function getOrSetBibliography() {
     var currBib = localStorage.getItem("bibliography");
     if(currBib === null) {
         localStorage.setItem("bibliography", JSON.stringify(defaultBibliography));
-        console.log('getOrSetBibliography(): Bibliography set to default');
     }
     const bib = JSON.parse(localStorage.getItem("bibliography"));
-    console.log(`getOrSetBibliography(): fetched bibliography ${bib}`);
     return bib;
 }
 
 export function getBibliography() {
     const bib = JSON.parse(localStorage.getItem("bibliography"));
-    console.log(`getOrSetBibliography(): fetched bibliography ${bib}`);
     return bib;
 }
 
@@ -66,7 +59,6 @@ export function getBibliography() {
 export async function resetBibliography() {
     localStorage.setItem("state", JSON.stringify(defaultState));
     localStorage.setItem("bibliography", JSON.stringify(defaultBibliography));
-    console.log('resetBibliography(): reset bibliography and settings to default');
 }
 
 /**
@@ -75,5 +67,4 @@ export async function resetBibliography() {
  */
 export function updateBibliography(bibliography) {
     localStorage.setItem("bibliography", JSON.stringify(bibliography));
-    console.log(`State updated to ${bibliography}`);
 }
