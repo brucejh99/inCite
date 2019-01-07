@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Bibliography from './Bibliography';
-import { getState, resetState } from '../services/Storage';
+import { getState } from '../services/Storage';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.

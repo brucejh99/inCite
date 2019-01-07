@@ -1,6 +1,7 @@
 /* global chrome */
 
 import React, { Component } from 'react';
+import uuid from 'uuid/v4';
 import './Citation.css';
 import request from 'request';
 import LoadingPage from './Loading';
@@ -96,7 +97,8 @@ export default class Citation extends Component {
       publisher: this.state.publisher,
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
-      url: this.state.url
+      url: this.state.url,
+      id: uuid() // gives unique ID to each bibliography entry. To be used later for deleting/editing
     }
 
     bibliography.push(metadata);

@@ -61,8 +61,8 @@ export async function resetBibliography() {
 }
 
 /**
- * Returns a bibliography object from local storage
- * @param {Object} bibliography
+ * Sets an array of bibliography objects to the local storage
+ * @param {Array} bibliography
  */
 export function updateBibliography(bibliography) {
     localStorage.setItem("bibliography", JSON.stringify(bibliography));

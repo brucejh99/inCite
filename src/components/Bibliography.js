@@ -55,11 +55,10 @@ export default class Bibliography extends Component {
       resetBibliography();
       this.setState({
         citationList: '',
-        message: 'Cleared bibliography!'
       });
     } catch(err) {
       this.setState({
-        message: 'Failed to clear bibliography!'
+        message: 'Failed to clear bibliography.'
       });
     }
   }
