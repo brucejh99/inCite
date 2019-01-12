@@ -98,7 +98,7 @@ export default class Citation extends Component {
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
       url: this.state.url,
-      id: uuid() // gives unique ID to each bibliography entry. To be used later for deleting/editing
+      id: uuid() // unique ID of each bibliography entry to be used for deleting/editing
     }
 
     bibliography.push(metadata);

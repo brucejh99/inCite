@@ -19,6 +19,7 @@ export default class Bibliography extends Component {
   componentDidMount() {
     var bibliography = getOrSetBibliography();
     var list = '';
+    // maybe in forEach, append a new HTML element to end of rendered list and force re-render?
     if(this.state.style === 'APA') {
       bibliography.sort(APASort);
       bibliography.forEach(metadata => list += toAPA(metadata) + '\n');
