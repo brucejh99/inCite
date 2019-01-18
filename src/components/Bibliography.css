@@ -18,7 +18,7 @@
 
 .display {
     width: 350px;
-    height: 350px;
+    height: 300px;
     max-width: 350px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -37,9 +37,16 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 1em;
     position: fixed;
-    left:-10000px;
-    top:-10000px;
+    left:-1000px;
+    top:-1000px;
     white-space: pre;
+}
+
+.button {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-style: solid;
+    border-color: black;
 }
 
 .button-container {
@@ -47,4 +54,8 @@
     height: auto;
     display: flex;
     justify-content: space-around;
+}
+
+.bottom-button {
+    justify-content: center;
 }

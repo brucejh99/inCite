@@ -24,7 +24,6 @@ export default class Navigator extends Component {
    */
   updateStyle(newStyle) {
     this.setState({ style: newStyle }, () => { updateState(this.state) });
-    console.log(`Style updated to ${newStyle}`);
   }
 
   /**
