@@ -1,3 +1,5 @@
+/* global chrome */
+
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 import './Citation.css';

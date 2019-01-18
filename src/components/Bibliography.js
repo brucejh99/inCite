@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
+import Button from '@material-ui/core/Button';
 import { getOrSetBibliography, resetBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
@@ -71,8 +72,8 @@ export default class Bibliography extends Component {
          document.queryCommandSupported('copy') &&
           <div>
             <div className="button-container">
-              <button onClick={this.copy}>Copy</button>
-              <button onClick={this.reset}>Clear</button>
+              <Button onClick={this.copy}>Copy</Button>
+              <Button onClick={this.reset}>Clear</Button>
             </div>
             {this.state.message}
           </div>
