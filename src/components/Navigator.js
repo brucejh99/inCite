@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState } from '../services/Storage';
+import { getOrSetState, updateState } from '../services/Storage';/*
 import Home from './Home';
-import Citation from './Citation';
+import Citation from './Citation';*/
+import Loading from './Loading';
+const Home = React.lazy(() => import('./Home'));
+const Citation = React.lazy(() => import('./Citation'));
 
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
@@ -48,7 +51,7 @@ export default class Navigator extends Component {
 
   render() {
     return (
-      <div>
+      <Suspense fallback={<Loading />}>
         {this.state.style !== null ?
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
@@ -57,7 +60,7 @@ export default class Navigator extends Component {
         }
         {(this.state.style === null) || this.state.launchPage ?
         <Home updateStyle={this.updateStyle} /> : <Citation />}
-      </div>
+      </Suspense>
     );
   }
 }
