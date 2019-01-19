@@ -66,7 +66,7 @@ export default class Bibliography extends Component {
     try {
       resetBibliography();
       this.setState({
-        citationList: '',
+        citationList: 'Works Cited\n',
       });
     } catch(err) {
       this.setState({

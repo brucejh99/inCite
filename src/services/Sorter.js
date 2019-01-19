@@ -45,7 +45,7 @@ export function APASort(citation1, citation2) {
         if(title1 < lastName2) return 1;
         else if(title1 > lastName2) return -1;
         else return 0;
-    } else {
+    } else if(citation1.title && citation2.title) {
         let title1, title2;
         const titleArray1 = citation1.title.split(' ');
         if(titleArray1.length > 1 && titleExceptions.includes(titleArray1[0])) {
@@ -60,8 +60,14 @@ export function APASort(citation1, citation2) {
             title2 = citation2.title || '';
         }
         if(title1 < title2) return 1;
-        else if(title2 > title2) return -1;
+        else if(title1 > title2) return -1;
         else return 0;
+    } else if(citation1.title) {
+        return -1;
+    } else if(citation2.title) {
+        return 1;
+    } else {
+        return 0
     }
 }
 
@@ -96,7 +102,7 @@ export function MLASort(citation1, citation2) {
         if(title1 < lastName2) return 1;
         else if(title1 > lastName2) return -1;
         else return 0;
-    } else {
+    } else if(citation1.title && citation2.title) {
         let title1, title2;
         const titleArray1 = citation1.title.split(' ');
         if(titleArray1.length > 1 && titleExceptions.includes(titleArray1[0])) {
@@ -111,8 +117,14 @@ export function MLASort(citation1, citation2) {
             title2 = citation2.title || '';
         }
         if(title1 < title2) return 1;
-        else if(title2 > title2) return -1;
+        else if(title1 > title2) return -1;
         else return 0;
+    } else if(citation1.title) {
+        return -1;
+    } else if(citation2.title) {
+        return 1;
+    } else {
+        return 0
     }
 
 }
