@@ -59,7 +59,6 @@ export function toMLA(data) {
     const publisher = data.publisher || undefined;
     const website = data.website | undefined;
     const title = data.article || undefined;
-    const dateAccessed = data.dateRetrieved || undefined;
     const url = data.url || '';
     if(author) {
         const nameArr = author.split(' ');
@@ -85,7 +84,7 @@ export function toMLA(data) {
         citation += `${publisher}, `;
     }
     if(date) {
-        const longDate = new Date(dateAccessed);
+        const longDate = new Date(date);
         citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}`;
     }
     if(url) {
