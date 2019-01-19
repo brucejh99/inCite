@@ -39,7 +39,6 @@ export default class Citation extends Component {
       const url = tabs[0].url;
       request({ uri: url, timeout: 5000 }, async function(err, res, html) {
         if(html === undefined || err) {
-          console.log('Could not read the page! We should display this somewhere.');
           self.setState({
             url: url,
             complete: true

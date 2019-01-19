@@ -10,10 +10,8 @@
     "metascraper-publisher": "^4.7.0",
     "metascraper-title": "^4.7.0",
     "metascraper-url": "^4.7.0",
-    "mobx": "^5.8.0",
-    "mobx-react": "^5.4.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-scripts": "^2.1.3",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
@@ -39,5 +37,15 @@
     "production": [
       "last 2 chrome versions"
     ]
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [
+          "transform-react-constant-elements",
+          "transform-react-inline-elements"
+        ]
+      }
+    }
   }
 }

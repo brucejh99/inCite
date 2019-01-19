@@ -71,9 +71,9 @@ export default class Bibliography extends Component {
         {
          document.queryCommandSupported('copy') &&
           <div>
-            <div className="button-container">
-              <Button onClick={this.copy}>Copy</Button>
-              <Button onClick={this.reset}>Clear</Button>
+            <div className="button-container bottom-button">
+              <Button className="button" onClick={this.copy}>Copy</Button>
+              <Button className="button" onClick={this.reset}>Clear</Button>
             </div>
             {this.state.message}
           </div>
