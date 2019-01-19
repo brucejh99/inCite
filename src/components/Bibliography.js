@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import { getOrSetBibliography, resetBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
@@ -30,7 +30,7 @@ export default class Bibliography extends Component {
 
   setBibliography() {
     var bibliography = getOrSetBibliography();
-    var list = '';
+    var list = 'Works Cited\n';
     if(this.state.style === 'APA') {
       bibliography.sort(APASort);
       bibliography.forEach(metadata => list += toAPA(metadata) + '\n');
