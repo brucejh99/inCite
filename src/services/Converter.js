@@ -11,7 +11,6 @@ export function toAPA(data) {
     const title = data.article || undefined;
     const dateAccessed = data.dateRetrieved || undefined;
     const url = data.url || '';
-    // APA-style name
     if(author) {
         const nameArr = author.split(' ');
         if(nameArr.length === 1) {
@@ -30,27 +29,26 @@ export function toAPA(data) {
         const italicizedTitle = title.italics();
         citation += `${italicizedTitle}. `;
     }
-    // APA-style date
     if(date) {
         const longDate = new Date(date);
         citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}). `;
     }
-    // article title
     if(author && title) {
-        const italicizedTitle = title.italics();
-        citation += `${italicizedTitle}. `;
+        citation += `${title.italics()}. `;
     }
-    // publisher name
     if(publisher) {
         citation += `${publisher}. `;
     }
     citation += 'Retrieved ';
-    // date the resource was accessed
     if(dateAccessed) {
         const longDate = new Date(dateAccessed);
-        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}), `;
+        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()})`;
     }
-    citation += `from ${url}.`;
+    if(url) {
+        citation += `, from ${url}.`;
+    } else {
+        citation += '.';
+    }
     return citation;
 }
 
@@ -59,9 +57,42 @@ export function toMLA(data) {
     const author = data.author || undefined;
     const date = data.datePublished || undefined;
     const publisher = data.publisher || undefined;
+    const website = data.website | undefined;
     const title = data.article || undefined;
     const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url || ''; // must be there, even if they provide it as an empty string?
+    const url = data.url || '';
+    if(author) {
+        const nameArr = author.split(' ');
+        if(nameArr.length === 1) {
+            citation += `${nameArr[0]}. `;
+        } else {
+            citation += `${nameArr[nameArr.length - 1]}, `;
+            const firstName = nameArr[0];
+            citation += `${firstName[0]} `;
+            for(var i = 1; i < nameArr.length - 1; ++i) {
+                const currMiddleName = nameArr[i];
+                citation += `${currMiddleName[0]}. `;
+            }
+        }
+    }
+    if(title) {
+        citation += `"${title}." `
+    }
+    if(website) {
+        citation += `${website.italics()}, `;
+    }
+    if(publisher) {
+        citation += `${publisher}, `;
+    }
+    if(date) {
+        const longDate = new Date(dateAccessed);
+        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}`;
+    }
+    if(url) {
+        citation += `, ${url}.`;
+    } else {
+        citation += '.';
+    }
     return citation;
 }
 

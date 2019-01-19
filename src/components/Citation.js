@@ -53,7 +53,8 @@ export default class Citation extends Component {
             success: true,
             article: metadata.title,
             author: metadata.author,
-            publisher: metadata.publisher,
+            website: metadata.publisher,
+            publisher: undefined,
             datePublished: dateString,
             url: url
           });
@@ -91,6 +92,7 @@ export default class Citation extends Component {
       article: this.state.article || undefined,
       author: this.state.author || undefined,
       publisher: this.state.publisher,
+      website: this.state.website,
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
       url: this.state.url,
@@ -113,12 +115,14 @@ export default class Citation extends Component {
         { this.state.complete ?
           <form onSubmit={this.addToBibliography}>
             <div className="table">
-              <FormField fieldName="Publisher" inputType="text" name="publisher"
-                value = {this.state.publisher} onChange={this.onChange} />
+              <FormField fieldName="Website" inputType="text" name="website"
+                value = {this.state.website} onChange={this.onChange} />
               <FormField fieldName="Article" inputType="text" name="article"
                 value={this.state.article} onChange={this.onChange} />
               <FormField fieldName="Author" inputType="text" name="author"
                 value={this.state.author} onChange={this.onChange} />
+                <FormField fieldName="Publisher" inputType="text" name="publisher"
+                value = {this.state.publisher} onChange={this.onChange} />
               <FormField fieldName="Date Published" inputType="date" name="datePublished"
                 value={this.toHTMLDate(this.state.datePublished)} onChange={this.onChange} />
               <FormField fieldName="Date Retrieved" inputType="date" name="dateRetrieved"

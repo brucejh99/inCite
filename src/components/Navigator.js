@@ -1,12 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState } from '../services/Storage';/*
-import Home from './Home';
-import Citation from './Citation';*/
+import { getOrSetState, updateState } from '../services/Storage';
 import Loading from './Loading';
 const Home = React.lazy(() => import('./Home'));
 const Citation = React.lazy(() => import('./Citation'));
-
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
 /**

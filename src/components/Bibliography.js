@@ -10,6 +10,7 @@ export default class Bibliography extends Component {
     super(props);
     this.copy = this.copy.bind(this);
     this.reset = this.reset.bind(this);
+    this.setBibliography = this.setBibliography.bind(this);
     this.state = {
       style: props.style,
       citationList: '',
@@ -18,6 +19,16 @@ export default class Bibliography extends Component {
   }
 
   componentDidMount() {
+    this.setBibliography();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.style !== this.state.style) {
+      this.setState({ style: nextProps.style }, this.setBibliography);
+    }
+  }
+
+  setBibliography() {
     var bibliography = getOrSetBibliography();
     var list = '';
     if(this.state.style === 'APA') {
