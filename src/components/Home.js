@@ -12,6 +12,7 @@ export default class Home extends Component {
     super(props);
     this.updateStyle = props.updateStyle;
     this.selectStyle = this.selectStyle.bind(this);
+    this.styleButton = this.styleButton.bind(this);
     this.state = getState();
   }
 
@@ -26,41 +27,26 @@ export default class Home extends Component {
     this.updateStyle(styleName);
   }
 
+  styleButton(styleName) {
+    return (
+    <button className={this.state.style === styleName ? "style-button selected" : "style-button default"} onClick={() => this.selectStyle(styleName)}>
+      {styleName}
+    </button>
+    );
+  }
+
   render() {
     return (
       <div>
         <h1 className="splash">inCite</h1>
         <div className="button-container">
-            <StyleButton styleName="MLA" selected={this.state.style === "MLA" ? true : false} selectStyleMethod={() => this.selectStyle("MLA")} />
-            <StyleButton styleName="APA" selected={this.state.style === "APA" ? true : false} selectStyleMethod={() => this.selectStyle("APA")} />
-            <StyleButton styleName="Chicago" selected={this.state.style === "Chicago" ? true : false} selectStyleMethod={() => this.selectStyle("Chicago")} />
-            <StyleButton styleName="Harvard" selected={this.state.style === "Harvard" ? true : false} selectStyleMethod={() => this.selectStyle("Harvard")} />
+            {this.styleButton("MLA")}
+            {this.styleButton("APA")}
+            {this.styleButton("Chicago")}
+            {this.styleButton("Harvard")}
         </div>
         <Bibliography style={this.state.style} />
       </div>
     );
-  }
-}
-
-/**
- * Button to select bibliography style
- * @prop {String} styleName Name of currently selected citation style
- * @prop {Function} selectStyleMethod Function to update selected style 
- */
-class StyleButton extends Component {
-  constructor(props) {
-    super(props);
-    this.styleName = props.styleName;
-    this.selectStyleMethod = props.selectStyleMethod;
-  }
-  
-  render() {
-    return (
-      <div>
-          <button className={this.props.selected ? "selected style-button" : "default style-button"} onClick={this.selectStyleMethod}>
-            {this.styleName}
-          </button>
-      </div>
-    )
   }
 }

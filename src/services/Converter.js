@@ -67,7 +67,9 @@ export function toMLA(data) {
         } else {
             citation += `${nameArr[nameArr.length - 1]}, `;
             const firstName = nameArr[0];
-            citation += `${firstName[0]} `;
+            citation += `${firstName[0]}`;
+            if(nameArr.length === 2) citation += '.';
+            else citation += ' ';
             for(var i = 1; i < nameArr.length - 1; ++i) {
                 const currMiddleName = nameArr[i];
                 citation += `${currMiddleName[0]}. `;

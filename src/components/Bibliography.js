@@ -78,17 +78,17 @@ export default class Bibliography extends Component {
   render() {
     return (
       <div className="body">
-      <div className="display" dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
-        {
-         document.queryCommandSupported('copy') &&
-          <div>
-            <div className="button-container bottom-button">
-              <Button className="button" onClick={this.copy}>Copy</Button>
-              <Button className="button" onClick={this.reset}>Clear</Button>
+        <div className="display" dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
+          {
+          document.queryCommandSupported('copy') &&
+            <div>
+              <div className="button-container bottom-button">
+                <Button variant="outlined" color="primary" onClick={this.copy}>Copy</Button>
+                <Button variant="outlined" color="primary" onClick={this.reset}>Clear</Button>
+              </div>
+              {this.state.message}
             </div>
-            {this.state.message}
-          </div>
-        }
+          }
         <div id="copyArea" contenteditable="true"></div>
       </div>
     );

@@ -28,12 +28,12 @@
     border-color: rgb(96, 178, 255);
 }
 
-.default.style-button {
+.default {
     background-color: white;
     color: rgb(96, 178, 255);
 }
 
-.selected.style-button {
+.selected {
     background-color: rgb(96, 178, 255);
     color: white;
 }

@@ -35,18 +35,12 @@
 
 #copyArea {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1em;
+    font-size: 12pt;
+    line-height: 2;
     position: fixed;
     left:-1000px;
     top:-1000px;
     white-space: pre;
-}
-
-.button {
-    padding-left: 20px;
-    padding-right: 20px;
-    border-style: solid;
-    border-color: black;
 }
 
 .button-container {
