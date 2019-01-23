@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
-import { Button } from '@material-ui/core';
+import { Button, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import { getOrSetBibliography, resetBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
@@ -14,7 +16,8 @@ export default class Bibliography extends Component {
     this.state = {
       style: props.style,
       citationList: '',
-      message: ''
+      message: '',
+      sortedBibliography: []
     }
   }
 
@@ -32,21 +35,29 @@ export default class Bibliography extends Component {
     var bibliography = getOrSetBibliography();
     var list = 'Works Cited\n';
     if(this.state.style === 'APA') {
-      bibliography.sort(APASort);
+      this.setState({ sortedBibliography: bibliography.sort(APASort) });
       bibliography.forEach(metadata => list += toAPA(metadata) + '\n');
     } else if(this.state.style === 'MLA') {
-      bibliography.sort(MLASort);
+      this.setState({ sortedBibliography: bibliography.sort(MLASort) });
       bibliography.forEach(metadata => list += toMLA(metadata) + '\n');
     } else if(this.state.style === 'Chicago') {
-      bibliography.sort(ChicagoSort);
+      this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
       bibliography.forEach(metadata => list += toChicago(metadata) + '\n');
     } else if(this.state.style === 'Harvard') {
-      bibliography.sort(HarvardSort);
+      this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
       bibliography.forEach(metadata => list += toHarvard(metadata) + '\n');
     } else {
       this.setState({ message: 'Select a style to begin.'});
     }
     this.setState({ citationList: list });
+  }
+
+  generate(element) {
+    return this.state.sortedBibliography.map(value =>
+      React.cloneElement(element, {
+        key: value,
+      }),
+    );
   }
 
   handleCopyCitation(citationText) {
@@ -78,7 +89,25 @@ export default class Bibliography extends Component {
   render() {
     return (
       <div className="body">
-        <div className="display" dangerouslySetInnerHTML={{ __html: this.state.citationList }}></div>
+        <div className="display">
+          <List dense={false}>
+            {this.state.sortedBibliography.map(item => {
+              return (
+              <ListItem divider={true}>
+                <ListItemText
+                  primary={toAPA(item)}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              )
+            })
+          }
+          </List>
+        </div>
           {
           document.queryCommandSupported('copy') &&
             <div>
