@@ -68,7 +68,7 @@ export function toMLA(data) {
             citation += `${nameArr[nameArr.length - 1]}, `;
             const firstName = nameArr[0];
             citation += `${firstName[0]}`;
-            if(nameArr.length === 2) citation += '.';
+            if(nameArr.length === 2) citation += '. ';
             else citation += ' ';
             for(var i = 1; i < nameArr.length - 1; ++i) {
                 const currMiddleName = nameArr[i];
@@ -97,10 +97,133 @@ export function toMLA(data) {
     return citation;
 }
 
-export function toChicago(data) {
+/*! Chicago Citation Style
 
+Last Name, First Name. “Page Title.” Website Title. Web Address
+(retrieved Date Accessed).
+
+Smith, John. “Obama inaugurated as President.” CNN.com.
+http://www.cnn.com/POLITICS/01/21/obama_inaugurated/index.html
+(accessed February 1, 2009).
+
+Notes:
+- Do not use initials for names
+- If no author, use publisher
+- If no website, use publisher
+- If no title, come up with your own descriptive title
+- If the website has a print counterpart (i.e. newspaper), put website
+in italics
+
+http://www.bibme.org/citation-guide/chicago/website/
+*/
+
+export function toChicago(data) {
+    let citation = '';
+    const author = data.author || undefined;
+    const date = data.datePublished || undefined;
+    const publisher = data.publisher || undefined;
+    const website = data.website | undefined;
+    const title = data.article || undefined;
+    const dateAccessed = data.dateRetrieved || undefined;
+    const url = data.url || '';
+
+    if(author) {
+        const nameArr = author.split(' ');
+        if(nameArr.length === 1) {
+            citation += `${nameArr[0]}. `;
+        } else {
+            citation += `${nameArr[nameArr.length - 1]}, `;
+            const firstName = nameArr[0];
+            citation += `${firstName}`;
+            for(var i = 1; i < nameArr.length - 1; ++i) {
+                const currMiddleName = nameArr[i];
+                citation += ` ${currMiddleName}`;
+            }
+            citation += `. `;
+        }
+    } else if(publisher) {
+        citation += ` ${publisher}. `;
+    }
+    if(title) {
+        citation += `"${title}." `;
+    }
+    if(website) {
+        citation += `${website}. `;
+    } else if(publisher) {
+        citation += `${publisher}. `;
+    }
+    if(url) {
+        citation += `${url} `;
+    }
+    if(dateAccessed) {
+        citation += `(Accessed `;
+        const longDate = new Date(dateAccessed);
+        citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()})`;
+    }
+
+    if (citation.substring(citation.length-1) == " ") {
+        citation = citation.substring(0, citation.length-1);
+    }
+    if (citation.substring(citation.length-1) != ".") {
+      citation += `.`;
+    }
+
+    return citation;
 }
 
-export function toHarvard(data) {
+/*! Harvard Citation Style
 
+Author surname(s), initial(s). (Year of publishing)  Title of
+page/site [Online]. Available at: URL (Accessed: day month year)
+
+Mitchell, J.A. (2017) How and when to reference [Online]. Available
+at: https://www.howandwhentoreference.com/ (Accessed: 27 May 2017)
+
+https://www.mendeley.com/guides/harvard-citation-guide
+*/
+
+export function toHarvard(data) {
+    let citation = '';
+    const author = data.author || undefined;
+    const date = data.datePublished || undefined;
+    const publisher = data.publisher || undefined;
+    const website = data.website | undefined;
+    const title = data.article || undefined;
+    const dateAccessed = data.dateRetrieved || undefined;
+    const url = data.url || '';
+
+    if(author) {
+        const nameArr = author.split(' ');
+        if(nameArr.length === 1) {
+            citation += `${nameArr[0]}. `;
+        } else {
+            citation += `${nameArr[nameArr.length - 1]}, `;
+            const firstName = nameArr[0];
+            citation += `${firstName[0]}. `;
+            for(var i = 1; i < nameArr.length - 1; ++i) {
+                const currMiddleName = nameArr[i];
+                citation += `${currMiddleName[0]}. `;
+            }
+        }
+    }
+    if(date) {
+        const longDate = new Date(date);
+        citation += `(${longDate.getFullYear()}) `;
+    }
+    if(title) {
+        citation += `${title.italics()} `;
+    } else if (website) {
+        citation += `${website.italics()}`;
+    }
+    citation += `[Online]. `;
+    if(url) {
+        citation += `Available at: ${url} `;
+    }
+    if(dateAccessed) {
+        citation += `(Accessed `;
+        const longDate = new Date(dateAccessed);
+        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()})`;
+    }
+
+    return citation;
 }
