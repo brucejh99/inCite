@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
-import { Button, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { Button, List, ListItem, ListItemSecondaryAction } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import { getOrSetBibliography, resetBibliography } from '../services/Storage';
@@ -52,12 +52,23 @@ export default class Bibliography extends Component {
     this.setState({ citationList: list });
   }
 
-  generate(element) {
-    return this.state.sortedBibliography.map(value =>
-      React.cloneElement(element, {
-        key: value,
-      }),
-    );
+  generateCitation(item) {
+    let citation;
+    switch (this.state.style) {
+      case ("APA"):
+        citation = toAPA(item);
+        break;
+      case("MLA"):
+        citation = toMLA(item);
+        break;
+      case("Chicago"):
+        citation = toChicago(item);
+        break;
+      case("Harvard"):
+        citation = toHarvard(item);
+        break;
+    }
+    return citation;
   }
 
   handleCopyCitation(citationText) {
@@ -90,23 +101,23 @@ export default class Bibliography extends Component {
     return (
       <div className="body">
         <div className="display">
-          <List dense={false}>
-            {this.state.sortedBibliography.map(item => {
-              return (
-              <ListItem divider={true}>
-                <ListItemText
-                  primary={toAPA(item)}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton aria-label="Delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-              )
-            })
-          }
-          </List>
+          <div className="list-container">
+            <List dense={true} style={{maxHeight: '100%', overflow: 'auto', padding: 0}}>
+              {this.state.sortedBibliography.map(item => {
+                return (
+                <ListItem divider={true}>
+                  <div className="list-item" dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }}></div>
+                  <ListItemSecondaryAction>
+                    <IconButton aria-label="Delete">
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                )
+              })
+            }
+            </List>
+          </div>
         </div>
           {
           document.queryCommandSupported('copy') &&
