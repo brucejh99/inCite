@@ -3,7 +3,7 @@ import './Bibliography.css';
 import { Button, List, ListItem, ListItemSecondaryAction } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import { getOrSetBibliography, resetBibliography } from '../services/Storage';
+import { getOrSetBibliography, resetBibliography, updateBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
 
@@ -15,7 +15,6 @@ export default class Bibliography extends Component {
     this.setBibliography = this.setBibliography.bind(this);
     this.state = {
       style: props.style,
-      citationList: '',
       message: '',
       sortedBibliography: []
     }
@@ -33,23 +32,11 @@ export default class Bibliography extends Component {
 
   setBibliography() {
     var bibliography = getOrSetBibliography();
-    var list = 'Works Cited\n';
-    if(this.state.style === 'APA') {
-      this.setState({ sortedBibliography: bibliography.sort(APASort) });
-      bibliography.forEach(metadata => list += toAPA(metadata) + '\n');
-    } else if(this.state.style === 'MLA') {
-      this.setState({ sortedBibliography: bibliography.sort(MLASort) });
-      bibliography.forEach(metadata => list += toMLA(metadata) + '\n');
-    } else if(this.state.style === 'Chicago') {
-      this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
-      bibliography.forEach(metadata => list += toChicago(metadata) + '\n');
-    } else if(this.state.style === 'Harvard') {
-      this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
-      bibliography.forEach(metadata => list += toHarvard(metadata) + '\n');
-    } else {
-      this.setState({ message: 'Select a style to begin.'});
-    }
-    this.setState({ citationList: list });
+    if(this.state.style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
+    else if(this.state.style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
+    else if(this.state.style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
+    else if(this.state.style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
+    else this.setState({ message: 'Select a style to begin.'});
   }
 
   generateCitation(item) {
@@ -108,7 +95,11 @@ export default class Bibliography extends Component {
                 <ListItem divider={true}>
                   <div className="list-item" dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }}></div>
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
+                    <IconButton aria-label="Delete" onClick={() => {
+                      const id = item.id;
+                      const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== id);
+                      this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
+                    }}>
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
