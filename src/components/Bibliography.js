@@ -52,25 +52,6 @@ export default class Bibliography extends Component {
     this.setState({ citationList: list });
   }
 
-  generateCitation(item) {
-    let citation;
-    switch (this.state.style) {
-      case ("APA"):
-        citation = toAPA(item);
-        break;
-      case("MLA"):
-        citation = toMLA(item);
-        break;
-      case("Chicago"):
-        citation = toChicago(item);
-        break;
-      case("Harvard"):
-        citation = toHarvard(item);
-        break;
-    }
-    return citation;
-  }
-
   handleCopyCitation(citationText) {
     let copyArea = document.getElementById("copyArea");
     copyArea.innerHTML = citationText;
