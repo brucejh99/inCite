@@ -16,18 +16,20 @@
     font-size: 1.5em;
 }
 
-.display {
+.list-container {
     width: 350px;
     height: 300px;
-    max-width: 350px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
     border-style: solid;
-    border-color: black;
+    border-color: grey;
     border-width: 1px;
-    padding: 5px;
+}
+
+.list-item {
+    width: 90%;
+    height: auto;
     text-align: left;
     word-wrap: break-word;
     white-space: pre-line;
@@ -38,8 +40,8 @@
     font-size: 12pt;
     line-height: 2;
     position: fixed;
-    left:-1000px;
-    top:-1000px;
+    left:-10000px;
+    top:-10000px;
     white-space: pre;
 }
 
