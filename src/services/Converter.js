@@ -17,15 +17,12 @@ export function toAPA(data) {
             citation += `${nameArr[0]}. `;
         } else {
             citation += `${nameArr[nameArr.length - 1]}, `;
-            const firstName = nameArr[0];
-            citation += `${firstName[0]}. `;
-            for(var i = 1; i < nameArr.length - 1; ++i) {
-                const currMiddleName = nameArr[i];
-                citation += `${currMiddleName[0]}. `;
+            for(var i = 0; i < nameArr.length - 1; ++i) {
+                const currFirstMiddleName = nameArr[i];
+                citation += `${currFirstMiddleName[0]}. `;
             }
         }
-    }
-    if(!author && title) {
+    } else if(title) {
         const italicizedTitle = title.italics();
         citation += `${italicizedTitle}. `;
     }
@@ -45,9 +42,7 @@ export function toAPA(data) {
         citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()})`;
     }
     if(url) {
-        citation += `, from ${url}.`;
-    } else {
-        citation += '.';
+        citation += `, from ${url}`;
     }
     return citation;
 }
@@ -65,15 +60,11 @@ export function toMLA(data) {
         if(nameArr.length === 1) {
             citation += `${nameArr[0]}. `;
         } else {
-            citation += `${nameArr[nameArr.length - 1]}, `;
-            const firstName = nameArr[0];
-            citation += `${firstName[0]}`;
-            if(nameArr.length === 2) citation += '. ';
-            else citation += ' ';
-            for(var i = 1; i < nameArr.length - 1; ++i) {
-                const currMiddleName = nameArr[i];
-                citation += `${currMiddleName[0]}. `;
+            citation += `${nameArr[nameArr.length - 1]},`;
+            for(var i = 0; i < nameArr.length - 1; ++i) {
+                citation += ` ${nameArr[i]}`;
             }
+            citation += '. ';
         }
     }
     if(title) {
@@ -87,13 +78,14 @@ export function toMLA(data) {
     }
     if(date) {
         const longDate = new Date(date);
-        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}`;
+        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}, `;
     }
     if(url) {
-        citation += `, ${url}.`;
-    } else {
-        citation += '.';
+        citation += `${url}`;
+    } else if(citation.substring(citation.length-2) == ", ") {
+        citation = citation.substring(0, citation.length-2);
     }
+    citation += '.';
     return citation;
 }
 
@@ -152,6 +144,10 @@ export function toChicago(data) {
     } else if(publisher) {
         citation += `${publisher}. `;
     }
+    if(date) {
+        const longDate = new Date(date);
+        citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()}. `;
+    }
     if(url) {
         citation += `${url} `;
     }
@@ -161,10 +157,10 @@ export function toChicago(data) {
         citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()})`;
     }
 
-    if (citation.substring(citation.length-1) == " ") {
+    if(citation.substring(citation.length-1) == " ") {
         citation = citation.substring(0, citation.length-1);
     }
-    if (citation.substring(citation.length-1) != ".") {
+    if(citation.substring(citation.length-1) != ".") {
       citation += `.`;
     }
 
