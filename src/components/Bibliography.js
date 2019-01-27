@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
 import { Button, List, ListItem, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { getOrSetBibliography, resetBibliography, updateBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';

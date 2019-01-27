@@ -6,6 +6,7 @@
 .load-image {
     animation: load-image-spin infinite 5s linear;
     height: 80px;
+    margin: 25px;
 }
 
 @keyframes load-image-spin {
