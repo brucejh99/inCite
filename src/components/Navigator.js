@@ -1,9 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
 import { getOrSetState, updateState } from '../services/Storage';
-import Loading from './Loading';
 const Home = React.lazy(() => import('./Home'));
-const Citation = React.lazy(() => import('./Citation'));
+const Citation = React.lazy(() =>import('./Citation'));
+
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
 /**
@@ -48,16 +48,19 @@ export default class Navigator extends Component {
 
   render() {
     return (
-      <Suspense fallback={<Loading />}>
+      <div>
         {this.state.style !== null ?
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
           <PageButton icon={addIcon} onClickMethod={this.citationPage} />
         </div> : null
         }
-        {(this.state.style === null) || this.state.launchPage ?
-        <Home updateStyle={this.updateStyle} /> : <Citation />}
-      </Suspense>
+        <h1 className="splash">inCite</h1>
+        <Suspense fallback={null}>
+            {(this.state.style === null) || this.state.launchPage ?
+            <Home updateStyle={this.updateStyle} /> : <Citation />}
+        </Suspense>
+      </div>
     );
   }
 }
@@ -76,11 +79,9 @@ class PageButton extends Component {
   
   render() {
     return (
-      <div>
-        <button className="customize-button" onClick={this.onClickMethod}>
-              <img src={this.icon} className="customize-button" alt="add-icon" />
-          </button>
-      </div>
+      <button className="customize-button" onClick={this.onClickMethod}>
+            <img src={this.icon} className="customize-button" alt="add-icon" />
+      </button>
     )
   }
 }

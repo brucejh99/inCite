@@ -38,7 +38,6 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <h1 className="splash">inCite</h1>
         <div className="button-container">
             {this.styleButton("MLA")}
             {this.styleButton("APA")}
