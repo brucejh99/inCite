@@ -30,7 +30,10 @@
 .list-item {
     width: 90%;
     height: auto;
+    min-height: 26px;
+    line-height: 26px;
     text-align: left;
+    vertical-align: middle;
     word-wrap: break-word;
     white-space: pre-line;
 }
