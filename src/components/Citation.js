@@ -6,6 +6,7 @@ import './Citation.css';
 import request from 'request';
 import LoadingPage from './Loading';
 import { getOrSetBibliography, updateBibliography } from '../services/Storage';
+import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
@@ -88,7 +89,7 @@ export default class Citation extends Component {
   addToBibliography(e) {
     e.preventDefault();
     let bibliography = getOrSetBibliography();
-    const metadata = {
+    let metadata = {
       article: this.state.article || undefined,
       author: this.state.author || undefined,
       publisher: this.state.publisher,
@@ -98,6 +99,11 @@ export default class Citation extends Component {
       url: this.state.url,
       id: uuid() // unique ID of each bibliography entry to be used for deleting/editing
     }
+
+    metadata.mla = toMLA(metadata);
+    metadata.apa = toAPA(metadata);
+    metadata.chicago = toChicago(metadata);
+    metadata.harvard = toHarvard(metadata);
 
     bibliography.push(metadata);
     updateBibliography(bibliography);

@@ -29,7 +29,9 @@
     "test": "mocha -r esm ./test/**/*.spec.js",
     "eject": "react-scripts eject",
     "uninline": "node ./bin/uninline.js build/index.html build/asset-manifest.json",
-    "post-install": "npm run uninline"
+    "post-install": "npm run uninline",
+    "lint": "eslint src",
+    "lint-fix": "eslint src --fix"
   },
   "browserslist": {
     "development": [

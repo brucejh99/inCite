@@ -7,6 +7,6 @@ export default class App extends Component {
       <div>
         <Navigator />
       </div>
-    )
+    );
   }
 }
