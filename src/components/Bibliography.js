@@ -88,12 +88,11 @@ export default class Bibliography extends Component {
       <div className="body">
         <div className="display">
           <div className="list-container">
-            <List dense={false} style={{maxHeight: '100%', overflow: 'auto', padding: 0}}>
-              {this.state.sortedBibliography.map(item => (
-                <ListItem divider={true}>
-                  <div className="list-item" dangerouslySetInnerHTML={{ __html:
-                  <p style="justify-content: middle">{this.generateCitation(item)}</p>
-                  }} />
+            <List dense={true} style={{maxHeight: '100%', overflow: 'auto', padding: 0}}>
+              {this.state.sortedBibliography.map(item => {
+                return (
+                <ListItem divider={true} className="list-item">
+                  <div className="list-text" dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }}></div>
                   <ListItemSecondaryAction>
                     <IconButton aria-label="Delete" onClick={() => {
                       const id = item.id;
@@ -104,7 +103,8 @@ export default class Bibliography extends Component {
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
-              ))
+                )
+              })
             }
             </List>
           </div>
