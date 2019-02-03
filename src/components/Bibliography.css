@@ -16,13 +16,13 @@
 }
 
 .list-item {
-    width: 250px;
+    width: 275px;
     min-height: 48px;
     justify-content: center;
 }
 
 .list-text {
-    width: 250px;
+    width: 275px;
     height: auto;
     text-align: left;
     vertical-align: middle;
