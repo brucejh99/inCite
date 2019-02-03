@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './Bibliography.css';
-import { Button, List, ListItem, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import {
+  Button, List, ListItem, ListItemSecondaryAction, IconButton,
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { getOrSetBibliography, resetBibliography, updateBibliography } from '../services/Storage';
-import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
-import { APASort, MLASort, ChicagoSort, HarvardSort } from  '../services/Sorter';
+import {
+  APASort, MLASort, ChicagoSort, HarvardSort,
+} from '../services/Sorter';
 
 export default class Bibliography extends Component {
   constructor(props) {
@@ -15,8 +18,8 @@ export default class Bibliography extends Component {
     this.state = {
       style: props.style,
       message: '',
-      sortedBibliography: []
-    }
+      sortedBibliography: [],
+    };
   }
 
   componentDidMount() {
@@ -24,47 +27,41 @@ export default class Bibliography extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.style !== this.state.style) {
+    if (nextProps.style !== this.state.style) {
       this.setState({ style: nextProps.style }, this.setBibliography);
     }
   }
 
   setBibliography() {
-    var bibliography = getOrSetBibliography();
-    if(this.state.style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
-    else if(this.state.style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
-    else if(this.state.style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
-    else if(this.state.style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
-    else this.setState({ message: 'Select a style to begin.'});
+    const bibliography = getOrSetBibliography();
+    if (this.state.style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
+    else if (this.state.style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
+    else if (this.state.style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
+    else if (this.state.style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
+    else this.setState({ message: 'Select a style to begin.' });
   }
 
   generateCitation(item) {
-    let citation;
     switch (this.state.style) {
-      case ("APA"):
-        citation = toAPA(item);
-        break;
-      case("MLA"):
-        citation = toMLA(item);
-        break;
-      case("Chicago"):
-        citation = toChicago(item);
-        break;
-      case("Harvard"):
-        citation = toHarvard(item);
-        break;
+      case ('APA'):
+        return item.apa;
+      case ('MLA'):
+        return item.mla;
+      case ('Chicago'):
+        return item.chicago;
+      case ('Harvard'):
+        return item.harvard;
     }
-    return citation;
   }
 
   handleCopyCitation(citationText) {
-    let copyArea = document.getElementById("copyArea");
+    const copyArea = document.getElementById('copyArea');
     copyArea.innerHTML = citationText;
     copyArea.focus();
-    document.execCommand("selectAll");
-    document.execCommand("copy");
+    document.execCommand('selectAll');
+    document.execCommand('copy');
   }
-  
+
   copy() {
     this.handleCopyCitation(this.state.citationList);
     this.setState({ message: 'Copied!' });
@@ -76,9 +73,9 @@ export default class Bibliography extends Component {
       this.setState({
         citationList: 'Works Cited\n',
       });
-    } catch(err) {
+    } catch (err) {
       this.setState({
-        message: 'Failed to clear bibliography.'
+        message: 'Failed to clear bibliography.',
       });
     }
   }
@@ -88,29 +85,31 @@ export default class Bibliography extends Component {
       <div className="body">
         <div className="display">
           <div className="list-container">
-            <List dense={true} style={{maxHeight: '100%', overflow: 'auto', padding: 0}}>
-              {this.state.sortedBibliography.map(item => {
-                return (
-                <ListItem divider={true} className="list-item">
-                  <div className="list-text" dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }}></div>
+            <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
+              {this.state.sortedBibliography.map(item => (
+                <ListItem divider>
+                  <div className="list-item" dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete" onClick={() => {
-                      const id = item.id;
-                      const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== id);
-                      this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
-                    }}>
+                    <IconButton
+                      aria-label="Delete"
+                      onClick={() => {
+                        const id = item.id;
+                        const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== id);
+                        this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
+                      }}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
-                )
-              })
+              ))
             }
             </List>
           </div>
         </div>
-          {
-          document.queryCommandSupported('copy') &&
+        {
+          document.queryCommandSupported('copy')
+            && (
             <div>
               <div className="button-container bottom-button">
                 <Button variant="outlined" color="primary" onClick={this.copy}>Copy</Button>
@@ -118,8 +117,9 @@ export default class Bibliography extends Component {
               </div>
               {this.state.message}
             </div>
+            )
           }
-        <div id="copyArea" contenteditable="true"></div>
+        <div id="copyArea" contentEditable="true" />
       </div>
     );
   }

@@ -22,16 +22,16 @@ export default class Home extends Component {
    */
   selectStyle(styleName) {
     this.setState({
-      style: styleName
+      style: styleName,
     });
     this.updateStyle(styleName);
   }
 
   styleButton(styleName) {
     return (
-    <button className={this.state.style === styleName ? "style-button selected" : "style-button default"} onClick={() => this.selectStyle(styleName)}>
-      {styleName}
-    </button>
+      <button className={this.state.style === styleName ? 'style-button selected' : 'style-button default'} onClick={() => this.selectStyle(styleName)}>
+        {styleName}
+      </button>
     );
   }
 
@@ -39,10 +39,10 @@ export default class Home extends Component {
     return (
       <div>
         <div className="button-container">
-            {this.styleButton("MLA")}
-            {this.styleButton("APA")}
-            {this.styleButton("Chicago")}
-            {this.styleButton("Harvard")}
+          {this.styleButton('MLA')}
+          {this.styleButton('APA')}
+          {this.styleButton('Chicago')}
+          {this.styleButton('Harvard')}
         </div>
         <Bibliography style={this.state.style} />
       </div>

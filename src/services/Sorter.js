@@ -1,136 +1,71 @@
-const titleExceptions = [ 'A', 'a', 'An', 'an', 'The', 'the' ];
+const titleExceptions = ['A', 'a', 'An', 'an', 'The', 'the'];
 
-function getLastName(author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length == 1) {
-        return nameArr[0];
-    } else {
-        return nameArr[nameArr.length - 1];
-    }
+function standardizeFormat(citation) {
+  if (citation[0] === '"') {
+    return citation.substring(1, citation.length);
+  } else if (citation.length > 2 && citation.substring(0, 3) === "<i>") {
+    return citation.substring(3, citation.length);
+  }
+  return citation;
 }
+
+/*function getLastName(author) {
+  const nameArr = author.split(' ');
+  if (nameArr.length == 1) {
+    return nameArr[0];
+  }
+  return nameArr[nameArr.length - 1];
+}*/
 
 /**
  * Function to be passed into an array of citation objects' sort() method to sort it into APA order
- * @param {Object} citation1 
- * @param {Object} citation2 
+ * @param {Object} citation1
+ * @param {Object} citation2
  */
 export function APASort(citation1, citation2) {
-    if(citation1.author && citation2.author) {
-        const lastName1 = getLastName(citation1.author);
-        const lastName2 = getLastName(citation2.author);
-        if(lastName1 < lastName2) return 1;
-        else if(lastName1 > lastName2) return -1;
-        else return 0;
-    } else if(citation1.author && citation2.article) {
-        const lastName1 = getLastName(citation1.author);
-        let title2;
-        const titleArray = citation2.article.split(' ');
-        if(titleArray.length > 1 && titleExceptions.includes(titleArray[0])) {
-            title2 = titleArray[1];
-        } else {
-            title2 = citation2.article;
-        }
-        if(lastName1 < title2) return 1;
-        else if(lastName1 > title2) return -1;
-        else return 0;
-    } else if(citation2.author && citation1.article) {
-        let title1;
-        const titleArray = citation1.article.split(' ');
-        if(titleArray.length > 1 && titleExceptions.includes(titleArray[0])) {
-            title1 = titleArray[1];
-        } else {
-            title1 = citation1.article;
-        }
-        const lastName2 = getLastName(citation2.author);
-        if(title1 < lastName2) return 1;
-        else if(title1 > lastName2) return -1;
-        else return 0;
-    } else if(citation1.article && citation2.article) {
-        let title1, title2;
-        const titleArray1 = citation1.article.split(' ');
-        if(titleArray1.length > 1 && titleExceptions.includes(titleArray1[0])) {
-            title1 = titleArray1[1];
-        } else {
-            title1 = citation1.article;
-        }
-        const titleArray2 = citation2.title.split(' ');
-        if(titleArray2.length > 1 && titleExceptions.includes(titleArray2[0])) {
-            title2 = titleArray2[1];
-        } else {
-            title2 = citation2.article;
-        }
-        if(title1 < title2) return 1;
-        else if(title1 > title2) return -1;
-        else return 0;
-    } else if(citation1.article) {
-        return -1;
-    } else if(citation2.article) {
-        return 1;
-    } else {
-        return 0
-    }
+  let apa1 = standardizeFormat(citation1.apa);
+  let apa2 = standardizeFormat(citation2.apa);
+  
+  if (apa1 < apa2) {
+    return -1;
+  } if (apa1 === apa2) {
+    return 0;
+  } // (apa1 > apa2)
+  return 1;
 }
 
 export function MLASort(citation1, citation2) {
-    if(citation1.author && citation2.author) {
-        const lastName1 = getLastName(citation1.author);
-        const lastName2 = getLastName(citation2.author);
-        if(lastName1 < lastName2) return 1;
-        else if(lastName1 > lastName2) return -1;
-        else return 0;
-    } else if(citation1.author && citation2.article) {
-        const lastName1 = getLastName(citation1.author);
-        let title2;
-        const titleArray = citation2.article.split(' ');
-        if(titleArray.length > 1 && titleExceptions.includes(titleArray[0])) {
-            title2 = titleArray[1];
-        } else {
-            title2 = citation2.article || '';
-        }
-        if(lastName1 < title2) return 1;
-        else if(lastName1 > title2) return -1;
-        else return 0;
-    } else if(citation2.author && citation1.article) {
-        let title1;
-        const titleArray = citation1.article.split(' ');
-        if(titleArray.length > 1 && titleExceptions.includes(titleArray[0])) {
-            title1 = titleArray[1];
-        } else {
-            title1 = citation2.article || '';
-        }
-        const lastName2 = getLastName(citation2.author);
-        if(title1 < lastName2) return 1;
-        else if(title1 > lastName2) return -1;
-        else return 0;
-    } else if(citation1.article && citation2.article) {
-        let title1, title2;
-        const titleArray1 = citation1.article.split(' ');
-        if(titleArray1.length > 1 && titleExceptions.includes(titleArray1[0])) {
-            title1 = titleArray1[1];
-        } else {
-            title1 = citation1.article || '';
-        }
-        const titleArray2 = citation2.article.split(' ');
-        if(titleArray2.length > 1 && titleExceptions.includes(titleArray2[0])) {
-            title2 = titleArray2[1];
-        } else {
-            title2 = citation2.article || '';
-        }
-        if(title1 < title2) return 1;
-        else if(title1 > title2) return -1;
-        else return 0;
-    } else if(citation1.article) {
-        return -1;
-    } else if(citation2.article) {
-        return 1;
-    } else {
-        return 0
-    }
+  let mla1 = standardizeFormat(citation1.mla);
+  let mla2 = standardizeFormat(citation2.mla);
 
+  if (mla1 < mla2) {
+    return -1;
+  } if (mla1 === mla2) {
+    return 0;
+  } // (mla1 > mla2)
+  return 1;
 }
 
 export function ChicagoSort(citation1, citation2) {
+  let chicago1 = standardizeFormat(citation1.chicago);
+  let chicago2 = standardizeFormat(citation2.chicago);
+
+  if (chicago1 < chicago2) {
+    return -1;
+  } if (chicago1 === chicago2) {
+    return 0;
+  } // (chicago1 > chicago2)
+  return 1;
 }
 
 export function HarvardSort(citation1, citation2) {
+  let harvard1 = standardizeFormat(citation1.harvard);
+  let harvard2 = standardizeFormat(citation2.harvard);
+
+  if (harvard1 < harvard2) {
+    return -1;
+  } if (harvard1 === harvard2) {
+    return 0;
+  } // (harvard1 > harvard2)
+  return 1;
 }

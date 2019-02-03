@@ -1,92 +1,92 @@
 // used for reading months
-const monthName = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+const monthName = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
 export function toAPA(data) {
-    let citation = '';
-    const author = data.author || undefined;
-    const date = data.datePublished || undefined;
-    const publisher = data.publisher || undefined;
-    const title = data.article || undefined;
-    const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url || '';
-    if(author) {
-        const nameArr = author.split(' ');
-        if(nameArr.length === 1) {
-            citation += `${nameArr[0]}. `;
-        } else {
-            citation += `${nameArr[nameArr.length - 1]}, `;
-            for(var i = 0; i < nameArr.length - 1; ++i) {
-                const currFirstMiddleName = nameArr[i];
-                citation += `${currFirstMiddleName[0]}. `;
-            }
-        }
-    } else if(title) {
-        const italicizedTitle = title.italics();
-        citation += `${italicizedTitle}. `;
+  let citation = '';
+  const author = data.author || undefined;
+  const date = data.datePublished || undefined;
+  const publisher = data.publisher || undefined;
+  const title = data.article || undefined;
+  const dateAccessed = data.dateRetrieved || undefined;
+  const url = data.url || '';
+  if (author) {
+    const nameArr = author.split(' ');
+    if (nameArr.length === 1) {
+      citation += `${nameArr[0]}. `;
+    } else {
+      citation += `${nameArr[nameArr.length - 1]}, `;
+      for (let i = 0; i < nameArr.length - 1; ++i) {
+        const currFirstMiddleName = nameArr[i];
+        citation += `${currFirstMiddleName[0]}. `;
+      }
     }
-    if(date) {
-        const longDate = new Date(date);
-        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}). `;
-    }
-    if(author && title) {
-        citation += `${title.italics()}. `;
-    }
-    if(publisher) {
-        citation += `${publisher}. `;
-    }
-    citation += 'Retrieved ';
-    if(dateAccessed) {
-        const longDate = new Date(dateAccessed);
-        citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()})`;
-    }
-    if(url) {
-        citation += `, from ${url}`;
-    }
-    return citation;
+  } else if (title) {
+    const italicizedTitle = title.italics();
+    citation += `${italicizedTitle}. `;
+  }
+  if (date) {
+    const longDate = new Date(date);
+    citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}). `;
+  }
+  if (author && title) {
+    citation += `${title.italics()}. `;
+  }
+  if (publisher) {
+    citation += `${publisher}. `;
+  }
+  citation += 'Retrieved ';
+  if (dateAccessed) {
+    const longDate = new Date(dateAccessed);
+    citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()})`;
+  }
+  if (url) {
+    citation += `, from ${url}`;
+  }
+  return citation;
 }
 
 export function toMLA(data) {
-    let citation = '';
-    const author = data.author || undefined;
-    const date = data.datePublished || undefined;
-    const publisher = data.publisher || undefined;
-    const website = data.website | undefined;
-    const title = data.article || undefined;
-    const url = data.url || '';
-    if(author) {
-        const nameArr = author.split(' ');
-        if(nameArr.length === 1) {
-            citation += `${nameArr[0]}. `;
-        } else {
-            citation += `${nameArr[nameArr.length - 1]},`;
-            for(var i = 0; i < nameArr.length - 1; ++i) {
-                citation += ` ${nameArr[i]}`;
-            }
-            citation += '. ';
-        }
+  let citation = '';
+  const author = data.author || undefined;
+  const date = data.datePublished || undefined;
+  const publisher = data.publisher || undefined;
+  const website = data.website | undefined;
+  const title = data.article || undefined;
+  const url = data.url || '';
+  if (author) {
+    const nameArr = author.split(' ');
+    if (nameArr.length === 1) {
+      citation += `${nameArr[0]}. `;
+    } else {
+      citation += `${nameArr[nameArr.length - 1]},`;
+      for (let i = 0; i < nameArr.length - 1; ++i) {
+        citation += ` ${nameArr[i]}`;
+      }
+      citation += '. ';
     }
-    if(title) {
-        citation += `"${title}." `
-    }
-    if(website) {
-        citation += `${website.italics()}, `;
-    }
-    if(publisher) {
-        citation += `${publisher}, `;
-    }
-    if(date) {
-        const longDate = new Date(date);
-        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}, `;
-    }
-    if(url) {
-        citation += `${url}`;
-    } else if(citation.substring(citation.length-2) == ", ") {
-        citation = citation.substring(0, citation.length-2);
-    }
-    citation += '.';
-    return citation;
+  }
+  if (title) {
+    citation += `"${title}." `;
+  }
+  if (website) {
+    citation += `${website.italics()}, `;
+  }
+  if (publisher) {
+    citation += `${publisher}, `;
+  }
+  if (date) {
+    const longDate = new Date(date);
+    citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()}, `;
+  }
+  if (url) {
+    citation += `${url}`;
+  } else if (citation.substring(citation.length - 2) == ', ') {
+    citation = citation.substring(0, citation.length - 2);
+  }
+  citation += '.';
+  return citation;
 }
 
 /*! Chicago Citation Style
@@ -110,61 +110,61 @@ http://www.bibme.org/citation-guide/chicago/website/
 */
 
 export function toChicago(data) {
-    let citation = '';
-    const author = data.author || undefined;
-    const date = data.datePublished || undefined;
-    const publisher = data.publisher || undefined;
-    const website = data.website | undefined;
-    const title = data.article || undefined;
-    const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url || '';
+  let citation = '';
+  const author = data.author || undefined;
+  const date = data.datePublished || undefined;
+  const publisher = data.publisher || undefined;
+  const website = data.website | undefined;
+  const title = data.article || undefined;
+  const dateAccessed = data.dateRetrieved || undefined;
+  const url = data.url || '';
 
-    if(author) {
-        const nameArr = author.split(' ');
-        if(nameArr.length === 1) {
-            citation += `${nameArr[0]}. `;
-        } else {
-            citation += `${nameArr[nameArr.length - 1]}, `;
-            const firstName = nameArr[0];
-            citation += `${firstName}`;
-            for(var i = 1; i < nameArr.length - 1; ++i) {
-                const currMiddleName = nameArr[i];
-                citation += ` ${currMiddleName}`;
-            }
-            citation += `. `;
-        }
-    } else if(publisher) {
-        citation += ` ${publisher}. `;
+  if (author) {
+    const nameArr = author.split(' ');
+    if (nameArr.length === 1) {
+      citation += `${nameArr[0]}. `;
+    } else {
+      citation += `${nameArr[nameArr.length - 1]}, `;
+      const firstName = nameArr[0];
+      citation += `${firstName}`;
+      for (let i = 1; i < nameArr.length - 1; ++i) {
+        const currMiddleName = nameArr[i];
+        citation += ` ${currMiddleName}`;
+      }
+      citation += '. ';
     }
-    if(title) {
-        citation += `"${title}." `;
-    }
-    if(website) {
-        citation += `${website}. `;
-    } else if(publisher) {
-        citation += `${publisher}. `;
-    }
-    if(date) {
-        const longDate = new Date(date);
-        citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()}. `;
-    }
-    if(url) {
-        citation += `${url} `;
-    }
-    if(dateAccessed) {
-        citation += `(Accessed `;
-        const longDate = new Date(dateAccessed);
-        citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()})`;
-    }
+  } else if (publisher) {
+    citation += ` ${publisher}. `;
+  }
+  if (title) {
+    citation += `"${title}." `;
+  }
+  if (website) {
+    citation += `${website}. `;
+  } else if (publisher) {
+    citation += `${publisher}. `;
+  }
+  if (date) {
+    const longDate = new Date(date);
+    citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()}. `;
+  }
+  if (url) {
+    citation += `${url} `;
+  }
+  if (dateAccessed) {
+    citation += '(Accessed ';
+    const longDate = new Date(dateAccessed);
+    citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()})`;
+  }
 
-    if(citation.substring(citation.length-1) == " ") {
-        citation = citation.substring(0, citation.length-1);
-    }
-    if(citation.substring(citation.length-1) != ".") {
-      citation += `.`;
-    }
+  if (citation.substring(citation.length - 1) == ' ') {
+    citation = citation.substring(0, citation.length - 1);
+  }
+  if (citation.substring(citation.length - 1) != '.') {
+    citation += '.';
+  }
 
-    return citation;
+  return citation;
 }
 
 /*! Harvard Citation Style
@@ -179,47 +179,51 @@ https://www.mendeley.com/guides/harvard-citation-guide
 */
 
 export function toHarvard(data) {
-    let citation = '';
-    const author = data.author || undefined;
-    const date = data.datePublished || undefined;
-    const publisher = data.publisher || undefined;
-    const website = data.website | undefined;
-    const title = data.article || undefined;
-    const dateAccessed = data.dateRetrieved || undefined;
-    const url = data.url || '';
+  let citation = '';
+  const author = data.author || undefined;
+  const date = data.datePublished || undefined;
+  const publisher = data.publisher || undefined;
+  const website = data.website | undefined;
+  const title = data.article || undefined;
+  const dateAccessed = data.dateRetrieved || undefined;
+  const url = data.url || '';
 
-    if(author) {
-        const nameArr = author.split(' ');
-        if(nameArr.length === 1) {
-            citation += `${nameArr[0]}. `;
-        } else {
-            citation += `${nameArr[nameArr.length - 1]}, `;
-            const firstName = nameArr[0];
-            citation += `${firstName[0]}. `;
-            for(var i = 1; i < nameArr.length - 1; ++i) {
-                const currMiddleName = nameArr[i];
-                citation += `${currMiddleName[0]}. `;
-            }
-        }
+  if (author) {
+    const nameArr = author.split(' ');
+    if (nameArr.length === 1) {
+      citation += `${nameArr[0]}. `;
+    } else {
+      citation += `${nameArr[nameArr.length - 1]}, `;
+      const firstName = nameArr[0];
+      citation += `${firstName[0]}. `;
+      for (let i = 1; i < nameArr.length - 1; ++i) {
+        const currMiddleName = nameArr[i];
+        citation += `${currMiddleName[0]}. `;
+      }
     }
-    if(date) {
-        const longDate = new Date(date);
-        citation += `(${longDate.getFullYear()}) `;
-    }
-    if(title) {
-        citation += `${title.italics()} `;
-    } else if (website) {
-        citation += `${website.italics()}`;
-    }
-    citation += `[Online]. `;
-    if(url) {
-        citation += `Available at: ${url} `;
-    }
-    if(dateAccessed) {
-        citation += `(Accessed `;
-        const longDate = new Date(dateAccessed);
-        citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()})`;
-    }
+  } else if (title) {
+    citation += `${title.italics()} `;
+  } else if (website) {
+    citation += `${website.italics()}`;
+  }
+  if (date) {
+    const longDate = new Date(date);
+    citation += `(${longDate.getFullYear()}) `;
+  }
+  if (author && title) {
+    citation += `${title.italics()} `;
+  } else if (author && website) {
+    citation += `${website.italics()}`;
+  }
+  citation += '[Online]. ';
+  if (url) {
+    citation += `Available at: ${url} `;
+  }
+  if (dateAccessed) {
+    citation += '(Accessed ';
+    const longDate = new Date(dateAccessed);
+    citation += `${longDate.getDate()} ${monthName[longDate.getMonth()]} ${longDate.getFullYear()})`;
+  }
 
-    return citation;
+  return citation;
 }
