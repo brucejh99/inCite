@@ -201,14 +201,18 @@ export function toHarvard(data) {
         citation += `${currMiddleName[0]}. `;
       }
     }
+  } else if (title) {
+    citation += `${title.italics()} `;
+  } else if (website) {
+    citation += `${website.italics()}`;
   }
   if (date) {
     const longDate = new Date(date);
     citation += `(${longDate.getFullYear()}) `;
   }
-  if (title) {
+  if (author && title) {
     citation += `${title.italics()} `;
-  } else if (website) {
+  } else if (author && website) {
     citation += `${website.italics()}`;
   }
   citation += '[Online]. ';

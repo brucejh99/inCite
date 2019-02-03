@@ -20,6 +20,11 @@
   "devDependencies": {
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-react": "^7.12.4",
     "esm": "^3.0.84",
     "mocha": "^5.2.0"
   },
