@@ -16,13 +16,17 @@
 }
 
 .list-item {
-    width: 275px;
     min-height: 48px;
     justify-content: center;
 }
 
+.list-item:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
 .list-text {
-    width: 275px;
+    width: 280px;
     height: auto;
     text-align: left;
     vertical-align: middle;
