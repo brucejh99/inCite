@@ -54,16 +54,16 @@ export default class Bibliography extends Component {
     }
   }
 
-  handleCopyCitation(citationText) {
+  handleCopyCitation() {
     const copyArea = document.getElementById('copyArea');
-    copyArea.innerHTML = citationText;
+    copyArea.innerHTML = this.state.citationList;
     copyArea.focus();
     document.execCommand('selectAll');
     document.execCommand('copy');
   }
 
   copy() {
-    this.handleCopyCitation(this.state.citationList);
+    this.handleCopyCitation();
     this.setState({ message: 'Copied!' });
   }
 
@@ -93,8 +93,7 @@ export default class Bibliography extends Component {
                     <IconButton
                       aria-label="Delete"
                       onClick={() => {
-                        const id = item.id;
-                        const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== id);
+                        const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== item.id);
                         this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
                       }}
                     >
