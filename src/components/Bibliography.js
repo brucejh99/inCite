@@ -71,7 +71,9 @@ export default class Bibliography extends Component {
     try {
       resetBibliography();
       this.setState({
-        citationList: 'Works Cited\n',
+        citationList: '',
+        sortedBibliography: [],
+        message: 'Bibliography cleared'
       });
     } catch (err) {
       this.setState({
