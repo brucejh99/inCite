@@ -2,20 +2,16 @@ const titleExceptions = ['A', 'a', 'An', 'an', 'The', 'the'];
 
 function standardizeFormat(citation) {
   if (citation[0] === '"') {
-    return citation.substring(1, citation.length);
+    return standardizeFormat(citation.substring(1, citation.length));
   } else if (citation.length > 2 && citation.substring(0, 3) === "<i>") {
-    return citation.substring(3, citation.length);
+    return standardizeFormat(citation.substring(3, citation.length));
+  } else if (titleExceptions.includes(citation.split(' ')[0])) {
+    return standardizeFormat(citation.substring(citation.split(' ')[0].length), citation.length);
   }
   return citation;
 }
 
-/*function getLastName(author) {
-  const nameArr = author.split(' ');
-  if (nameArr.length == 1) {
-    return nameArr[0];
-  }
-  return nameArr[nameArr.length - 1];
-}*/
+// TODO: get full number and check. Numbers should always go after letter ones and localeCompare only compares the first digit, not full number since it is still string comparison
 
 /**
  * Function to be passed into an array of citation objects' sort() method to sort it into APA order
@@ -23,49 +19,25 @@ function standardizeFormat(citation) {
  * @param {Object} citation2
  */
 export function APASort(citation1, citation2) {
-  let apa1 = standardizeFormat(citation1.apa);
-  let apa2 = standardizeFormat(citation2.apa);
-  
-  if (apa1 < apa2) {
-    return -1;
-  } if (apa1 === apa2) {
-    return 0;
-  } // (apa1 > apa2)
-  return 1;
+  const apa1 = standardizeFormat(citation1.apa);
+  const apa2 = standardizeFormat(citation2.apa);
+  return apa1.localeCompare(apa2);
 }
 
 export function MLASort(citation1, citation2) {
-  let mla1 = standardizeFormat(citation1.mla);
-  let mla2 = standardizeFormat(citation2.mla);
-
-  if (mla1 < mla2) {
-    return -1;
-  } if (mla1 === mla2) {
-    return 0;
-  } // (mla1 > mla2)
-  return 1;
+  const mla1 = standardizeFormat(citation1.mla);
+  const mla2 = standardizeFormat(citation2.mla);
+  return mla1.localeCompare(mla2);
 }
 
 export function ChicagoSort(citation1, citation2) {
-  let chicago1 = standardizeFormat(citation1.chicago);
-  let chicago2 = standardizeFormat(citation2.chicago);
-
-  if (chicago1 < chicago2) {
-    return -1;
-  } if (chicago1 === chicago2) {
-    return 0;
-  } // (chicago1 > chicago2)
-  return 1;
+  const chicago1 = standardizeFormat(citation1.chicago);
+  const chicago2 = standardizeFormat(citation2.chicago);
+  return chicago1.localeCompare(chicago2);
 }
 
 export function HarvardSort(citation1, citation2) {
-  let harvard1 = standardizeFormat(citation1.harvard);
-  let harvard2 = standardizeFormat(citation2.harvard);
-
-  if (harvard1 < harvard2) {
-    return -1;
-  } if (harvard1 === harvard2) {
-    return 0;
-  } // (harvard1 > harvard2)
-  return 1;
+  const harvard1 = standardizeFormat(citation1.harvard);
+  const harvard2 = standardizeFormat(citation2.harvard);
+  return harvard1.localeCompare(harvard2);
 }
