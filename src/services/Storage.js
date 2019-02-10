@@ -9,7 +9,8 @@ const defaultState = {
 const defaultBibliography = [];
 
 /**
- * Returns current state from local storage or sets it to default values if it is null and returns default values
+ * Returns current state from local storage or sets it to default values if
+ * it is null and returns default values
  */
 export function getOrSetState() {
   const currState = localStorage.getItem('state');

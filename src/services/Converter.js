@@ -52,7 +52,7 @@ export function toMLA(data) {
   const author = data.author || undefined;
   const date = data.datePublished || undefined;
   const publisher = data.publisher || undefined;
-  const website = data.website | undefined;
+  const website = data.website || undefined;
   const title = data.article || undefined;
   const url = data.url || '';
   if (author) {
@@ -82,7 +82,7 @@ export function toMLA(data) {
   }
   if (url) {
     citation += `${url}`;
-  } else if (citation.substring(citation.length - 2) == ', ') {
+  } else if (citation.substring(citation.length - 2) === ', ') {
     citation = citation.substring(0, citation.length - 2);
   }
   citation += '.';
@@ -114,7 +114,7 @@ export function toChicago(data) {
   const author = data.author || undefined;
   const date = data.datePublished || undefined;
   const publisher = data.publisher || undefined;
-  const website = data.website | undefined;
+  const website = data.website || undefined;
   const title = data.article || undefined;
   const dateAccessed = data.dateRetrieved || undefined;
   const url = data.url || '';
@@ -157,10 +157,10 @@ export function toChicago(data) {
     citation += `${monthName[longDate.getMonth()]} ${longDate.getDate()}, ${longDate.getFullYear()})`;
   }
 
-  if (citation.substring(citation.length - 1) == ' ') {
+  if (citation.substring(citation.length - 1) === ' ') {
     citation = citation.substring(0, citation.length - 1);
   }
-  if (citation.substring(citation.length - 1) != '.') {
+  if (citation.substring(citation.length - 1) !== '.') {
     citation += '.';
   }
 
@@ -182,8 +182,7 @@ export function toHarvard(data) {
   let citation = '';
   const author = data.author || undefined;
   const date = data.datePublished || undefined;
-  const publisher = data.publisher || undefined;
-  const website = data.website | undefined;
+  const website = data.website || undefined;
   const title = data.article || undefined;
   const dateAccessed = data.dateRetrieved || undefined;
   const url = data.url || '';
