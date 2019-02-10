@@ -27,22 +27,25 @@ export default class Bibliography extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.style !== this.state.style) {
+    const { style } = this.state;
+    if (nextProps.style !== style) {
       this.setState({ style: nextProps.style }, this.setBibliography);
     }
   }
 
   setBibliography() {
+    const { style } = this.state;
     const bibliography = getOrSetBibliography();
-    if (this.state.style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
-    else if (this.state.style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
-    else if (this.state.style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
-    else if (this.state.style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
+    if (style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
+    else if (style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
+    else if (style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
+    else if (style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
     else this.setState({ message: 'Select a style to begin.' });
   }
 
   generateCitation(item) {
-    switch (this.state.style) {
+    const { style } = this.state;
+    switch (style) {
       case ('APA'):
         return item.apa;
       case ('MLA'):
@@ -51,12 +54,15 @@ export default class Bibliography extends Component {
         return item.chicago;
       case ('Harvard'):
         return item.harvard;
+      default:
+        throw new Error('No citation style');
     }
   }
 
   handleCopyCitation() {
     const copyArea = document.getElementById('copyArea');
-    copyArea.innerHTML = this.state.citationList;
+    const { citationList } = this.state;
+    copyArea.innerHTML = citationList;
     copyArea.focus();
     document.execCommand('selectAll');
     document.execCommand('copy');
@@ -85,9 +91,9 @@ export default class Bibliography extends Component {
       <div className="body">
         <div className="display">
           <div className="list-container">
-            <List dense={true} style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
+            <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
               {this.state.sortedBibliography.map(item => (
-                <ListItem divider={true} className="list-item">
+                <ListItem divider className="list-item">
                   <div dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} className="list-text" />
                   <ListItemSecondaryAction>
                     <IconButton
