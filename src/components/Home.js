@@ -44,7 +44,7 @@ export default class Home extends Component {
           {this.styleButton('Chicago')}
           {this.styleButton('Harvard')}
         </div>
-        <Bibliography style={this.state.style} />
+        <Bibliography style={this.state.style} toggleEdit={this.props.toggleEdit} />
       </div>
     );
   }

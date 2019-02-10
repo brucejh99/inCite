@@ -16,52 +16,64 @@ const metascraper = require('metascraper')([
   require('metascraper-url')()
 ]);
 
+/**
+ * Citation screen. New Invariant: all citations must have an ID so we can determine replace vs. add based on whether or not it exists
+ */
 export default class Citation extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.addToBibliography = this.addToBibliography.bind(this);
     this.state = {
       complete: false,
       success: false,
-      article: null,
-      author: null,
-      publisher: null,
-      datePublished: null,
-      dateRetrieved: this.getCorrectedCurrentDate(),
-      url: null,
+      article: this.props.citation === null ? null : this.props.citation.article,
+      author: this.props.citation === null ? null : this.props.citation.author,
+      website: this.props.citation === null ? null : this.props.citation.website,
+      publisher: this.props.citation === null ? null : this.props.citation.publisher,
+      datePublished: this.props.citation === null ? null : this.props.citation.datePublished,
+      dateRetrieved: this.props.citation === null ? this.getCorrectedCurrentDate() : this.props.citation.dateRetrieved,
+      url: this.props.citation === null ? null : this.props.citation.url,
+      id: this.props.citation ? this.props.citation.id : null,
       added: ''
     }
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    const self = this;
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-      const url = tabs[0].url;
-      request({ uri: url, timeout: 5000 }, async function(err, res, html) {
-        if(html === undefined || err) {
-          self.setState({
-            url: url,
-            complete: true
-          });
-        } else {
-          const metadata = await metascraper({ html, url });
-          metadata.success = true;
-          let dateString = metadata.date;
-          if(dateString) dateString = new Date(dateString);
-          self.setState({
-            complete: true,
-            success: true,
-            article: metadata.title,
-            author: metadata.author,
-            website: metadata.publisher,
-            publisher: undefined,
-            datePublished: dateString,
-            url: url
-          });
-        }
+    if(this.props.citation !== null) {
+      this.setState({
+        complete: true,
+        success: true
       });
-    });
+    } else {
+      const self = this;
+      chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+        const url = tabs[0].url;
+        request({ uri: url, timeout: 5000 }, async function(err, res, html) {
+          if(html === undefined || err) {
+            self.setState({
+              url: url,
+              complete: true
+            });
+          } else {
+            const metadata = await metascraper({ html, url });
+            metadata.success = true;
+            let dateString = metadata.date;
+            if(dateString) dateString = new Date(dateString);
+            self.setState({
+              complete: true,
+              success: true,
+              article: metadata.title,
+              author: metadata.author,
+              website: metadata.publisher,
+              publisher: undefined,
+              datePublished: dateString,
+              url: url
+            });
+          }
+        });
+      });
+    }
   }
 
   getCorrectedCurrentDate() { // correct the date for timezone differences
@@ -71,15 +83,13 @@ export default class Citation extends Component {
   }
 
   onChange(field, value) {
-    this.setState({
-      [field]: value
-    });
+    this.setState({ [field]: value });
   }
 
   toHTMLDate(date) {
     let dateString;
     try {
-      dateString = date.toISOString().split("T")[0];
+      dateString = new Date(date).toISOString().split("T")[0];
     } catch {
       dateString = '';
     }
@@ -97,7 +107,7 @@ export default class Citation extends Component {
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
       url: this.state.url,
-      id: uuid() // unique ID of each bibliography entry to be used for deleting/editing
+      id: this.state.id || uuid()
     }
 
     metadata.mla = toMLA(metadata);
@@ -105,9 +115,11 @@ export default class Citation extends Component {
     metadata.chicago = toChicago(metadata);
     metadata.harvard = toHarvard(metadata);
 
-    bibliography.push(metadata);
-    updateBibliography(bibliography);
+    const newBibliography = bibliography.filter(citation => citation.id !== metadata.id);
+    newBibliography.push(metadata);
+    updateBibliography(newBibliography);
     this.setState({ added: 'Added to bibliography!' });
+    this.props.toggleEdit(null);
   }
 
   render() {
@@ -117,13 +129,13 @@ export default class Citation extends Component {
         <form onSubmit={this.addToBibliography}>
           <div className="table">
             <FormField fieldName="Website" inputType="text" name="website"
-              value = {this.state.website} onChange={this.onChange} />
+              value={this.state.website} onChange={this.onChange} />
             <FormField fieldName="Article" inputType="text" name="article"
               value={this.state.article} onChange={this.onChange} />
             <FormField fieldName="Author" inputType="text" name="author"
               value={this.state.author} onChange={this.onChange} />
               <FormField fieldName="Publisher" inputType="text" name="publisher"
-              value = {this.state.publisher} onChange={this.onChange} />
+              value={this.state.publisher} onChange={this.onChange} />
             <FormField fieldName="Date Published" inputType="date" name="datePublished"
               value={this.toHTMLDate(this.state.datePublished)} onChange={this.onChange} />
             <FormField fieldName="Date Retrieved" inputType="date" name="dateRetrieved"
@@ -131,8 +143,10 @@ export default class Citation extends Component {
             <FormField fieldName="URL" inputType="text" name="url"
               value={this.state.url} onChange={this.onChange} />
           </div>
-          <div className="add-citation"><input type="submit" value="Add Citation" /><br />
-          {this.state.added} </div>
+          <div className="add-citation">
+            <input type="submit" value={this.state.id ? 'Replace Citation' : 'Add Citation'} /><br />
+            {this.state.added}
+          </div>
         </form>
         :
       <LoadingPage /> }

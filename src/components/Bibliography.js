@@ -89,7 +89,7 @@ export default class Bibliography extends Component {
           <div className="list-container">
             <List dense={true} style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
               {this.state.sortedBibliography.map(item => (
-                <ListItem divider={true} className="list-item">
+                <ListItem divider={true} onClick={() => this.props.toggleEdit(item)} className="list-item">
                   <div dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} className="list-text"/>
                   <ListItemSecondaryAction>
                     <IconButton
