@@ -2,7 +2,8 @@ import React, { Component, Suspense } from 'react';
 import './Navigator.css';
 import { getOrSetState, setState } from '../services/Storage';
 const Home = React.lazy(() => import('./Home'));
-const Citation = React.lazy(() =>import('./Citation'));
+const Citation = React.lazy(() => import('./Citation'));
+const BibliographyList = React.lazy(() => import('./BibliographyList'))
 
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
@@ -15,6 +16,7 @@ export default class Navigator extends Component {
     const persistentSettings = getOrSetState();
     this.launchPage = this.launchPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
+    this.bibliographyListPage = this.bibliographyListPage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.editPage = this.editPage.bind(this);
     this.state = {
@@ -38,10 +40,12 @@ export default class Navigator extends Component {
     this.setState({
       launchPage: true,
       citationPage: false,
+      bibliographyListPage: false,
       editingValue: null
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
+      bibliographyListPage: thistate.bibliographyListPage,
       style: this.state.style
     }));
   }
@@ -53,10 +57,12 @@ export default class Navigator extends Component {
     this.setState({
       launchPage: false,
       citationPage: true,
-      editValue: null
+      bibliographyListPage: false,
+      editingValue: null
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
+      bibliographyListPage: thistate.bibliographyListPage,
       style: this.state.style
     }));
   }
@@ -68,28 +74,49 @@ export default class Navigator extends Component {
     this.setState({
       launchPage: citation === null ? true : false,
       citationPage: citation === null ? false : true,
+      bibliographyListPage: false,
       editingValue: citation
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
+      bibliographyListPage: thistate.bibliographyListPage,
       style: this.state.style
     }));
   }
 
+  /**
+   * Renders bibliography list page and updates state to bibliographyListPage in state and local storage
+   */
+  bibliographyListPage() {
+    this.setState({
+      launchPage: false,
+      citationPage: false,
+      bibliographyListPage: true
+    }, () => { updateState(this.state) });
+  }
+
   render() {
+    let currentPage;
+    if ((this.state.style === null) || this.state.launchPage) {
+      currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
+    } else if (this.state.citationPage) {
+      currentPage = <Citation toggleEdit={this.editPage} />;
+    } else if (this.state.bibliographyListPage) {
+      currentPage = <BibliographyList />;
+    }
+
     return (
       <div>
         {this.state.style !== null ?
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.launchPage} />
           <PageButton icon={addIcon} onClickMethod={this.citationPage} />
+          <PageButton icon={addIcon} onClickMethod={this.bibliographyListPage} />
         </div> : null
         }
         <h1 className="splash">inCite</h1>
         <Suspense fallback={null}>
-            {(this.state.style === null) || this.state.launchPage ?
-            <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} /> :
-            <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />}
+            {currentPage}
         </Suspense>
       </div>
     );
