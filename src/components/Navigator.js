@@ -12,10 +12,15 @@ const addIcon = require('../assets/add-icon.png'); // update to better buttons
 export default class Navigator extends Component {
   constructor() {
     super();
+    const persistentSettings = getOrSetState();
     this.launchPage = this.launchPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
-    this.state = getOrSetState();
+    this.editPage = this.editPage.bind(this);
+    this.state = {
+      editingValue: null,
+      ...persistentSettings
+    }
   }
 
   /**
@@ -32,8 +37,13 @@ export default class Navigator extends Component {
   launchPage() {
     this.setState({
       launchPage: true,
-      citationPage: false
-    }, () => { updateState(this.state) });
+      citationPage: false,
+      editingValue: null
+    }, () => updateState({
+      launchPage: this.state.launchPage,
+      citationPage: this.state.citationPage,
+      style: this.state.style
+    }));
   }
 
   /**
@@ -42,8 +52,28 @@ export default class Navigator extends Component {
   citationPage() {
     this.setState({
       launchPage: false,
-      citationPage: true
-    }, () => { updateState(this.state) });
+      citationPage: true,
+      editValue: null
+    }, () => updateState({
+      launchPage: this.state.launchPage,
+      citationPage: this.state.citationPage,
+      style: this.state.style
+    }));
+  }
+
+  /**
+   * Toggles between editing and non-editing mode. Really just navigates to citation with a prop
+   */
+  editPage(citation) {
+    this.setState({
+      launchPage: citation === null ? true : false,
+      citationPage: citation === null ? false : true,
+      editingValue: citation
+    }, () => updateState({
+      launchPage: this.state.launchPage,
+      citationPage: this.state.citationPage,
+      style: this.state.style
+    }));
   }
 
   render() {
@@ -58,7 +88,8 @@ export default class Navigator extends Component {
         <h1 className="splash">inCite</h1>
         <Suspense fallback={null}>
             {(this.state.style === null) || this.state.launchPage ?
-            <Home updateStyle={this.updateStyle} /> : <Citation />}
+            <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} /> :
+            <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />}
         </Suspense>
       </div>
     );
