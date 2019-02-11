@@ -87,6 +87,7 @@ export default class Citation extends Component {
   }
 
   toHTMLDate(date) {
+    if(date === null) return null;
     let dateString;
     try {
       dateString = new Date(date).toISOString().split("T")[0];
