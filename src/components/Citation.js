@@ -25,7 +25,6 @@ export default class Citation extends Component {
     this.addToBibliography = this.addToBibliography.bind(this);
     this.state = {
       complete: false,
-      success: false,
       article: this.props.citation === null ? null : this.props.citation.article,
       author: this.props.citation === null ? null : this.props.citation.author,
       website: this.props.citation === null ? null : this.props.citation.website,
@@ -41,10 +40,7 @@ export default class Citation extends Component {
 
   componentDidMount() {
     if(this.props.citation !== null) {
-      this.setState({
-        complete: true,
-        success: true
-      });
+      this.setState({ complete: true });
     } else {
       const self = this;
       chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
@@ -57,12 +53,10 @@ export default class Citation extends Component {
             });
           } else {
             const metadata = await metascraper({ html, url });
-            metadata.success = true;
             let dateString = metadata.date;
             if(dateString) dateString = new Date(dateString);
             self.setState({
               complete: true,
-              success: true,
               article: metadata.title,
               author: metadata.author,
               website: metadata.publisher,

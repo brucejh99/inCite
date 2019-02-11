@@ -3,7 +3,7 @@ import chai from 'chai';
 
 chai.should();
 
-function makeData(title, author, date, publisher, url, dateRetrieved, success) {
+function makeData(title, author, date, publisher, url, dateRetrieved) {
     var metadata = {};
     if(title) metadata.article = 'Title';
     if(author) metadata.author = 'FirstName MiddleName LastName';
@@ -11,7 +11,6 @@ function makeData(title, author, date, publisher, url, dateRetrieved, success) {
     if(publisher) metadata.publisher = 'Publisher';
     if(url) metadata.url = 'www.url.com/test/';
     if(dateRetrieved) metadata.dateRetrieved = new Date('2018-12-25T15:00:01.069Z');
-    metadata.success = success;
     return metadata;
 }
 
