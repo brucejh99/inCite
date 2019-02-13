@@ -45,7 +45,7 @@ export default class Navigator extends Component {
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
-      bibliographyListPage: thistate.bibliographyListPage,
+      bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
     }));
   }
@@ -62,7 +62,7 @@ export default class Navigator extends Component {
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
-      bibliographyListPage: thistate.bibliographyListPage,
+      bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
     }));
   }
@@ -79,7 +79,7 @@ export default class Navigator extends Component {
     }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
-      bibliographyListPage: thistate.bibliographyListPage,
+      bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
     }));
   }
@@ -92,7 +92,12 @@ export default class Navigator extends Component {
       launchPage: false,
       citationPage: false,
       bibliographyListPage: true
-    }, () => { updateState(this.state) });
+    }, () => updateState({
+      launchPage: this.state.launchPage,
+      citationPage: this.state.citationPage,
+      bibliographyListPage: this.state.bibliographyListPage,
+      style: this.state.style
+    }));
   }
 
   render() {
@@ -100,7 +105,7 @@ export default class Navigator extends Component {
     if ((this.state.style === null) || this.state.launchPage) {
       currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
     } else if (this.state.citationPage) {
-      currentPage = <Citation toggleEdit={this.editPage} />;
+      currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
     } else if (this.state.bibliographyListPage) {
       currentPage = <BibliographyList />;
     }

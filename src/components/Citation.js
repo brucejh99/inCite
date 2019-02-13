@@ -23,6 +23,7 @@ export default class Citation extends Component {
   constructor(props) {
     super(props);
     this.addToBibliography = this.addToBibliography.bind(this);
+    console.log(this.props.citation);
     this.state = {
       complete: false,
       article: this.props.citation === null ? null : this.props.citation.article,
