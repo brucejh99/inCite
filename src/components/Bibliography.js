@@ -61,8 +61,8 @@ export default class Bibliography extends Component {
 
   handleCopyCitation() {
     const copyArea = document.getElementById('copyArea');
-    const { citationList } = this.state;
-    copyArea.innerHTML = citationList;
+    const copyValue = this.state.sortedBibliography.map(item => this.generateCitation(item));
+    copyArea.innerHTML = copyValue.join('\n');
     copyArea.focus();
     document.execCommand('selectAll');
     document.execCommand('copy');
@@ -129,5 +129,17 @@ export default class Bibliography extends Component {
         <div id="copyArea" contentEditable="true" />
       </div>
     );
+  }
+}
+
+class CommandButton extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div></div>
+    )
   }
 }
