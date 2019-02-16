@@ -5,15 +5,16 @@
   "dependencies": {
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
-    "metascraper": "^4.9.0",
+    "metascraper": "^4.10.1",
     "metascraper-author": "^4.7.0",
     "metascraper-date": "^4.7.0",
     "metascraper-publisher": "^4.7.0",
     "metascraper-title": "^4.7.0",
     "metascraper-url": "^4.7.0",
+    "number-to-words": "^1.2.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "^2.1.3",
+    "react-scripts": "^2.1.5",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },
