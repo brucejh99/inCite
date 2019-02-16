@@ -131,15 +131,3 @@ export default class Bibliography extends Component {
     );
   }
 }
-
-class CommandButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div></div>
-    )
-  }
-}

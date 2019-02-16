@@ -165,7 +165,7 @@ class FormField extends Component {
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
 
-    if (fieldName == "datePublished" || fieldName == "dateRetrieved") {
+    if (fieldName === "datePublished" || fieldName === "dateRetrieved") {
       fieldValue = new Date(fieldValue);
     }
 
