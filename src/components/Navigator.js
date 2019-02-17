@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState } from '../services/Storage';
+import { getOrSetState, setState } from '../services/Storage';
 const Home = React.lazy(() => import('./Home'));
 const Citation = React.lazy(() =>import('./Citation'));
 
@@ -28,7 +28,7 @@ export default class Navigator extends Component {
    * @param {String} newStyle
    */
   updateStyle(newStyle) {
-    this.setState({ style: newStyle }, () => { updateState(this.state) });
+    this.setState({ style: newStyle }, () => { setState(this.state) });
   }
 
   /**
@@ -39,7 +39,7 @@ export default class Navigator extends Component {
       launchPage: true,
       citationPage: false,
       editingValue: null
-    }, () => updateState({
+    }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
       style: this.state.style
@@ -54,7 +54,7 @@ export default class Navigator extends Component {
       launchPage: false,
       citationPage: true,
       editValue: null
-    }, () => updateState({
+    }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
       style: this.state.style
@@ -69,7 +69,7 @@ export default class Navigator extends Component {
       launchPage: citation === null ? true : false,
       citationPage: citation === null ? false : true,
       editingValue: citation
-    }, () => updateState({
+    }, () => setState({
       launchPage: this.state.launchPage,
       citationPage: this.state.citationPage,
       style: this.state.style

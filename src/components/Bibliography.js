@@ -4,7 +4,7 @@ import {
   Button, List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { getOrSetBibliography, resetBibliography, updateBibliography } from '../services/Storage';
+import { getOrSetBibliography, resetBibliography, setBibliography } from '../services/Storage';
 import {
   APASort, MLASort, ChicagoSort, HarvardSort,
 } from '../services/Sorter';
@@ -102,7 +102,7 @@ export default class Bibliography extends Component {
                       aria-label="Delete"
                       onClick={() => {
                         const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== item.id);
-                        this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
+                        this.setState({ sortedBibliography: bibliography }, () => setBibliography(bibliography));
                       }}
                     >
                       <DeleteIcon />

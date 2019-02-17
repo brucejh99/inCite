@@ -5,7 +5,7 @@ import uuid from 'uuid/v4';
 import './Citation.css';
 import request from 'request';
 import LoadingPage from './Loading';
-import { getOrSetBibliography, updateBibliography } from '../services/Storage';
+import { getOrSetBibliography, setBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 
 const metascraper = require('metascraper')([
@@ -112,7 +112,7 @@ export default class Citation extends Component {
 
     const newBibliography = bibliography.filter(citation => citation.id !== metadata.id);
     newBibliography.push(metadata);
-    updateBibliography(newBibliography);
+    setBibliography(newBibliography);
     this.setState({ added: 'Added to bibliography!' });
     this.props.toggleEdit(null);
   }

@@ -1,11 +1,11 @@
 import {
     getOrSetState,
     getState,
-    updateState,
+    setState,
     getOrSetBibliography,
     getBibliography,
     resetBibliography,
-    updateBibliography
+    setBibliography
 } from '../src/services/Storage';
 import chai from 'chai';
 
