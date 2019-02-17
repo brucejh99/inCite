@@ -4,7 +4,7 @@ import {
   Button, List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { getOrSetBibliography, resetBibliography, setBibliography } from '../services/Storage';
+import { getBibliography, resetBibliography, updateBibliography } from '../services/Storage';
 import {
   APASort, MLASort, ChicagoSort, HarvardSort,
 } from '../services/Sorter';
@@ -18,7 +18,10 @@ export default class Bibliography extends Component {
     this.state = {
       style: props.style,
       message: '',
-      sortedBibliography: [],
+      sortedBibliography: {
+        name: '',
+        citations: []
+      }
     };
   }
 
@@ -35,12 +38,20 @@ export default class Bibliography extends Component {
 
   setBibliography() {
     const { style } = this.state;
-    const bibliography = getOrSetBibliography();
-    if (style === 'APA') this.setState({ sortedBibliography: bibliography.sort(APASort) });
-    else if (style === 'MLA') this.setState({ sortedBibliography: bibliography.sort(MLASort) });
-    else if (style === 'Chicago') this.setState({ sortedBibliography: bibliography.sort(ChicagoSort) });
-    else if (style === 'Harvard') this.setState({ sortedBibliography: bibliography.sort(HarvardSort) });
-    else this.setState({ message: 'Select a style to begin.' });
+    const bibliography = getBibliography();
+    if (style === 'APA') {
+      bibliography.citations = bibliography.citations.sort(APASort);
+      this.setState({ sortedBibliography: bibliography });
+    } else if (style === 'MLA') {
+      bibliography.citations = bibliography.citations.sort(MLASort);
+      this.setState({ sortedBibliography: bibliography });
+    } else if (style === 'Chicago') {
+      bibliography.citations = bibliography.citations.sort(ChicagoSort);
+      this.setState({ sortedBibliography: bibliography });
+    } else if (style === 'Harvard') {
+      bibliography.citations = bibliography.citations.sort(HarvardSort);
+      this.setState({ sortedBibliography: bibliography });
+    } else this.setState({ message: 'Select a style to begin.' });
   }
 
   generateCitation(item) {
@@ -61,7 +72,7 @@ export default class Bibliography extends Component {
 
   handleCopyCitation() {
     const copyArea = document.getElementById('copyArea');
-    const copyValue = this.state.sortedBibliography.map(item => this.generateCitation(item));
+    const copyValue = this.state.sortedBibliography.citations.map(item => this.generateCitation(item));
     copyArea.innerHTML = copyValue.join('\n');
     copyArea.focus();
     document.execCommand('selectAll');
@@ -89,29 +100,34 @@ export default class Bibliography extends Component {
   }
 
   render() {
+    const citationList = (
+      <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
+        {this.state.sortedBibliography.citations.map(item => (
+          <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
+            <div dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} className="list-text"/>
+            <ListItemSecondaryAction>
+              <IconButton
+                aria-label="Delete"
+                onClick={() => {
+                  const bibliography = this.state.sortedBibliography;
+                  bibliography.citations = bibliography.citations.filter(citation => citation.id !== item.id);
+                  this.setState({ sortedBibliography: bibliography }, () => updateBibliography(bibliography));
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))
+        }
+      </List>
+    );
+
     return (
       <div className="body">
         <div className="display">
           <div className="list-container">
-            <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
-              {this.state.sortedBibliography.map(item => (
-                <ListItem divider={true} onClick={() => this.props.toggleEdit(item)} className="list-item">
-                  <div dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} className="list-text"/>
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      aria-label="Delete"
-                      onClick={() => {
-                        const bibliography = this.state.sortedBibliography.filter(citation => citation.id !== item.id);
-                        this.setState({ sortedBibliography: bibliography }, () => setBibliography(bibliography));
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))
-            }
-            </List>
+            {citationList}
           </div>
         </div>
         {

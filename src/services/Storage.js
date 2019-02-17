@@ -2,8 +2,9 @@
 
 const defaultState = {
   style: null,
-  launchPage: false,
-  citationPage: true,
+  bibliographyListPage: true,
+  bibliographyPage: false,
+  citationPage: false
 };
 
 const defaultBibliography = [];
@@ -17,7 +18,7 @@ export function getState() {
 }
 
 /**
- * Set state item in local storage
+ * Updates state item in local storage
  * @param {Object} state
  */
 export function updateState(state) {
@@ -36,7 +37,7 @@ export function getOrSetState() {
 }
 
 /**
- * Returns bibliography stored in local storage
+ * Returns the current bibliography stored in local storage
  */
 export function getBibliography() {
   const bib = JSON.parse(localStorage.getItem('bibliography'));
@@ -44,7 +45,7 @@ export function getBibliography() {
 }
 
 /**
- * Sets a biblography object in local storage
+ * Updates the current biblography object in local storage
  * @param {Object} bibliography
  */
 export function updateBibliography(bibliography) {
@@ -52,14 +53,17 @@ export function updateBibliography(bibliography) {
 }
 
 /**
- * Returns bibliography stored in local storage or sets empty bibliography and returns it
+ * Creates a new biblography with the given name
+ * @param {String} name
  */
-export function getOrSetBibliography() {
-  const currBib = localStorage.getItem('bibliography');
-  if (currBib === null) {
-    updateBibliography(defaultBibliography);
+export function createBibliography(name) {
+  const newBibliography = {
+    name,
+    citations: []
   }
-  return getBibliography();
+  localStorage.setItem(name, JSON.stringify(newBibliography));
+  updateBibliography(newBibliography);
+  return newBibliography
 }
 
 /**

@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, setState } from '../services/Storage';
+import { getOrSetState, updateState } from '../services/Storage';
 const Home = React.lazy(() => import('./Home'));
 const Citation = React.lazy(() => import('./Citation'));
 const BibliographyList = React.lazy(() => import('./BibliographyList'))
@@ -14,9 +14,9 @@ export default class Navigator extends Component {
   constructor() {
     super();
     const persistentSettings = getOrSetState();
-    this.launchPage = this.launchPage.bind(this);
-    this.citationPage = this.citationPage.bind(this);
     this.bibliographyListPage = this.bibliographyListPage.bind(this);
+    this.bibliographyPage = this.bibliographyPage.bind(this);
+    this.citationPage = this.citationPage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.editPage = this.editPage.bind(this);
     this.state = {
@@ -30,20 +30,37 @@ export default class Navigator extends Component {
    * @param {String} newStyle
    */
   updateStyle(newStyle) {
-    this.setState({ style: newStyle }, () => { setState(this.state) });
+    this.setState({ style: newStyle }, () => { updateState(this.state) });
   }
 
   /**
-   * Renders launch page and updates state to launchPage in state and local storage
+   * Renders bibliography list page and updates state to bibliographyListPage in state and local storage
    */
-  launchPage() {
+  bibliographyListPage() {
     this.setState({
-      launchPage: true,
+      bibliographyListPage: true,
+      bibliographyPage: false,
       citationPage: false,
-      bibliographyListPage: false,
       editingValue: null
-    }, () => setState({
-      launchPage: this.state.launchPage,
+    }, () => updateState ({
+      bibliographyPage: this.state.bibliographyPage,
+      citationPage: this.state.citationPage,
+      bibliographyListPage: this.state.bibliographyListPage,
+      style: this.state.style
+    }));
+  }
+
+  /**
+   * Renders bibliography page and updates state to bibliographyPage in state and local storage
+   */
+  bibliographyPage() {
+    this.setState({
+      bibliographyListPage: false,
+      bibliographyPage: true,
+      citationPage: false,
+      editingValue: null
+    }, () => updateState({
+      bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
@@ -55,12 +72,12 @@ export default class Navigator extends Component {
    */
   citationPage() {
     this.setState({
-      launchPage: false,
-      citationPage: true,
       bibliographyListPage: false,
+      bibliographyPage: false,
+      citationPage: true,
       editingValue: null
-    }, () => setState({
-      launchPage: this.state.launchPage,
+    }, () => updateState({
+      bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
@@ -72,28 +89,12 @@ export default class Navigator extends Component {
    */
   editPage(citation) {
     this.setState({
-      launchPage: citation === null ? true : false,
+      bibliographyPage: citation === null ? true : false,
       citationPage: citation === null ? false : true,
       bibliographyListPage: false,
       editingValue: citation
-    }, () => setState({
-      launchPage: this.state.launchPage,
-      citationPage: this.state.citationPage,
-      bibliographyListPage: this.state.bibliographyListPage,
-      style: this.state.style
-    }));
-  }
-
-  /**
-   * Renders bibliography list page and updates state to bibliographyListPage in state and local storage
-   */
-  bibliographyListPage() {
-    this.setState({
-      launchPage: false,
-      citationPage: false,
-      bibliographyListPage: true
     }, () => updateState({
-      launchPage: this.state.launchPage,
+      bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
       style: this.state.style
@@ -102,23 +103,22 @@ export default class Navigator extends Component {
 
   render() {
     let currentPage;
-    if ((this.state.style === null) || this.state.launchPage) {
+    if (this.state.bibliographyListPage) {
+      currentPage = <BibliographyList />;
+    } else if (this.state.bibliographyPage) {
       currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
     } else if (this.state.citationPage) {
       currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
-    } else if (this.state.bibliographyListPage) {
-      currentPage = <BibliographyList />;
     }
 
     return (
       <div>
-        {this.state.style !== null ?
         <div className="customize-bar">
-          <PageButton icon={addIcon} onClickMethod={this.launchPage} />
-          <PageButton icon={addIcon} onClickMethod={this.citationPage} />
           <PageButton icon={addIcon} onClickMethod={this.bibliographyListPage} />
-        </div> : null
-        }
+          <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
+          <PageButton icon={addIcon} onClickMethod={this.citationPage} />
+        </div>
+
         <h1 className="splash">inCite</h1>
         <Suspense fallback={null}>
             {currentPage}
