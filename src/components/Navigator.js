@@ -25,7 +25,7 @@ export default class Navigator extends Component {
 
   /**
    * Updates style type in state and local storage
-   * @param {String} newStyle 
+   * @param {String} newStyle
    */
   updateStyle(newStyle) {
     this.setState({ style: newStyle }, () => { updateState(this.state) });
@@ -107,7 +107,7 @@ class PageButton extends Component {
     this.icon = props.icon;
     this.onClickMethod = props.onClickMethod;
   }
-  
+
   render() {
     return (
       <button className="customize-button" onClick={this.onClickMethod}>

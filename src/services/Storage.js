@@ -9,19 +9,6 @@ const defaultState = {
 const defaultBibliography = [];
 
 /**
- * Returns current state from local storage or sets it to default values if
- * it is null and returns default values
- */
-export function getOrSetState() {
-  const currState = localStorage.getItem('state');
-  if (currState === null) {
-    localStorage.setItem('state', JSON.stringify(defaultState));
-  }
-  const state = JSON.parse(localStorage.getItem('state'));
-  return state;
-}
-
-/**
  * Returns current state from local storage
  */
 export function getState() {
@@ -30,7 +17,7 @@ export function getState() {
 }
 
 /**
- * Updates state item in local storage
+ * Set state item in local storage
  * @param {Object} state
  */
 export function updateState(state) {
@@ -38,20 +25,41 @@ export function updateState(state) {
 }
 
 /**
- * Returns bibliography stored in local storage or sets it to "" and retuns "" if it does not exist
+ * Returns current state from local storage or sets it to default values and returns it
  */
-export function getOrSetBibliography() {
-  const currBib = localStorage.getItem('bibliography');
-  if (currBib === null) {
-    localStorage.setItem('bibliography', JSON.stringify(defaultBibliography));
+export function getOrSetState() {
+  const currState = localStorage.getItem('state');
+  if (currState === null) {
+    updateState(defaultState);
   }
+  return getState();
+}
+
+/**
+ * Returns bibliography stored in local storage
+ */
+export function getBibliography() {
   const bib = JSON.parse(localStorage.getItem('bibliography'));
   return bib;
 }
 
-export function getBibliography() {
-  const bib = JSON.parse(localStorage.getItem('bibliography'));
-  return bib;
+/**
+ * Sets a biblography object in local storage
+ * @param {Object} bibliography
+ */
+export function updateBibliography(bibliography) {
+  localStorage.setItem('bibliography', JSON.stringify(bibliography));
+}
+
+/**
+ * Returns bibliography stored in local storage or sets empty bibliography and returns it
+ */
+export function getOrSetBibliography() {
+  const currBib = localStorage.getItem('bibliography');
+  if (currBib === null) {
+    updateBibliography(defaultBibliography);
+  }
+  return getBibliography();
 }
 
 /**
@@ -59,12 +67,4 @@ export function getBibliography() {
  */
 export async function resetBibliography() {
   localStorage.setItem('bibliography', JSON.stringify(defaultBibliography));
-}
-
-/**
- * Sets an array of bibliography objects to the local storage
- * @param {Array} bibliography
- */
-export function updateBibliography(bibliography) {
-  localStorage.setItem('bibliography', JSON.stringify(bibliography));
 }
