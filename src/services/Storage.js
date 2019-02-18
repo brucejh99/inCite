@@ -4,7 +4,7 @@ const defaultState = {
   style: null,
   bibliographyListPage: true,
   bibliographyPage: false,
-  citationPage: false
+  citationPage: false,
 };
 
 const defaultBibliography = [];
@@ -40,7 +40,8 @@ export function getOrSetState() {
  * Returns the current bibliography stored in local storage
  */
 export function getBibliography() {
-  const bib = JSON.parse(localStorage.getItem('bibliography'));
+  const name = localStorage.getItem('bibliography');
+  const bib = JSON.parse(localStorage.getItem(name));
   return bib;
 }
 
@@ -49,7 +50,7 @@ export function getBibliography() {
  * @param {Object} bibliography
  */
 export function updateBibliography(bibliography) {
-  localStorage.setItem('bibliography', JSON.stringify(bibliography));
+  localStorage.setItem(bibliography.name, JSON.stringify(bibliography));
 }
 
 /**
@@ -58,12 +59,11 @@ export function updateBibliography(bibliography) {
  */
 export function createBibliography(name) {
   const newBibliography = {
-    name,
-    citations: []
-  }
+    citations: [],
+  };
   localStorage.setItem(name, JSON.stringify(newBibliography));
-  updateBibliography(newBibliography);
-  return newBibliography
+  localStorage.setItem('bibliography', name);
+  return newBibliography;
 }
 
 /**

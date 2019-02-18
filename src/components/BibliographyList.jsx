@@ -9,25 +9,38 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.createBibliography = this.createBibliography.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.state = getState();
     this.state.bibliographyList = [];
+    this.state.name = "Untitled";
   }
 
   createBibliography() {
-    createBibliography('name');
+    createBibliography(this.state.name);
   }
 
   selectBibliography(bibliographyName) {
     // Update the current bibliography and open "home"
   }
 
+  onChange(event) {
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+
+    this.setState({ [fieldName]: fieldValue });
+  }
+
   render() {
     return (
       <div className="body">
         <div className="display">
-          <button type="button" onClick={() => this.createBibliography() }>
-            Create New Bibliography
-          </button>
+
+        <form onSubmit={this.createBibliography}>
+          Name: <input type="text" name="name" value={this.state.name} onChange={this.onChange}/>
+          <br/>
+          <input type="submit" value="Create New Bibliography" />
+        </form>
+
           <div className="list-container">
             <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
               {this.state.bibliographyList.map(item => (
@@ -39,8 +52,7 @@ export default class Home extends Component {
                       onClick={() => {
                         // set current bib
                       }}
-                    >
-                    </IconButton>
+                    />
                   </ListItemSecondaryAction>
                 </ListItem>
               ))

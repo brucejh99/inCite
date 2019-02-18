@@ -23,6 +23,7 @@ export default class Citation extends Component {
   constructor(props) {
     super(props);
     this.addToBibliography = this.addToBibliography.bind(this);
+    this.onChange = this.onChange.bind(this);
     console.log(this.props.citation);
     this.state = {
       complete: false,
@@ -36,7 +37,6 @@ export default class Citation extends Component {
       id: this.props.citation ? this.props.citation.id : null,
       added: ''
     }
-    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
