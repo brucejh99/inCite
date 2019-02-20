@@ -17,11 +17,22 @@ export default class Navigator extends Component {
     this.bibliographyListPage = this.bibliographyListPage.bind(this);
     this.bibliographyPage = this.bibliographyPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
+    this.updateStyle = this.updateStyle.bind(this);
     this.editPage = this.editPage.bind(this);
     this.state = {
+      style: null,
       editingValue: null,
       ...persistentSettings
     }
+  }
+
+  /**
+   * Updates style type in state and local storage
+   * @param {String} newStyle
+   */
+  updateStyle(newStyle) {
+    this.setState({ style: newStyle });
+    updateStyle(newStyle);
   }
 
   /**
@@ -93,17 +104,21 @@ export default class Navigator extends Component {
     if (this.state.bibliographyListPage) {
       currentPage = <BibliographyList />;
     } else if (this.state.bibliographyPage) {
-      currentPage = <Home toggleEdit={this.editPage} />;
+      currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
     } else if (this.state.citationPage) {
       currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
     }
+
+    console.log(this.state);
 
     return (
       <div>
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={this.bibliographyListPage} />
           <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
-          <PageButton icon={addIcon} onClickMethod={this.citationPage} />
+          {this.state.style !== null ?
+            <PageButton icon={addIcon} onClickMethod={this.citationPage} />
+            : null }
         </div>
 
         <h1 className="splash">inCite</h1>
