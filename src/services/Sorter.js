@@ -1,13 +1,14 @@
 const { toWords } = require('number-to-words');
+
 const titleExceptions = ['A', 'a', 'An', 'an', 'The', 'the'];
 const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 function standardizeFormat(citation) {
   if (citation[0] === '"') {
     return standardizeFormat(citation.substring(1, citation.length));
-  } else if (citation.length > 2 && citation.substring(0, 3) === "<i>") {
+  } if (citation.length > 2 && citation.substring(0, 3) === '<i>') {
     return standardizeFormat(citation.substring(3, citation.length));
-  } else if (titleExceptions.includes(citation.split(' ')[0])) {
+  } if (titleExceptions.includes(citation.split(' ')[0])) {
     return standardizeFormat(citation.substring(citation.split(' ')[0].length), citation.length);
   }
   return citation;
@@ -15,10 +16,10 @@ function standardizeFormat(citation) {
 
 // For number comparison since localeCompare does string comparison and only considers the first digit
 function getStartNumber(citation) {
-  if(digits.includes(citation[0])) {
+  if (digits.includes(citation[0])) {
     let i = 0;
-    let curr = 0;;
-    while(digits.includes(citation[i])) {
+    let curr = 0;
+    while (digits.includes(citation[i])) {
       curr *= 10;
       curr += parseInt(citation[i]);
       ++i;

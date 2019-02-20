@@ -1,12 +1,15 @@
 /* global localStorage */
 
 const defaultState = {
-  style: null,
-  launchPage: false,
-  citationPage: true,
+  bibliographyListPage: true,
+  bibliographyPage: false,
+  citationPage: false,
 };
 
-const defaultBibliography = [];
+const newBibliography = {
+  style: null,
+  citations: [],
+};
 
 /**
  * Returns current state from local storage
@@ -17,7 +20,7 @@ export function getState() {
 }
 
 /**
- * Set state item in local storage
+ * Updates state item in local storage
  * @param {Object} state
  */
 export function updateState(state) {
@@ -36,35 +39,62 @@ export function getOrSetState() {
 }
 
 /**
- * Returns bibliography stored in local storage
+ * Creates a new biblography with the given name
+ * @param {String} name
+ */
+export function createBibliography(name) {
+  localStorage.setItem(`__${name}`, JSON.stringify(newBibliography));
+  localStorage.setItem('bibliography', name);
+  return newBibliography;
+}
+
+/**
+ * Returns the current bibliography stored in local storage
  */
 export function getBibliography() {
-  const bib = JSON.parse(localStorage.getItem('bibliography'));
+  const name = localStorage.getItem('bibliography');
+  let bib = JSON.parse(localStorage.getItem(`__${name}`));
+  if (!bib) {
+    bib = createBibliography('Untitled');
+  }
   return bib;
 }
 
 /**
- * Sets a biblography object in local storage
+ * Updates the current biblography object in local storage
  * @param {Object} bibliography
  */
 export function updateBibliography(bibliography) {
-  localStorage.setItem('bibliography', JSON.stringify(bibliography));
+  const name = localStorage.getItem('bibliography');
+  localStorage.setItem(`__${name}`, JSON.stringify(bibliography));
 }
 
 /**
- * Returns bibliography stored in local storage or sets empty bibliography and returns it
- */
-export function getOrSetBibliography() {
-  const currBib = localStorage.getItem('bibliography');
-  if (currBib === null) {
-    updateBibliography(defaultBibliography);
-  }
-  return getBibliography();
-}
-
-/**
- * Resets bibliography item in local storage to an empty array
+ * Clear entries in current bibliography
  */
 export async function resetBibliography() {
-  localStorage.setItem('bibliography', JSON.stringify(defaultBibliography));
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  currentBibliography.citations = [];
+  localStorage.setItem(`__${name}`, JSON.stringify(currentBibliography));
+}
+
+/**
+ * Gets the style from the current bibliography in local storage
+ */
+export function getStyle() {
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  return currentBibliography.style;
+}
+
+/**
+ * Updates the style in the current bibliography in local storage
+ * @param {String} style
+ */
+export function updateStyle(style) {
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  currentBibliography.style = style;
+  localStorage.setItem(`__${name}`, JSON.stringify(currentBibliography));
 }

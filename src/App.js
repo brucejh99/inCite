@@ -4,7 +4,7 @@ import Navigator from './components/Navigator';
 export default class App extends Component {
   render() {
     return (
-        <Navigator />
+      <Navigator />
     );
   }
 }
