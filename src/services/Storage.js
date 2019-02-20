@@ -7,7 +7,10 @@ const defaultState = {
   citationPage: false,
 };
 
-const defaultBibliography = [];
+const newBibliography = {
+  style: '',
+  citations: [],
+};
 
 /**
  * Returns current state from local storage
@@ -37,11 +40,24 @@ export function getOrSetState() {
 }
 
 /**
+ * Creates a new biblography with the given name
+ * @param {String} name
+ */
+export function createBibliography(name) {
+  localStorage.setItem(`__${name}`, JSON.stringify(newBibliography));
+  localStorage.setItem('bibliography', name);
+  return newBibliography;
+}
+
+/**
  * Returns the current bibliography stored in local storage
  */
 export function getBibliography() {
   const name = localStorage.getItem('bibliography');
-  const bib = JSON.parse(localStorage.getItem(name));
+  let bib = JSON.parse(localStorage.getItem(`__${name}`));
+  if (!bib) {
+    bib = createBibliography('Untitled');
+  }
   return bib;
 }
 
@@ -50,25 +66,16 @@ export function getBibliography() {
  * @param {Object} bibliography
  */
 export function updateBibliography(bibliography) {
-  localStorage.setItem(bibliography.name, JSON.stringify(bibliography));
+  const name = localStorage.getItem('bibliography');
+  localStorage.setItem(`__${name}`, JSON.stringify(bibliography));
 }
 
 /**
- * Creates a new biblography with the given name
- * @param {String} name
- */
-export function createBibliography(name) {
-  const newBibliography = {
-    citations: [],
-  };
-  localStorage.setItem(name, JSON.stringify(newBibliography));
-  localStorage.setItem('bibliography', name);
-  return newBibliography;
-}
-
-/**
- * Resets bibliography item in local storage to an empty array
+ * Clear entries in current bibliography
  */
 export async function resetBibliography() {
-  localStorage.setItem('bibliography', JSON.stringify(defaultBibliography));
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  currentBibliography.citations = [];
+  localStorage.setItem(`__${name}`, JSON.stringify(currentBibliography));
 }
