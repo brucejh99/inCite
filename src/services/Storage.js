@@ -1,14 +1,13 @@
 /* global localStorage */
 
 const defaultState = {
-  style: null,
   bibliographyListPage: true,
   bibliographyPage: false,
   citationPage: false,
 };
 
 const newBibliography = {
-  style: '',
+  style: null,
   citations: [],
 };
 
@@ -77,5 +76,25 @@ export async function resetBibliography() {
   const name = localStorage.getItem('bibliography');
   const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
   currentBibliography.citations = [];
+  localStorage.setItem(`__${name}`, JSON.stringify(currentBibliography));
+}
+
+/**
+ * Gets the style from the current bibliography in local storage
+ */
+export function getStyle() {
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  return currentBibliography.style;
+}
+
+/**
+ * Updates the style in the current bibliography in local storage
+ * @param {String} style
+ */
+export function updateStyle(style) {
+  const name = localStorage.getItem('bibliography');
+  const currentBibliography = JSON.parse(localStorage.getItem(`__${name}`));
+  currentBibliography.style = style;
   localStorage.setItem(`__${name}`, JSON.stringify(currentBibliography));
 }

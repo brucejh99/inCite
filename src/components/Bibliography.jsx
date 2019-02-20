@@ -4,58 +4,14 @@ import {
   Button, List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { getBibliography, resetBibliography, updateBibliography } from '../services/Storage';
+import { getBibliography, resetBibliography, updateBibliography, getStyle } from '../services/Storage';
 import {
   APASort, MLASort, ChicagoSort, HarvardSort,
 } from '../services/Sorter';
 
 export default class Bibliography extends Component {
-  constructor(props) {
-    super(props);
-    this.copy = this.copy.bind(this);
-    this.reset = this.reset.bind(this);
-    this.setBibliography = this.setBibliography.bind(this);
-    this.state = {
-      style: props.style,
-      message: '',
-      sortedBibliography: {
-        name: '',
-        citations: []
-      }
-    };
-  }
-
-  componentDidMount() {
-    this.setBibliography();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { style } = this.state;
-    if (nextProps.style !== style) {
-      this.setState({ style: nextProps.style }, this.setBibliography);
-    }
-  }
-
-  setBibliography() {
-    const { style } = this.state;
-    const bibliography = getBibliography();
-    if (style === 'APA') {
-      bibliography.citations = bibliography.citations.sort(APASort);
-      this.setState({ sortedBibliography: bibliography });
-    } else if (style === 'MLA') {
-      bibliography.citations = bibliography.citations.sort(MLASort);
-      this.setState({ sortedBibliography: bibliography });
-    } else if (style === 'Chicago') {
-      bibliography.citations = bibliography.citations.sort(ChicagoSort);
-      this.setState({ sortedBibliography: bibliography });
-    } else if (style === 'Harvard') {
-      bibliography.citations = bibliography.citations.sort(HarvardSort);
-      this.setState({ sortedBibliography: bibliography });
-    } else this.setState({ message: 'Select a style to begin.' });
-  }
-
-  generateCitation(item) {
-    const { style } = this.state;
+  static generateCitation(item) {
+    const style = getStyle();
     switch (style) {
       case ('APA'):
         return item.apa;
@@ -70,9 +26,45 @@ export default class Bibliography extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    this.copy = this.copy.bind(this);
+    this.reset = this.reset.bind(this);
+    this.setBibliography = this.setBibliography.bind(this);
+    this.state = {
+      message: '',
+      sortedBibliography: {
+        style: null,
+        citations: [],
+      }
+    };
+  }
+
+  componentDidMount() {
+    this.setBibliography();
+  }
+
+  setBibliography() {
+    const bibliography = getBibliography();
+    const style = getStyle();
+    if (style === 'APA') {
+      bibliography.citations = bibliography.citations.sort(APASort);
+      this.setState({ message: '', sortedBibliography: bibliography });
+    } else if (style === 'MLA') {
+      bibliography.citations = bibliography.citations.sort(MLASort);
+      this.setState({ message: '', sortedBibliography: bibliography });
+    } else if (style === 'Chicago') {
+      bibliography.citations = bibliography.citations.sort(ChicagoSort);
+      this.setState({ message: '', sortedBibliography: bibliography });
+    } else if (style === 'Harvard') {
+      bibliography.citations = bibliography.citations.sort(HarvardSort);
+      this.setState({ message: '', sortedBibliography: bibliography });
+    } else this.setState({ message: 'Select a style to begin.' });
+  }
+
   handleCopyCitation() {
     const copyArea = document.getElementById('copyArea');
-    const copyValue = this.state.sortedBibliography.citations.map(item => this.generateCitation(item));
+    const copyValue = this.state.sortedBibliography.citations.map(item => Bibliography.generateCitation(item));
     copyArea.innerHTML = copyValue.join('\n');
     copyArea.focus();
     document.execCommand('selectAll');
@@ -88,8 +80,10 @@ export default class Bibliography extends Component {
     try {
       resetBibliography();
       this.setState({
-        citationList: '',
-        sortedBibliography: [],
+        sortedBibliography: {
+          style: null,
+          citations: [],
+        },
         message: 'Bibliography cleared'
       });
     } catch (err) {
@@ -104,7 +98,7 @@ export default class Bibliography extends Component {
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
         {this.state.sortedBibliography.citations.map(item => (
           <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
-            <div dangerouslySetInnerHTML={{ __html: this.generateCitation(item) }} className="list-text"/>
+            <div dangerouslySetInnerHTML={{ __html: Bibliography.generateCitation(item) }} className="list-text"/>
             <ListItemSecondaryAction>
               <IconButton
                 aria-label="Delete"

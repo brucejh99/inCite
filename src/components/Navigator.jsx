@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState } from '../services/Storage';
+import { getOrSetState, updateState, updateStyle } from '../services/Storage';
 const Home = React.lazy(() => import('./Home'));
 const Citation = React.lazy(() => import('./Citation'));
 const BibliographyList = React.lazy(() => import('./BibliographyList'))
@@ -17,20 +17,11 @@ export default class Navigator extends Component {
     this.bibliographyListPage = this.bibliographyListPage.bind(this);
     this.bibliographyPage = this.bibliographyPage.bind(this);
     this.citationPage = this.citationPage.bind(this);
-    this.updateStyle = this.updateStyle.bind(this);
     this.editPage = this.editPage.bind(this);
     this.state = {
       editingValue: null,
       ...persistentSettings
     }
-  }
-
-  /**
-   * Updates style type in state and local storage
-   * @param {String} newStyle
-   */
-  updateStyle(newStyle) {
-    this.setState({ style: newStyle }, () => { updateState(this.state) });
   }
 
   /**
@@ -46,7 +37,6 @@ export default class Navigator extends Component {
       bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
-      style: this.state.style
     }));
   }
 
@@ -63,7 +53,6 @@ export default class Navigator extends Component {
       bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
-      style: this.state.style
     }));
   }
 
@@ -80,7 +69,6 @@ export default class Navigator extends Component {
       bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
-      style: this.state.style
     }));
   }
 
@@ -97,7 +85,6 @@ export default class Navigator extends Component {
       bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
       bibliographyListPage: this.state.bibliographyListPage,
-      style: this.state.style
     }));
   }
 
@@ -106,7 +93,7 @@ export default class Navigator extends Component {
     if (this.state.bibliographyListPage) {
       currentPage = <BibliographyList />;
     } else if (this.state.bibliographyPage) {
-      currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
+      currentPage = <Home toggleEdit={this.editPage} />;
     } else if (this.state.citationPage) {
       currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
     }

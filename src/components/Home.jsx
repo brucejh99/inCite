@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Bibliography from './Bibliography';
-import { getState } from '../services/Storage';
+import { getState, updateStyle } from '../services/Storage';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
@@ -10,7 +10,6 @@ import { getState } from '../services/Storage';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.updateStyle = props.updateStyle;
     this.selectStyle = this.selectStyle.bind(this);
     this.styleButton = this.styleButton.bind(this);
     this.state = getState();
@@ -24,7 +23,7 @@ export default class Home extends Component {
     this.setState({
       style: styleName,
     });
-    this.updateStyle(styleName);
+    updateStyle(styleName);
   }
 
   styleButton(styleName) {
