@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import './Citation.css';
+import './CitationPage.css';
 import request from 'request';
 import LoadingPage from './Loading';
 import { getBibliography, updateBibliography } from '../services/Storage';
@@ -19,12 +19,11 @@ const metascraper = require('metascraper')([
 /**
  * Citation screen. New Invariant: all citations must have an ID so we can determine replace vs. add based on whether or not it exists
  */
-export default class Citation extends Component {
+export default class CitationPage extends Component {
   constructor(props) {
     super(props);
     this.addToBibliography = this.addToBibliography.bind(this);
     this.onChange = this.onChange.bind(this);
-    console.log(this.props.citation);
     this.state = {
       complete: false,
       article: this.props.citation === null ? null : this.props.citation.article,

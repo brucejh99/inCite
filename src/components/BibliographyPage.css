@@ -1,0 +1,30 @@
+.button-container {
+    width: 350px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.style-button {
+    height: 20px;
+    width: 80px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: solid;
+    border-width: 1px;
+    border-color: rgb(96, 178, 255);
+}
+
+.default {
+    background-color: white;
+    color: rgb(96, 178, 255);
+}
+
+.selected {
+    background-color: rgb(96, 178, 255);
+    color: white;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Home.css';
+import './BibliographyPage.css';
 import Bibliography from './Bibliography';
 import { getState } from '../services/Storage';
 
@@ -7,7 +7,7 @@ import { getState } from '../services/Storage';
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {Function} updateStyle Method to update selected style globally
  */
-export default class Home extends Component {
+export default class BibliographyPage extends Component {
   constructor(props) {
     super(props);
     this.updateStyle = props.updateStyle;

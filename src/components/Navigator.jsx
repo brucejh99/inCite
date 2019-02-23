@@ -1,9 +1,9 @@
 import React, { Component, Suspense } from 'react';
 import './Navigator.css';
-import { getOrSetState, updateState, updateStyle } from '../services/Storage';
-const Home = React.lazy(() => import('./Home'));
-const Citation = React.lazy(() => import('./Citation'));
-const BibliographyList = React.lazy(() => import('./BibliographyList'))
+import { getOrSetState, updateState, setCurrentBibliography, updateStyle } from '../services/Storage';
+const BibliographyListPage = React.lazy(() => import('./BibliographyListPage'))
+const BibliographyPage = React.lazy(() => import('./BibliographyPage'));
+const CitationPage = React.lazy(() => import('./CitationPage'));
 
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
@@ -19,6 +19,7 @@ export default class Navigator extends Component {
     this.citationPage = this.citationPage.bind(this);
     this.updateStyle = this.updateStyle.bind(this);
     this.editPage = this.editPage.bind(this);
+    this.editBibliography = this.editBibliography.bind(this);
     this.state = {
       style: null,
       editingValue: null,
@@ -88,10 +89,26 @@ export default class Navigator extends Component {
    */
   editPage(citation) {
     this.setState({
+      bibliographyListPage: false,
       bibliographyPage: citation === null ? true : false,
       citationPage: citation === null ? false : true,
-      bibliographyListPage: false,
       editingValue: citation
+    }, () => updateState({
+      bibliographyPage: this.state.bibliographyPage,
+      citationPage: this.state.citationPage,
+      bibliographyListPage: this.state.bibliographyListPage,
+    }));
+  }
+
+  /**
+   * Selects the bibliography to display
+   */
+  editBibliography(name) {
+    setCurrentBibliography();
+    this.setState({
+      bibliographyListPage: false,
+      bibliographyPage: true,
+      citationPage: false,
     }, () => updateState({
       bibliographyPage: this.state.bibliographyPage,
       citationPage: this.state.citationPage,
@@ -102,14 +119,12 @@ export default class Navigator extends Component {
   render() {
     let currentPage;
     if (this.state.bibliographyListPage) {
-      currentPage = <BibliographyList />;
+      currentPage = <BibliographyListPage />;
     } else if (this.state.bibliographyPage) {
-      currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
+      currentPage = <BibliographyPage updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
     } else if (this.state.citationPage) {
-      currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
+      currentPage = <CitationPage citation={this.state.editingValue} toggleEdit={this.editPage} />;
     }
-
-    console.log(this.state);
 
     return (
       <div>

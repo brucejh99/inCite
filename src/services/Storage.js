@@ -39,12 +39,35 @@ export function getOrSetState() {
 }
 
 /**
+ * Updates the bibliography list with a new bibliography
+ * @param {String} name
+ */
+export function updateBibliographyList(name) {
+  let bibliographyList = JSON.parse(localStorage.getItem('bibliographyList'));
+  if (bibliographyList === null) {
+    bibliographyList = [];
+  }
+  bibliographyList.push(name);
+  localStorage.setItem('bibliographyList', JSON.stringify(bibliographyList));
+}
+
+/**
+ * Gets the bibliography list
+ */
+export function getBibliographyList() {
+  let bibliographyList = JSON.parse(localStorage.getItem('bibliographyList'));
+  if (!bibliographyList) bibliographyList = [];
+  return bibliographyList;
+}
+
+/**
  * Creates a new biblography with the given name
  * @param {String} name
  */
 export function createBibliography(name) {
   localStorage.setItem(`__${name}`, JSON.stringify(newBibliography));
   localStorage.setItem('bibliography', name);
+  updateBibliographyList(name);
   return newBibliography;
 }
 
@@ -54,9 +77,7 @@ export function createBibliography(name) {
 export function getBibliography() {
   const name = localStorage.getItem('bibliography');
   let bib = JSON.parse(localStorage.getItem(`__${name}`));
-  if (!bib) {
-    bib = createBibliography('Untitled');
-  }
+  if (!bib) bib = createBibliography('Untitled');
   return bib;
 }
 
@@ -67,6 +88,14 @@ export function getBibliography() {
 export function updateBibliography(bibliography) {
   const name = localStorage.getItem('bibliography');
   localStorage.setItem(`__${name}`, JSON.stringify(bibliography));
+}
+
+/**
+ * Updates the current biblography object in local storage
+ * @param {String} name
+ */
+export function setCurrentBibliography(name) {
+  localStorage.setItem('bibliography', name);
 }
 
 /**
