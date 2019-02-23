@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from 'react';
+import { observer, inject } from 'mobx-react';
 import './Navigator.css';
-import { getOrSetState, updateState, updateStyle } from '../services/Storage';
+
 const Home = React.lazy(() => import('./Home'));
 const Citation = React.lazy(() => import('./Citation'));
 const BibliographyList = React.lazy(() => import('./BibliographyList'))
@@ -10,115 +11,28 @@ const addIcon = require('../assets/add-icon.png'); // update to better buttons
 /**
  * Class that provides a taskbar and wrapper to render different pages
  */
-export default class Navigator extends Component {
-  constructor() {
-    super();
-    const persistentSettings = getOrSetState();
-    this.bibliographyListPage = this.bibliographyListPage.bind(this);
-    this.bibliographyPage = this.bibliographyPage.bind(this);
-    this.citationPage = this.citationPage.bind(this);
-    this.updateStyle = this.updateStyle.bind(this);
-    this.editPage = this.editPage.bind(this);
-    this.state = {
-      style: null,
-      editingValue: null,
-      ...persistentSettings
-    }
-  }
-
-  /**
-   * Updates style type in state and local storage
-   * @param {String} newStyle
-   */
-  updateStyle(newStyle) {
-    this.setState({ style: newStyle });
-    updateStyle(newStyle);
-  }
-
-  /**
-   * Renders bibliography list page and updates state to bibliographyListPage in state and local storage
-   */
-  bibliographyListPage() {
-    this.setState({
-      bibliographyListPage: true,
-      bibliographyPage: false,
-      citationPage: false,
-      editingValue: null
-    }, () => updateState ({
-      bibliographyPage: this.state.bibliographyPage,
-      citationPage: this.state.citationPage,
-      bibliographyListPage: this.state.bibliographyListPage,
-    }));
-  }
-
-  /**
-   * Renders bibliography page and updates state to bibliographyPage in state and local storage
-   */
-  bibliographyPage() {
-    this.setState({
-      bibliographyListPage: false,
-      bibliographyPage: true,
-      citationPage: false,
-      editingValue: null
-    }, () => updateState({
-      bibliographyPage: this.state.bibliographyPage,
-      citationPage: this.state.citationPage,
-      bibliographyListPage: this.state.bibliographyListPage,
-    }));
-  }
-
-  /**
-   * Renders citation page and updates state to citationPage in state and local storage
-   */
-  citationPage() {
-    this.setState({
-      bibliographyListPage: false,
-      bibliographyPage: false,
-      citationPage: true,
-      editingValue: null
-    }, () => updateState({
-      bibliographyPage: this.state.bibliographyPage,
-      citationPage: this.state.citationPage,
-      bibliographyListPage: this.state.bibliographyListPage,
-    }));
-  }
-
-  /**
-   * Toggles between editing and non-editing mode. Really just navigates to citation with a prop
-   */
-  editPage(citation) {
-    this.setState({
-      bibliographyPage: citation === null ? true : false,
-      citationPage: citation === null ? false : true,
-      bibliographyListPage: false,
-      editingValue: citation
-    }, () => updateState({
-      bibliographyPage: this.state.bibliographyPage,
-      citationPage: this.state.citationPage,
-      bibliographyListPage: this.state.bibliographyListPage,
-    }));
-  }
-
+class Navigator extends Component {
   render() {
+    const { appState, bibliography } = this.props.store;
     let currentPage;
-    if (this.state.bibliographyListPage) {
+    if (appState.bibliographyListPage) {
       currentPage = <BibliographyList />;
-    } else if (this.state.bibliographyPage) {
-      currentPage = <Home updateStyle={this.updateStyle} toggleEdit={this.editPage} />;
-    } else if (this.state.citationPage) {
-      currentPage = <Citation citation={this.state.editingValue} toggleEdit={this.editPage} />;
+    } else if (appState.bibliographyPage) {
+      currentPage = <Home />;
+    } else if (appState.citationPage) {
+      currentPage = <Citation />;
+    } else {
+      currentPage = <BibliographyList />;
     }
-
-    console.log(this.state);
 
     return (
       <div>
         <div className="customize-bar">
-          <PageButton icon={addIcon} onClickMethod={this.bibliographyListPage} />
-          <PageButton icon={addIcon} onClickMethod={this.bibliographyPage} />
-          {this.state.style !== null ?
-            <PageButton icon={addIcon} onClickMethod={this.citationPage} />
-            : null }
+          <PageButton icon={addIcon} onClickMethod={appState.navigate('BibliographyList')} />
+          <PageButton icon={addIcon} onClickMethod={appState.navigate('Bibliography')} />
+          {bibliography.bibStyle !== null ?
+            <PageButton icon={addIcon} onClickMethod={appState.navigate('Citation')} /> :
+            null }
         </div>
 
         <h1 className="splash">inCite</h1>
@@ -150,3 +64,5 @@ class PageButton extends Component {
     )
   }
 }
+
+export default inject('store')(observer(Navigator));

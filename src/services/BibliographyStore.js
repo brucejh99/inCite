@@ -40,8 +40,9 @@ const BibliographyStoreModel = types
                 citations: self.citation
             }));
         },
-        addCitation(citation) {
-            self.citations.push(citation);
+        addCitation(newCitation) {
+            self.citations.filter(citation => citation.id !== newCitation.id);
+            self.citations.push(newCitation);
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
                 citations: self.citation
@@ -49,7 +50,7 @@ const BibliographyStoreModel = types
         }
     }))
     .views(self => ({
-        get biName() {
+        get bibName() {
             return self.name;
         },
         get bibStyle() {

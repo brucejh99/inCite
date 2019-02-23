@@ -19,4 +19,6 @@ class StoreModel {
     }
 }
 
-export default new StoreModel().init();
+const store = new StoreModel();
+store.init();
+export default store;

@@ -4,14 +4,15 @@ import {
   Button, List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { getBibliography, resetBibliography, updateBibliography, getStyle } from '../services/Storage';
+import { inject, observer } from 'mobx-react';
+import { resetBibliography, updateBibliography } from '../services/Storage';
 import {
   APASort, MLASort, ChicagoSort, HarvardSort,
 } from '../services/Sorter';
 
-export default class Bibliography extends Component {
+class Bibliography extends Component {
   static generateCitation(item) {
-    const style = getStyle();
+    const { style } = this.props.bibliography;
     switch (style) {
       case ('APA'):
         return item.apa;
@@ -45,20 +46,16 @@ export default class Bibliography extends Component {
   }
 
   setBibliography() {
-    const bibliography = getBibliography();
-    const style = getStyle();
+    const { bibliography } = this.props;
+    const style = bibliography.bibStyle;
     if (style === 'APA') {
-      bibliography.citations = bibliography.citations.sort(APASort);
-      this.setState({ message: '', sortedBibliography: bibliography });
+      this.setState({ message: '', sortedBibliography: bibliography.citations.sort(APASort) });
     } else if (style === 'MLA') {
-      bibliography.citations = bibliography.citations.sort(MLASort);
-      this.setState({ message: '', sortedBibliography: bibliography });
+      this.setState({ message: '', sortedBibliography: bibliography.citations.sort(MLASort) });
     } else if (style === 'Chicago') {
-      bibliography.citations = bibliography.citations.sort(ChicagoSort);
-      this.setState({ message: '', sortedBibliography: bibliography });
+      this.setState({ message: '', sortedBibliography: bibliography.citations.sort(ChicagoSort) });
     } else if (style === 'Harvard') {
-      bibliography.citations = bibliography.citations.sort(HarvardSort);
-      this.setState({ message: '', sortedBibliography: bibliography });
+      this.setState({ message: '', sortedBibliography: bibliography.citations.sort(HarvardSort) });
     } else this.setState({ message: 'Select a style to begin.' });
   }
 
@@ -97,7 +94,7 @@ export default class Bibliography extends Component {
     const citationList = (
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
         {this.state.sortedBibliography.citations.map(item => (
-          <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
+          <ListItem divider onClick={() => this.props.startEdit(item)} className="list-item">
             <div dangerouslySetInnerHTML={{ __html: Bibliography.generateCitation(item) }} className="list-text"/>
             <ListItemSecondaryAction>
               <IconButton
@@ -141,3 +138,5 @@ export default class Bibliography extends Component {
     );
   }
 }
+
+export default inject('store')(observer(Bibliography));

@@ -1,41 +1,32 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Bibliography from './Bibliography';
-import { getState } from '../services/Storage';
+import { observer, inject } from 'mobx-react';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {Function} updateStyle Method to update selected style globally
  */
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.updateStyle = props.updateStyle;
-    this.selectStyle = this.selectStyle.bind(this);
     this.styleButton = this.styleButton.bind(this);
-    this.state = getState();
-  }
-
-  /**
-   * Method to select a new style and update state globally
-   * @param {String} styleName Currently selected style
-   */
-  selectStyle(styleName) {
-    this.setState({
-      style: styleName,
-    });
-    this.updateStyle(styleName);
   }
 
   styleButton(styleName) {
+    const { bibliography } = this.props.store;
     return (
-      <button className={this.state.style === styleName ? 'style-button selected' : 'style-button default'} onClick={() => this.selectStyle(styleName)}>
+      <button
+        className={bibliography.bibStyle === styleName ? 'style-button selected' : 'style-button default'}
+        onClick={() => bibliography.updateStyle(styleName)}>
         {styleName}
       </button>
     );
   }
 
   render() {
+    const { appState, bibliography } = this.props.store;
     return (
       <div>
         <div className="button-container">
@@ -44,8 +35,16 @@ export default class Home extends Component {
           {this.styleButton('Chicago')}
           {this.styleButton('Harvard')}
         </div>
-        <Bibliography style={this.state.style} toggleEdit={this.props.toggleEdit} />
+        <Bibliography
+          style={appState.bibStyle}
+          state={appState.state}
+          bibliography={bibliography.bibCitations}
+          startEdit={bibliography.startEditCitation}
+          endEdit={bibliography.endEditCitation}
+        />
       </div>
     );
   }
 }
+
+export default inject('store')(observer(Home));

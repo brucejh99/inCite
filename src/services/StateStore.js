@@ -20,23 +20,7 @@ const AppStateModel = types
         editingValue: types.maybeNull(Citation)
     })
     .actions(self => ({
-        pesistentState() {
-            const persistentState = JSON.parse(localStorage.getItem('PersistentState'));
-            if(persistentState) {
-                self = {
-                    ...self,
-                    ...persistentState,
-                    editingValue: null
-                }
-            } else {
-                self = {
-                    ...self,
-                    ...defaultState,
-                    editingValue: null
-                }
-            }
-        },
-        togglePage(pageName) {
+        navigate(pageName) {
             switch(pageName) {
                 case("BibliographyList"):
                     self.bibliographyListPage = true;
@@ -76,10 +60,11 @@ const AppStateModel = types
             self.bibliographyListPage = false;
             self.bibliographyPage = true;
             self.citationPage = false;
+            self.editingValue = null;
         }
     }))
     .views(self => ({
-        get appState() {
+        get state() {
             const { bibliographyListPage, bibliographyPage, citationPage, editingValue } = self;
             return { bibliographyListPage, bibliographyPage, citationPage, editingValue };
         }

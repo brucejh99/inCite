@@ -1,12 +1,11 @@
 /* global chrome */
-
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 import './Citation.css';
 import request from 'request';
 import LoadingPage from './Loading';
-import { getBibliography, updateBibliography } from '../services/Storage';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
+import { inject, observer } from 'mobx-react';
 
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
@@ -17,31 +16,35 @@ const metascraper = require('metascraper')([
 ]);
 
 /**
- * Citation screen. New Invariant: all citations must have an ID so we can determine replace vs. add based on whether or not it exists
+ * Citation screen. All citations must have an ID so we can determine replace vs. add based on whether or not it exists
  */
-export default class Citation extends Component {
+class Citation extends Component {
   constructor(props) {
     super(props);
     this.addToBibliography = this.addToBibliography.bind(this);
     this.onChange = this.onChange.bind(this);
-    console.log(this.props.citation);
     this.state = {
-      complete: false,
-      article: this.props.citation === null ? null : this.props.citation.article,
-      author: this.props.citation === null ? null : this.props.citation.author,
-      website: this.props.citation === null ? null : this.props.citation.website,
-      publisher: this.props.citation === null ? null : this.props.citation.publisher,
-      datePublished: this.props.citation === null ? null : this.props.citation.datePublished,
-      dateRetrieved: this.props.citation === null ? this.getCorrectedCurrentDate() : this.props.citation.dateRetrieved,
-      url: this.props.citation === null ? null : this.props.citation.url,
-      id: this.props.citation ? this.props.citation.id : null,
-      added: ''
+      complete: false
     }
   }
 
   componentDidMount() {
-    if(this.props.citation !== null) {
-      this.setState({ complete: true });
+    const { editingValue } = this.props;
+    if(editingValue !== null) {
+      this.setState({
+        article: editingValue.article,
+        author: editingValue.author,
+        website: editingValue.website,
+        publisher: editingValue.publisher,
+        datePublished: editingValue.datePublished,
+        dateRetrieved: editingValue === null ?
+          this.getCorrectedCurrentDate() :
+          editingValue.dateRetrieved,
+        url: editingValue.url,
+        id: editingValue.id,
+        added: '',
+        complete: true
+      });
     } else {
       const self = this;
       chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
@@ -50,6 +53,7 @@ export default class Citation extends Component {
           if(html === undefined || err) {
             self.setState({
               url: url,
+              id: uuid(),
               complete: true
             });
           } else {
@@ -63,7 +67,9 @@ export default class Citation extends Component {
               website: metadata.publisher,
               publisher: undefined,
               datePublished: dateString,
-              url: url
+              dateRetrieved: this.getCorrectedCurrentDate(),
+              url: url,
+              id: uuid()
             });
           }
         });
@@ -94,7 +100,7 @@ export default class Citation extends Component {
 
   addToBibliography(e) {
     e.preventDefault();
-    let bibliography = getBibliography();
+    const { appState, bibliography } = this.props.store;
     let metadata = {
       article: this.state.article || undefined,
       author: this.state.author || undefined,
@@ -103,7 +109,7 @@ export default class Citation extends Component {
       datePublished: this.state.datePublished,
       dateRetrieved: this.state.dateRetrieved,
       url: this.state.url,
-      id: this.state.id || uuid()
+      id: this.state.id
     }
 
     metadata.mla = toMLA(metadata);
@@ -111,12 +117,9 @@ export default class Citation extends Component {
     metadata.chicago = toChicago(metadata);
     metadata.harvard = toHarvard(metadata);
 
-    const newBibliography = bibliography;
-    newBibliography.citations.filter(citation => citation.id !== metadata.id);
-    newBibliography.citations.push(metadata);
-    updateBibliography(newBibliography);
+    bibliography.addCitation(metadata);
     this.setState({ added: 'Added to bibliography!' });
-    this.props.toggleEdit(null);
+    appState.endEditCitation();
   }
 
   render() {
@@ -187,3 +190,5 @@ class FormField extends Component {
     )
   }
 }
+
+export default inject('store')(observer(Citation));
