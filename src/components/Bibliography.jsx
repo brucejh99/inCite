@@ -94,7 +94,7 @@ class Bibliography extends Component {
     const citationList = (
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
         {this.state.sortedBibliography.citations.map(item => (
-          <ListItem divider onClick={() => this.props.startEdit(item)} className="list-item">
+          <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
             <div dangerouslySetInnerHTML={{ __html: Bibliography.generateCitation(item) }} className="list-text"/>
             <ListItemSecondaryAction>
               <IconButton

@@ -39,8 +39,7 @@ class Home extends Component {
           style={appState.bibStyle}
           state={appState.state}
           bibliography={bibliography.bibCitations}
-          startEdit={bibliography.startEditCitation}
-          endEdit={bibliography.endEditCitation}
+          // toggleEdit={bibliography.startEditCitation}
         />
       </div>
     );

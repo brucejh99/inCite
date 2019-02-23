@@ -15,11 +15,29 @@ const Citation = types.model({
 const BibliographyStoreModel = types
     .model('Bibliography', {
         name: types.string,
+        list: types.array(types.string),
         style: types.maybeNull(types.string),
         citations: types.array(Citation)
     })
     .actions(self => ({
-        switchBibliography(name) {
+        addBibliography(name, style) {
+            self.name = name;
+            self.style = style || null;
+            self.citations = [];
+            self.list.push(name);
+            localStorage.setItem(name, JSON.stringify({
+                style,
+                citations: []
+            }));
+            localStorage.setItem('Bibliographies', JSON.stringify({ name, list: self.list }));
+        },
+        deleteBibliography(name) {
+            localStorage.removeItem(name);
+            self.list.filter(bib => bib.name !== name);
+            localStorage.setItem('Bibliographies', JSON.stringify({ name: '', list: self.list }));
+        },
+        selectBibliography(name) {
+            localStorage.setItem('Bibliographies', { name, list: self.list });
             const { style, citations } = JSON.parse(localStorage.getItem(name));
             self.name = name;
             self.style = style;
@@ -27,17 +45,20 @@ const BibliographyStoreModel = types
         },
         updateName(name) {
             localStorage.removeItem(self.name);
+            self.list.filter(item => item === self.name);
             self.name = name;
+            self.list.push(self.name);
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
                 citations: self.citations
             }));
+            localStorage.setItem('Bibliographies', JSON.stringify({ name, list: self.list }));
         },
         updateStyle(styleName) {
             self.style = styleName;
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
-                citations: self.citation
+                citations: self.citations
             }));
         },
         addCitation(newCitation) {
@@ -45,13 +66,25 @@ const BibliographyStoreModel = types
             self.citations.push(newCitation);
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
-                citations: self.citation
+                citations: self.citations
             }));
+        },
+        deleteCitation(citation) {
+            self.citations.filter(item => item.id === citation.id);
+            localStorage.setItem(self.name, JSON.stringify({
+                style: self.style,
+                citations: self.citations
+            }))
         }
     }))
     .views(self => ({
-        get bibName() {
-            return self.name;
+        get activeBibName() {
+            const bibs = localStorage.getItem('Bibliographies');
+            if(bibs === null) return null;
+            return JSON.parse(bibs).name;
+        },
+        get bibList() {
+            return self.list;
         },
         get bibStyle() {
             return self.style;

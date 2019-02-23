@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Button, List, ListItem, ListItemSecondaryAction, IconButton,
+  List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import './BibliographyList.css';
 import { getState, createBibliography } from '../services/Storage';
 
-export default class Home extends Component {
+export default class BibliographyList extends Component {
   constructor(props) {
     super(props);
     this.createBibliography = this.createBibliography.bind(this);

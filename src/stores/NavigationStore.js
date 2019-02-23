@@ -1,23 +1,11 @@
 /* global localStorage */
 import { types } from 'mobx-state-tree';
 
-const Citation = types.model({
-    article: types.optional(types.string),
-    author: types.optional(types.string),
-    publisher: types.optional(types.string),
-    website: types.optional(types.string),
-    datePublished: types.optional(types.Date),
-    dateRetrieved: types.optional(types.Date),
-    url: types.optional(types.string),
-    id: types.string
-});
-
-const AppStateModel = types
-    .model('App', {
+const NavigationModel = types
+    .model('Navigation', {
         bibliographyListPage: types.boolean,
         bibliographyPage: types.boolean,
-        citationPage: types.boolean,
-        editingValue: types.maybeNull(Citation)
+        citationPage: types.boolean
     })
     .actions(self => ({
         navigate(pageName) {
@@ -44,36 +32,24 @@ const AppStateModel = types
                     break;
             }
             const newState = {
-                bibliographyListPage: true,
-                bibliographyPage: false,
-                citationPage: false
+                bibliographyListPage: self.bibliographyListPage,
+                bibliographyPage: self.bibliographyPage,
+                citationPage: self.citationPage
             }
             localStorage.setItem('PersistentState', JSON.stringify(newState));
-        },
-        startEditCitation(citation) {
-            self.bibliographyListPage = false;
-            self.bibliographyPage = false;
-            self.citationPage = true;
-            self.editingValue = citation;
-        },
-        endEditCitation() {
-            self.bibliographyListPage = false;
-            self.bibliographyPage = true;
-            self.citationPage = false;
-            self.editingValue = null;
         }
     }))
     .views(self => ({
-        get state() {
-            const { bibliographyListPage, bibliographyPage, citationPage, editingValue } = self;
-            return { bibliographyListPage, bibliographyPage, citationPage, editingValue };
+        get page() {
+            const { bibliographyListPage, bibliographyPage, citationPage } = self;
+            return { bibliographyListPage, bibliographyPage, citationPage };
         }
     }));
 
-export const defaultState = {
+export const defaultView = {
     bibliographyListPage: true,
     bibliographyPage: false,
     citationPage: false
 }
 
-export default AppStateModel;
+export default NavigationModel;
