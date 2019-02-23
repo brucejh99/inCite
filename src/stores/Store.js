@@ -9,12 +9,8 @@ class StoreModel {
         const storedPage = localStorage.getItem('PersistentState');
         const storedBib = localStorage.getItem(this.bibliography.activeBibName);
 
-        if(storedPage !== null) {
-            this.appState = NavigationStoreModel.create(JSON.parse(storedPage));
-        }
-        if(storedBib !== null) {
-            this.bibliography = BibliographyStoreModel.create(JSON.parse(storedBib));
-        }
+        if(storedPage) this.appState = NavigationStoreModel.create(JSON.parse(storedPage));
+        if(storedBib) this.bibliography = BibliographyStoreModel.create(JSON.parse(storedBib));
     }
 }
 
