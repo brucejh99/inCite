@@ -10,12 +10,12 @@ export default class BibliographyList extends Component {
     const bibliographyList = (
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
         {this.props.list.map(item => (
-          <ListItem divider onClick={() => this.props.selectBibliography(item.name)} className="list-item">
+          <ListItem divider onClick={() => this.props.onClick(item)} className="list-item">
             <div dangerouslySetInnerHTML={{ __html: item }} className="list-text"/>
             <ListItemSecondaryAction>
               <IconButton
                 aria-label="Delete"
-                onClick={() => this.props.delete(item.name)}
+                onClick={() => this.props.delete(item)}
               >
                 <DeleteIcon />
               </IconButton>

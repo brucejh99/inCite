@@ -1,9 +1,11 @@
 import NavigationStoreModel, { defaultView } from './NavigationStore';
 import BibliographyStoreModel, { emptyBibliography }  from './BibliographyStore';
+// import CitationStoreModel, { emptyCitation } from './CitationStore';
 
 class StoreModel {
     navigation = NavigationStoreModel.create(defaultView);
     bibliography = BibliographyStoreModel.create(emptyBibliography);
+    // citation = CitationStoreModel.create(emptyCitation);
 
     init = () => {
         const storedPage = localStorage.getItem('PersistentState');

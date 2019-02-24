@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './BibliographyListPage.css';
+import './BibliographyListScreen.css';
 import { observer, inject } from 'mobx-react';
-import BibliographyList from './BibliographyList';
+import BibliographyList from '../../components/BibliographyList';
 
 class BibliographyListPage extends Component {
   state = {
@@ -22,13 +22,19 @@ class BibliographyListPage extends Component {
     navigation.navigate('Bibliography');
   }
 
+  selectBibliography = (name) => {
+    const { bibliography, navigation } = this.props.store;
+    bibliography.selectBibliography(name);
+    navigation.navigate('Bibliography');
+  }
+
   render() {
     const { bibliography } = this.props.store;
     return (
       <div>
         <BibliographyList
           list={bibliography.bibList}
-          edit={bibliography.updateName}
+          onClick={this.selectBibliography}
           delete={bibliography.deleteBibliography}
         />
         <form onSubmit={this.createBibliography}>

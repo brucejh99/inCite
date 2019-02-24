@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import Store from './stores/Store';
-import Navigator from './components/Navigator';
+import Navigator from './navigator/Navigator';
 
 export default class App extends Component {
   render() {

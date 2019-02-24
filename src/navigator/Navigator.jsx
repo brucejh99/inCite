@@ -2,9 +2,9 @@ import React, { Component, Suspense } from 'react';
 import { observer, inject } from 'mobx-react';
 import './Navigator.css';
 
-const BibliographyPage = React.lazy(() => import('./BibliographyPage'));
-const Citation = React.lazy(() => import('./CitationPage'));
-const BibliographyListPage = React.lazy(() => import('./BibliographyListPage'));
+const BibliographyPage = React.lazy(() => import('../pages/screens/BibliographyScreen'));
+const Citation = React.lazy(() => import('../pages/screens/CitationScreen'));
+const BibliographyListPage = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
 
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
