@@ -1,7 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
-import './Citation.css';
+import './CitationPage.css';
 import request from 'request';
 import LoadingPage from './Loading';
 import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';

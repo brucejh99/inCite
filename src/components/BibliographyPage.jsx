@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Home.css';
+import './BibliographyPage.css';
 import Bibliography from './Bibliography';
 import { observer, inject } from 'mobx-react';
 
@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react';
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {Function} updateStyle Method to update selected style globally
  */
-class Home extends Component {
+export default class BibliographyPage extends Component {
   constructor(props) {
     super(props);
     this.updateStyle = props.updateStyle;
@@ -46,4 +46,4 @@ class Home extends Component {
   }
 }
 
-export default inject('store')(observer(Home));
+export default inject('store')(observer(BibliographyPage));
