@@ -38,7 +38,9 @@ const BibliographyStoreModel = types
         },
         deleteBibliography(name) {
             localStorage.removeItem(`__${name}`);
-            self.list.filter(bib => bib.name !== `__${name}`);
+            self.list.replace(self.list.filter(bibName => bibName !== name));
+            self.name = '';
+            self.citations.replace([]);
             localStorage.setItem('Bibliographies', JSON.stringify({ name: '', list: self.list }));
         },
         selectBibliography(name) {
@@ -74,7 +76,7 @@ const BibliographyStoreModel = types
             }));
         },
         deleteCitation(citation) {
-            self.citations.filter(item => item.id === citation.id);
+            self.citations.replace(self.citations.filter(item => item.id === citation.id));
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
                 citations: self.citations

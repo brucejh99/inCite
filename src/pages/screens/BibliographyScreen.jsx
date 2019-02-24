@@ -4,7 +4,7 @@ import './BibliographyScreen.css';
 import request from 'request';
 import uuid from 'uuid/v4';
 import { observer, inject } from 'mobx-react';
-import Bibliography from '../views/Bibliography';
+import BibliographyView from '../views/BibliographyView';
 import { toAPA, toMLA, toChicago, toHarvard } from '../../services/Converter';
 import { getCorrectedCurrentDate, } from '../../services/Utils';
 
@@ -66,7 +66,7 @@ class BibliographyPage extends Component {
   render() {
     const { navigation, bibliography } = this.props.store;
     return (
-      <Bibliography
+      <BibliographyView
         style={navigation.bibStyle}
         state={navigation.state}
         bibliography={bibliography.renderCitations}

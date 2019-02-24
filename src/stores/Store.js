@@ -16,10 +16,10 @@ class StoreModel {
             const bibliographies = JSON.parse(storedBib);
             const activeBib = JSON.parse(localStorage.getItem(bibliographies.name));
             this.bibliography = BibliographyStoreModel.create({
-                name: activeBib,
+                name: bibliographies.name,
                 list: bibliographies.list,
-                style: activeBib.style,
-                citations: activeBib.citations
+                style: activeBib ? activeBib.style : null,
+                citations: activeBib ? activeBib.citations : []
             });
         }
     }

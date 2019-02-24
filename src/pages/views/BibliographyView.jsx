@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Bibliography.css';
+import './BibliographyView.css';
 import {
   Button, List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
@@ -27,10 +27,7 @@ class Bibliography extends Component {
           <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
             <div dangerouslySetInnerHTML={{ __html: item }} className="list-text"/>
             <ListItemSecondaryAction>
-              <IconButton
-                aria-label="Delete"
-                onClick={() => deleteItem(item)}
-              >
+              <IconButton aria-label="Delete" onClick={() => deleteItem(item)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
