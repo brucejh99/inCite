@@ -46,7 +46,7 @@ const BibliographyStoreModel = types
             const { style, citations } = JSON.parse(localStorage.getItem(`__${name}`));
             self.name = `__${name}`;
             self.style = style;
-            self.citations = citations;
+            self.citations.replace(citations);
         },
         updateName(name) {
             localStorage.removeItem(self.name);
