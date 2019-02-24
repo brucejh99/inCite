@@ -30,7 +30,7 @@ class Citation extends Component {
 
   componentDidMount() {
     const { editingValue } = this.props;
-    if(editingValue !== null) {
+    if(editingValue) {
       this.setState({
         article: editingValue.article,
         author: editingValue.author,
@@ -100,7 +100,7 @@ class Citation extends Component {
 
   addToBibliography(e) {
     e.preventDefault();
-    const { appState, bibliography } = this.props.store;
+    const { bibliography } = this.props.store;
     let metadata = {
       article: this.state.article || undefined,
       author: this.state.author || undefined,
@@ -119,7 +119,6 @@ class Citation extends Component {
 
     bibliography.addCitation(metadata);
     this.setState({ added: 'Added to bibliography!' });
-    appState.endEditCitation();
   }
 
   render() {

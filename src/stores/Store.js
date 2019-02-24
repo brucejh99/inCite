@@ -7,13 +7,22 @@ class StoreModel {
 
     init = () => {
         const storedPage = localStorage.getItem('PersistentState');
-        const storedBib = localStorage.getItem(this.bibliography.activeBibName);
+        const storedBib = localStorage.getItem('Bibliographies');
 
-        if(storedPage) this.appState = NavigationStoreModel.create(JSON.parse(storedPage));
-        if(storedBib) this.bibliography = BibliographyStoreModel.create(JSON.parse(storedBib));
+        if(storedPage) this.navigation = NavigationStoreModel.create(JSON.parse(storedPage));
+        if(storedBib) {
+            const bibliographies = JSON.parse(storedBib);
+            const activeBib = JSON.parse(localStorage.getItem(bibliographies.name));
+            this.bibliography = BibliographyStoreModel.create({
+                name: activeBib,
+                list: bibliographies.list,
+                style: activeBib.style,
+                citations: activeBib.citations
+            });
+        }
     }
 }
 
-const store = new StoreModel();
-store.init();
-export default store;
+const Store = new StoreModel();
+Store.init();
+export default Store;

@@ -2,9 +2,9 @@ import React, { Component, Suspense } from 'react';
 import { observer, inject } from 'mobx-react';
 import './Navigator.css';
 
-const Home = React.lazy(() => import('./Home'));
-const Citation = React.lazy(() => import('./Citation'));
-const BibliographyList = React.lazy(() => import('./BibliographyList'))
+const BibliographyPage = React.lazy(() => import('./BibliographyPage'));
+const Citation = React.lazy(() => import('./CitationPage'));
+const BibliographyListPage = React.lazy(() => import('./BibliographyListPage'));
 
 const addIcon = require('../assets/add-icon.png'); // update to better buttons
 
@@ -13,25 +13,25 @@ const addIcon = require('../assets/add-icon.png'); // update to better buttons
  */
 class Navigator extends Component {
   render() {
-    const { appState, bibliography } = this.props.store;
+    const { navigation, bibliography } = this.props.store;
     let currentPage;
-    if (appState.bibliographyListPage) {
-      currentPage = <BibliographyList />;
-    } else if (appState.bibliographyPage) {
-      currentPage = <Home />;
-    } else if (appState.citationPage) {
+    if (navigation.page.bibliographyListPage) {
+      currentPage = <BibliographyListPage />;
+    } else if (navigation.page.bibliographyPage) {
+      currentPage = <BibliographyPage />;
+    } else if (navigation.page.citationPage) {
       currentPage = <Citation />;
     } else {
-      currentPage = <BibliographyList />;
+      currentPage = <BibliographyListPage />;
     }
 
     return (
       <div>
         <div className="customize-bar">
-          <PageButton icon={addIcon} onClickMethod={appState.navigate('BibliographyList')} />
-          <PageButton icon={addIcon} onClickMethod={appState.navigate('Bibliography')} />
+          <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('BibliographyList')} />
+          <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Bibliography')} />
           {bibliography.bibStyle !== null ?
-            <PageButton icon={addIcon} onClickMethod={appState.navigate('Citation')} /> :
+            <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
             null }
         </div>
 

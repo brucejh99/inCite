@@ -29,7 +29,7 @@ const BibliographyStoreModel = types
                 style,
                 citations: []
             }));
-            localStorage.setItem('Bibliographies', JSON.stringify({ name, list: self.list }));
+            localStorage.setItem('Bibliographies', JSON.stringify({ name, list: self.list.toJS() }));
         },
         deleteBibliography(name) {
             localStorage.removeItem(name);
@@ -84,20 +84,21 @@ const BibliographyStoreModel = types
             return JSON.parse(bibs).name;
         },
         get bibList() {
-            return self.list;
+            return self.list.toJS();
         },
         get bibStyle() {
             return self.style;
         },
         get bibCitations() {
-            return self.citation.toJS();
+            return self.citations.toJS();
         }
     }));
 
 export const emptyBibliography = {
     name: 'Untitled',
     style: null,
-    citations: []
+    citations: [],
+    list: []
 }
 
 export default BibliographyStoreModel;

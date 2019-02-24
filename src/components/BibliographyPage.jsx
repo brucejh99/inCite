@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react';
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {Function} updateStyle Method to update selected style globally
  */
-export default class BibliographyPage extends Component {
+class BibliographyPage extends Component {
   constructor(props) {
     super(props);
     this.updateStyle = props.updateStyle;
@@ -26,7 +26,7 @@ export default class BibliographyPage extends Component {
   }
 
   render() {
-    const { appState, bibliography } = this.props.store;
+    const { navigation, bibliography } = this.props.store;
     return (
       <div>
         <div className="button-container">
@@ -36,8 +36,8 @@ export default class BibliographyPage extends Component {
           {this.styleButton('Harvard')}
         </div>
         <Bibliography
-          style={appState.bibStyle}
-          state={appState.state}
+          style={navigation.bibStyle}
+          state={navigation.state}
           bibliography={bibliography.bibCitations}
           // toggleEdit={bibliography.startEditCitation}
         />
