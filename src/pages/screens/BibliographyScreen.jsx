@@ -33,6 +33,7 @@ class BibliographyPage extends Component {
           metadata = await metascraper({ html, url });
         }
         let dateString = metadata.date;
+        console.log(dateString);
         if(dateString) dateString = new Date(dateString);
         const citation = {
           url: metadata.url || null,
@@ -56,16 +57,18 @@ class BibliographyPage extends Component {
   copyCitations = () => {
     const { bibliography } = this.props.store;
     const copyArea = document.getElementById('copyArea');
-    const copyValue = bibliography.renderCitations;
+    const copyValue = bibliography.renderCitations.map(item => item.citation);
     copyArea.innerHTML = copyValue.join('\n');
     copyArea.focus();
     document.execCommand('selectAll');
     document.execCommand('copy');
   }
 
-  editCitation = () => {
-    // do things here
-    this.props.store.navigation.navigate('Citation');
+  editCitation = (item) => {
+    const { navigation, citation, bibliography } = this.props.store;
+    const editValue = bibliography.bibCitations.find(value => value.id === item.id);
+    citation.setCitation(editValue);
+    navigation.navigate('Citation');
   }
 
   render() {

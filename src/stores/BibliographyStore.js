@@ -3,13 +3,13 @@ import { types } from 'mobx-state-tree';
 import { MLASort, APASort, ChicagoSort, HarvardSort } from '../services/Sorter';
 
 const Citation = types.model({
-    article: types.optional(types.string),
-    author: types.optional(types.string),
-    publisher: types.optional(types.string),
-    website: types.optional(types.string),
-    datePublished: types.optional(types.Date),
-    dateRetrieved: types.optional(types.Date),
-    url: types.optional(types.string),
+    article: types.maybeNull(types.string),
+    author: types.maybeNull(types.string),
+    publisher: types.maybeNull(types.string),
+    website: types.maybeNull(types.string),
+    datePublished: types.maybeNull(types.Date),
+    dateRetrieved: types.maybeNull(types.Date),
+    url: types.maybeNull(types.string),
     id: types.string,
     apa: types.string,
     mla: types.string,
@@ -76,7 +76,7 @@ const BibliographyStoreModel = types
             }));
         },
         deleteCitation(citation) {
-            self.citations.replace(self.citations.filter(item => item.id === citation.id));
+            self.citations.replace(self.citations.filter(item => item.id !== citation.id));
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
                 citations: self.citations
@@ -105,19 +105,31 @@ const BibliographyStoreModel = types
             switch(self.style) {
                 case 'APA':
                     jsBib.sort(APASort);
-                    sortedBibliography = jsBib.map(item => item.apa);
+                    sortedBibliography = jsBib.map(item => ({
+                        citation: item.apa,
+                        id: item.id
+                    }));
                     break;
                 case 'MLA': 
                     jsBib.sort(MLASort);
-                    sortedBibliography = jsBib.map(item => item.mla);
+                    sortedBibliography = jsBib.map(item => ({
+                        citation: item.mla,
+                        id: item.id
+                    }));
                     break;
                 case 'Chicago':
                     jsBib.sort(ChicagoSort);
-                    sortedBibliography = jsBib.map(item => item.chicago);
+                    sortedBibliography = jsBib.map(item => ({
+                        citation: item.chicago,
+                        id: item.id
+                    }));
                     break;
                 case 'Harvard':
                     jsBib.sort(HarvardSort);
-                    sortedBibliography = jsBib.map(item => item.harvard);
+                    sortedBibliography = jsBib.map(item => ({
+                        citation: item.harvard,
+                        id: item.id
+                    }));
                     break;
                 default:
                     sortedBibliography = ['Error: select a valid style'];

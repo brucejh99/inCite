@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './BibliographyListScreen.css';
 import { observer, inject } from 'mobx-react';
-import ScrollableList from '../../components/ScrollableList';
+import FancyList from '../../components/FancyList';
 
 class BibliographyListPage extends Component {
   state = {
@@ -32,7 +32,7 @@ class BibliographyListPage extends Component {
     const { bibliography } = this.props.store;
     return (
       <div>
-        <ScrollableList
+        <FancyList
           data={bibliography.bibList}
           onClick={this.selectBibliography}
           delete={bibliography.deleteBibliography}
