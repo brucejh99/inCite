@@ -5,21 +5,6 @@
   border-collapse: collapse;
 }
 
-.tr {
-  display: table-row;
-  border-bottom: 15px solid transparent;
-}
-
-.td {
-  display: table-cell;
-}
-
-.table-name {
-  width: 90px;
-  padding-right: 20px;
-  text-align: left;
-}
-
 .name-input {
   width: 240px;
 }

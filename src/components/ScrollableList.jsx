@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './BibliographyList.css';
+import './ScrollableList.css';
 import {
   List, ListItem, ListItemSecondaryAction, IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-export default class BibliographyList extends Component {
+export default class ScrollableList extends Component {
   render() {
     const bibliographyList = (
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
-        {this.props.list.map(item => (
+        {this.props.data.map(item => (
           <ListItem divider onClick={() => this.props.onClick(item)} className="list-item">
             <div dangerouslySetInnerHTML={{ __html: item }} className="list-text"/>
             <ListItemSecondaryAction>

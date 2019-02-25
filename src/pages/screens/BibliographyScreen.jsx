@@ -63,15 +63,21 @@ class BibliographyPage extends Component {
     document.execCommand('copy');
   }
 
+  editCitation = () => {
+    // do things here
+    this.props.store.navigation.navigate('Citation');
+  }
+
   render() {
-    const { navigation, bibliography } = this.props.store;
+    const { bibliography } = this.props.store;
     return (
       <BibliographyView
-        style={navigation.bibStyle}
-        state={navigation.state}
+        style={bibliography.bibStyle}
+        updateStyle={bibliography.updateStyle}
         bibliography={bibliography.renderCitations}
         add={this.addCitation}
         copy={this.copyCitations}
+        edit={this.editCitation}
         deleteItem={bibliography.deleteCitation}
       />
     );

@@ -2,11 +2,16 @@
 import React, { Component } from 'react';
 import './CitationScreen.css';
 import { inject, observer } from 'mobx-react';
+import FormField from '../../components/FormField';
 
 /**
  * Citation screen. All citations must have an ID so we can determine replace vs. add based on whether or not it exists
  */
 class Citation extends Component {
+  state = {
+    ...this.props.citation
+  }
+
   onChange = (field, value) => {
     this.setState({ [field]: value });
   }
@@ -22,7 +27,7 @@ class Citation extends Component {
     return dateString;
   }
 
-  addToBibliography = (e) => {
+  updateBibliography = (e) => {
   }
 
   render() {
@@ -52,41 +57,6 @@ class Citation extends Component {
         </form>
       </div>
     );
-  }
-}
-
-/**
- * Field class to enter bibliographic information
- * @prop {String} fieldName Name of field, shown in label and placeholder
- * @prop {String} inputType Type of input (text, date etc.)
- */
-class FormField extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  onFieldChange = (event) => {
-    const fieldName = event.target.name;
-    let fieldValue = event.target.value;
-
-    if (fieldName === "datePublished" || fieldName === "dateRetrieved") {
-      fieldValue = new Date(fieldValue);
-    }
-
-    this.props.onChange(fieldName, fieldValue);
-  }
-
-  render() {
-    return (
-      <label className="tr">
-        <span className="td table-name">{this.props.fieldName}</span>
-        <span className="td table-field">
-          <input className={this.props.fieldName} type={this.props.inputType}
-            name={this.props.name} placeholder={this.props.fieldName}
-            value={this.props.value} onChange={this.onFieldChange}/>
-        </span>
-      </label>
-    )
   }
 }
 

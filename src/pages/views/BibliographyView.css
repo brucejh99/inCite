@@ -4,17 +4,6 @@
     margin: 0px;
 }
 
-.list-container {
-    width: 350px;
-    height: 300px;
-    margin-top: 20px;
-    margin-left: 25px;
-    margin-right: 25px;
-    border-style: solid;
-    border-color: grey;
-    border-width: 1px;
-}
-
 .list-item {
     min-height: 48px;
     justify-content: center;

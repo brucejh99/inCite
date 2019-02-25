@@ -1,41 +1,24 @@
 import React, { Component } from 'react';
 import './BibliographyView.css';
-import {
-  Button, List, ListItem, ListItemSecondaryAction, IconButton,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Button } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
+import ScrollableList from '../../components/ScrollableList';
 
-class Bibliography extends Component {
+class BibliographyView extends Component {
   // TODO: move to components
   styleButton = (styleName) => {
-    const { bibliography } = this.props.store;
+    const { style, updateStyle } = this.props;
     return (
       <button
-        className={bibliography.bibStyle === styleName ? 'style-button selected' : 'style-button default'}
-        onClick={() => bibliography.updateStyle(styleName)}>
+        className={style === styleName ? 'style-button selected' : 'style-button default'}
+        onClick={() => updateStyle(styleName)}>
         {styleName}
       </button>
     );
   }
 
   render() {
-    const { bibliography, deleteItem } = this.props;
-    const citationList = (
-      <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
-        {bibliography.map(item => (
-          <ListItem divider onClick={() => this.props.toggleEdit(item)} className="list-item">
-            <div dangerouslySetInnerHTML={{ __html: item }} className="list-text"/>
-            <ListItemSecondaryAction>
-              <IconButton aria-label="Delete" onClick={() => deleteItem(item)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))
-        }
-      </List>
-    );
+    const { bibliography, deleteItem, edit } = this.props;
 
     return (
       <div className="body">
@@ -46,9 +29,11 @@ class Bibliography extends Component {
             {this.styleButton('Harvard')}
         </div>
         <div className="display">
-          <div className="list-container">
-            {citationList}
-          </div>
+          <ScrollableList
+            data={bibliography}
+            onClick={edit}
+            delete={deleteItem}
+          />
         </div>
         {
           document.queryCommandSupported('copy')
@@ -67,4 +52,4 @@ class Bibliography extends Component {
   }
 }
 
-export default inject('store')(observer(Bibliography));
+export default inject('store')(observer(BibliographyView));
