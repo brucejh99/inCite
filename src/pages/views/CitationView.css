@@ -1,0 +1,11 @@
+.table {
+    display: table;
+    margin: 0 25px;
+    margin-top: 25px;
+    border-collapse: collapse;
+}
+
+.add-citation {
+    padding-top: 10px;
+    text-align: center;
+}

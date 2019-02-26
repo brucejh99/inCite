@@ -1,12 +1,3 @@
-.button-container {
-    width: 350px;
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: space-between;
-}
-
 .style-button {
     height: 20px;
     width: 80px;
