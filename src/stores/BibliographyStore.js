@@ -52,7 +52,7 @@ const BibliographyStoreModel = types
         },
         updateName(name) {
             localStorage.removeItem(self.name);
-            self.list.filter(item => item === self.name);
+            self.list.filter(item => item !== self.name);
             self.name = `__${name}`;
             self.list.push(self.name);
             localStorage.setItem(self.name, JSON.stringify({
@@ -74,6 +74,14 @@ const BibliographyStoreModel = types
                 style: self.style,
                 citations: self.citations
             }));
+        },
+        replaceCitation(newCitation) {
+            self.citations.replace(self.citations.filter(citation => citation.id !== newCitation.id));
+            self.citations.push(newCitation);
+            localStorage.setItem(self.name, JSON.stringify({
+                style: self.style,
+                citations: self.citations
+            }))
         },
         deleteCitation(citation) {
             self.citations.replace(self.citations.filter(item => item.id !== citation.id));

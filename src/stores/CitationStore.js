@@ -1,5 +1,6 @@
 /* global chrome */
 import { types } from 'mobx-state-tree';
+import { toAPA, toMLA, toChicago, toHarvard } from '../services/Converter';
 
 const CitationStoreModel = types
     .model('Citation', {
@@ -45,15 +46,19 @@ const CitationStoreModel = types
             self.url = url;
         },
         clearCitation() {
-            self = {
-                ...self,
-                ...emptyCitation
-            }
+            self.article = emptyCitation.article;
+            self.author = emptyCitation.author;
+            self.website = emptyCitation.website;
+            self.publisher = emptyCitation.publisher;
+            self.datePublished = emptyCitation.datePublished;
+            self.dateRetrieved = emptyCitation.dateRetrieved;
+            self.url = emptyCitation.url;
+            self.id = emptyCitation.id;
         }
     }))
     .views(self => ({
         get citation() {
-            return {
+            const citation = {
                 article: self.article,
                 author: self.author,
                 website: self.website,
@@ -63,6 +68,11 @@ const CitationStoreModel = types
                 url: self.url,
                 id: self.id
             }
+            citation.apa = toAPA(citation);
+            citation.mla = toMLA(citation);
+            citation.chicago = toChicago(citation);
+            citation.harvard = toHarvard(citation);
+            return citation;
         }
     }));
 

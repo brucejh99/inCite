@@ -33,7 +33,6 @@ class BibliographyPage extends Component {
           metadata = await metascraper({ html, url });
         }
         let dateString = metadata.date;
-        console.log(dateString);
         if(dateString) dateString = new Date(dateString);
         const citation = {
           url: metadata.url || null,
