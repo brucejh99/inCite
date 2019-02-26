@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import './BibliographyListScreen.css';
 import { observer, inject } from 'mobx-react';
-import FancyList from '../../components/FancyList';
+import BibliographyListView from '../views/BibliographyListView';
 
 class BibliographyListPage extends Component {
   state = {
@@ -31,18 +30,14 @@ class BibliographyListPage extends Component {
   render() {
     const { bibliography } = this.props.store;
     return (
-      <div>
-        <FancyList
-          data={bibliography.bibList}
-          onClick={this.selectBibliography}
-          delete={bibliography.deleteBibliography}
-        />
-        <form onSubmit={this.createBibliography}>
-          Name: <input type="text" name="name" value={this.state.name} onChange={this.onChange}/>
-          <br />
-          <input type="submit" value="Create New Bibliography" />
-        </form>
-      </div>
+      <BibliographyListView
+        bibliography={bibliography.bibList}
+        selectBib={this.selectBibliography}
+        deleteBib={bibliography.deleteBibliography}
+        name={this.state.name}
+        editName={this.onChange}
+        submitName={this.createBibliography}
+      />
     );
   }
 }

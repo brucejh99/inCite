@@ -1,6 +1,5 @@
 /* global chrome */
 import React, { Component } from 'react';
-import './BibliographyScreen.css';
 import request from 'request';
 import uuid from 'uuid/v4';
 import { observer, inject } from 'mobx-react';

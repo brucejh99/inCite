@@ -2,31 +2,20 @@ import React, { Component } from 'react';
 import './BibliographyView.css';
 import { Button } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
+import StyleButton from '../../components/StyleButton'
 import ScrollableList from '../../components/ScrollableList';
 
 class BibliographyView extends Component {
-  // TODO: move to components
-  styleButton = (styleName) => {
-    const { style, updateStyle } = this.props;
-    return (
-      <button
-        className={style === styleName ? 'style-button selected' : 'style-button default'}
-        onClick={() => updateStyle(styleName)}>
-        {styleName}
-      </button>
-    );
-  }
-
   render() {
-    const { bibliography, deleteItem, edit } = this.props;
+    const { bibliography, deleteItem, edit, style, updateStyle } = this.props;
 
     return (
       <div className="body">
         <div className="button-container">
-            {this.styleButton('MLA')}
-            {this.styleButton('APA')}
-            {this.styleButton('Chicago')}
-            {this.styleButton('Harvard')}
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='APA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='Chicago' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='Harvard' updateStyle={updateStyle} />
         </div>
         <div className="display">
           <ScrollableList
