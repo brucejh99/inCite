@@ -15,7 +15,7 @@ const CitationStoreModel = types
     })
     .actions(self => ({
         // note: we should probably find a cleaner way of handling this later
-        // i.e. save when extension closes
+        // i.e. save the citation when extension closes
         saveCitation() {
             localStorage.setItem('CurrentCitation', JSON.stringify({
                 article: self.article,

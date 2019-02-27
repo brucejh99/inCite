@@ -45,7 +45,6 @@ class Citation extends Component {
         updateURL={citation.updateURL}
         toHTMLDate={this.toHTMLDate}
         updateBibliography={this.updateBibliography}
-        saveCitation={citation.saveCitation}
     />
     );
   }
