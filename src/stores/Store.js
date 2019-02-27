@@ -10,6 +10,7 @@ class StoreModel {
     init = () => {
         const storedPage = localStorage.getItem('PersistentState');
         const storedBib = localStorage.getItem('Bibliographies');
+        const storedCitation = localStorage.getItem('CurrentCitation');
 
         if(storedPage) this.navigation = NavigationStoreModel.create(JSON.parse(storedPage));
         if(storedBib) {
@@ -21,6 +22,9 @@ class StoreModel {
                 style: activeBib ? activeBib.style : null,
                 citations: activeBib ? activeBib.citations : []
             });
+        }
+        if(storedCitation) {
+            this.citation.setCitation(JSON.parse(storedCitation));
         }
     }
 }
