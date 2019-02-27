@@ -11,7 +11,7 @@ export default class ScrollableList extends Component {
       <List dense style={{ maxHeight: '100%', overflow: 'auto', padding: 0 }}>
         {this.props.data.map(item => (
           <ListItem divider onClick={() => this.props.onClick(item)} className="list-item">
-            <div dangerouslySetInnerHTML={{ __html: item.citation }} className="list-text"/>
+            <div dangerouslySetInnerHTML={{ __html: item.citation }} className="list-text" />
             <ListItemSecondaryAction>
               <IconButton
                 aria-label="Delete"

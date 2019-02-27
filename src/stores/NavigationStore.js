@@ -35,7 +35,7 @@ const NavigationModel = types
                 bibliographyPage: self.bibliographyPage,
                 citationPage: self.citationPage
             }
-            if(!self.citationPage) localStorage.setItem('PersistentState', JSON.stringify(newState));
+            localStorage.setItem('PersistentState', JSON.stringify(newState));
         }
     }))
     .views(self => ({

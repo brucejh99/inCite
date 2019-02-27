@@ -14,36 +14,58 @@ const CitationStoreModel = types
         id: types.string
     })
     .actions(self => ({
+        // note: we should probably find a cleaner way of handling this later
+        // i.e. save when extension closes
+        saveCitation() {
+            localStorage.setItem('CurrentCitation', JSON.stringify({
+                article: self.article,
+                author: self.author,
+                website: self.website,
+                publisher: self.publisher,
+                datePublished: self.datePublished,
+                dateRetrieved: self.dateRetrieved,
+                url: self.url,
+                id: self.id
+            }));
+        },
         setCitation(citation) {
             self.article = citation.article;
             self.author = citation.author;
             self.website = citation.website;
             self.publisher = citation.publisher;
-            self.datePublished = citation.datePublished || null;
-            self.dateRetrieved = citation.dateRetrieved || null;
+            self.datePublished = citation.datePublished ? new Date(citation.datePublished) : null;
+            self.dateRetrieved = citation.dateRetrieved ? new Date(citation.dateRetrieved) : null;
             self.url = citation.url;
             self.id = citation.id;
+            this.saveCitation();
         },
         updateArticle(article) {
             self.article = article;
+            this.saveCitation();
         },
         updateAuthor(name) {
             self.author = name;
+            this.saveCitation();
         },
         updateWebsite(site) {
             self.website = site;
+            this.saveCitation();
         },
         updatePublisher(publisher) {
             self.publisher = publisher;
+            this.saveCitation();
         },
         updateDatePublished(date) {
             self.datePublished = date;
+            this.saveCitation();
         },
         updateDateRetrieved(date) {
             self.dateRetrieved = date;
+            this.saveCitation();
         },
         updateURL(url) {
             self.url = url;
+            this.saveCitation();
         },
         clearCitation() {
             self.article = emptyCitation.article;
@@ -54,6 +76,7 @@ const CitationStoreModel = types
             self.dateRetrieved = emptyCitation.dateRetrieved;
             self.url = emptyCitation.url;
             self.id = emptyCitation.id;
+            localStorage.removeItem('CurrentCitation');
         }
     }))
     .views(self => ({
