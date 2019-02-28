@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import StyleButton from '../../components/StyleButton'
 import ScrollableList from '../../components/ScrollableList';
+import ScrollableArea from '../../components/ScrollableArea';
 
 class BibliographyView extends Component {
   render() {
@@ -23,6 +24,25 @@ class BibliographyView extends Component {
             onClick={edit}
             delete={deleteItem}
           />
+          {/* Use example:
+          <ScrollableArea
+            height='100px'
+            width='100px'
+            borderColor='black'
+            borderWidth='1px'>
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
+          </ScrollableArea> */}
         </div>
         {
           document.queryCommandSupported('copy')
