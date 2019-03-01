@@ -32,17 +32,14 @@ class BibliographyView extends Component {
           }
         </ScrollableArea>
         </div>
-        {
-          document.queryCommandSupported('copy')
-            && (
-            <div>
-              <div className="button-container bottom-button">
-                <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
-                <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
-              </div>
+          <div>
+            <div className="button-container bottom-button">
+              <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
+              {document.queryCommandSupported('copy')
+                ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
+                : null}
             </div>
-            )
-          }
+          </div>
         <div id="copyArea" contentEditable="true" />
       </div>
     );
