@@ -24,21 +24,13 @@ class BibliographyView extends Component {
             backgroundColor='white'
             borderColor='#FFE455'
             borderWidth={2}
-          >
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-            <p className="test">Text!!!!!</p>
-          </ScrollableArea>
+            curved={true}
+        >
+          {bibliography.map(item => (
+              <div></div>
+            ))
+          }
+        </ScrollableArea>
         </div>
         {
           document.queryCommandSupported('copy')

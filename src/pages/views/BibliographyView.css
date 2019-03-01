@@ -4,6 +4,16 @@
     margin: 0px;
 }
 
+.list-item {
+    min-height: 48px;
+    justify-content: center;
+}
+
+.list-item:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
 .list-text {
     width: 265px;
     height: auto;

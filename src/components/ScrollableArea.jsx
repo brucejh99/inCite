@@ -5,10 +5,13 @@ import React, { Component } from 'react';
  */
 export default class ScrollableArea extends Component {
 
+  // TODO: make list generating function a prop and affect styles here
+
   wrapper = {
     backgroundColor: this.props.borderColor ? this.props.borderColor : null,
     height: `${this.props.height + 2 * this.props.borderWidth}px`,
     width: `${this.props.width + 2 * this.props.borderWidth}px`,
+    borderRadius: this.props.curved ? '0px 10px' : '0px',
     display: 'flex',
     justifyContent: 'center',
     overflow: 'hidden'
@@ -18,8 +21,8 @@ export default class ScrollableArea extends Component {
     height: `${this.props.height}px`,
     width: `${this.props.width}px`,
     backgroundColor: this.props.backgroundColor,
+    borderRadius: this.props.curved ? '0px 10px' : '0px',
     marginTop: `${this.props.borderWidth}px`,
-    // border: 'none',
     overflow: 'hidden'
   }
 
