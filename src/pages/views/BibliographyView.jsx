@@ -3,7 +3,6 @@ import './BibliographyView.css';
 import { Button } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import StyleButton from '../../components/StyleButton'
-import ScrollableList from '../../components/ScrollableList';
 import ScrollableArea from '../../components/ScrollableArea';
 
 class BibliographyView extends Component {
@@ -18,31 +17,28 @@ class BibliographyView extends Component {
             <StyleButton style={style} buttonStyle='Chicago' updateStyle={updateStyle} />
             <StyleButton style={style} buttonStyle='Harvard' updateStyle={updateStyle} />
         </div>
-        <div className="display">
-          <ScrollableList
-            data={bibliography}
-            onClick={edit}
-            delete={deleteItem}
-          />
-          {/* Use example:
-          <ScrollableArea
-            height='100px'
-            width='100px'
-            borderColor='black'
-            borderWidth='1px'>
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-          </ScrollableArea> */}
+        <div className="list-container">
+        <ScrollableArea
+            width={300}
+            height={300}
+            backgroundColor='white'
+            borderColor='#FFE455'
+            borderWidth={2}
+          >
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+            <p className="test">Text!!!!!</p>
+          </ScrollableArea>
         </div>
         {
           document.queryCommandSupported('copy')
