@@ -62,9 +62,9 @@ class BibliographyPage extends Component {
     document.execCommand('copy');
   }
 
-  editCitation = (item) => {
+  editCitation = (citationObject) => {
     const { navigation, citation, bibliography } = this.props.store;
-    const editValue = bibliography.bibCitations.find(value => value.id === item.id);
+    const editValue = bibliography.bibCitations.find(value => value.id === citationObject.id);
     citation.setCitation(editValue);
     navigation.navigate('Citation');
   }
@@ -78,7 +78,7 @@ class BibliographyPage extends Component {
         bibliography={bibliography.renderCitations}
         add={this.addCitation}
         copy={this.copyCitations}
-        edit={this.editCitation}
+        editItem={this.editCitation}
         deleteItem={bibliography.deleteCitation}
       />
     );
