@@ -5,8 +5,6 @@ import React, { Component } from 'react';
  */
 export default class ScrollableArea extends Component {
 
-  // TODO: make list generating function a prop and affect styles here
-
   wrapper = {
     backgroundColor: this.props.borderColor ? this.props.borderColor : null,
     height: `${this.props.height + 2 * this.props.borderWidth}px`,
