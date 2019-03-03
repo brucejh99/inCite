@@ -27,6 +27,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    border: none;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -44,7 +45,7 @@
 .wrapper {
     width: 300px;
     height: 300px;
-    background-color: #FFE455;
+    background-color: #fff1aa;
     display: flex;
     align-items: center;
     justify-content: center;

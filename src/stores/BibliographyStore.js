@@ -83,8 +83,8 @@ const BibliographyStoreModel = types
                 citations: self.citations
             }))
         },
-        deleteCitation(citation) {
-            self.citations.replace(self.citations.filter(item => item.id !== citation.id));
+        deleteCitation(toDelete) {
+            self.citations.replace(self.citations.filter(citation => citation.id !== toDelete.id));
             localStorage.setItem(self.name, JSON.stringify({
                 style: self.style,
                 citations: self.citations

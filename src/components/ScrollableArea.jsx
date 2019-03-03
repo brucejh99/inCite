@@ -31,6 +31,7 @@ export default class ScrollableArea extends Component {
     width: '100%',
     paddingRight: '20px',
     paddingLeft: '20px',
+    marginLeft: '-20px',
     overflowY: 'scroll'
   }
 
@@ -39,7 +40,9 @@ export default class ScrollableArea extends Component {
       <div style={this.wrapper}>
         <div style={this.outerStyle}>
           <div style={this.innerStyle}>
-            {this.props.children}
+            <div style={this.body}>
+              {this.props.children}
+            </div>
           </div>
         </div>
       </div>

@@ -4,10 +4,11 @@ import { Button } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import StyleButton from '../../components/StyleButton'
 import ScrollableArea from '../../components/ScrollableArea';
+import CitationListItem from '../../components/CitationListItem';
 
 class BibliographyView extends Component {
   render() {
-    const { bibliography, deleteItem, edit, style, updateStyle } = this.props;
+    const { bibliography, deleteItem, editItem, style, updateStyle } = this.props;
 
     return (
       <div className="body">
@@ -19,15 +20,18 @@ class BibliographyView extends Component {
         </div>
         <div className="list-container">
         <ScrollableArea
-            width={300}
+            width={345}
             height={300}
             backgroundColor='white'
-            borderColor='#FFE455'
+            borderColor='#fff1aa'
             borderWidth={2}
             curved={true}
         >
           {bibliography.map(item => (
-              <div></div>
+              <CitationListItem
+                citationObject={item}
+                deleteCitation={() => deleteItem(item)}
+                editCitation={() => editItem(item)} />
             ))
           }
         </ScrollableArea>
