@@ -6,7 +6,7 @@ const BibliographyPage = React.lazy(() => import('../pages/screens/BibliographyS
 const Citation = React.lazy(() => import('../pages/screens/CitationScreen'));
 const BibliographyListPage = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
 
-const addIcon = require('../assets/add-icon.png'); // update to better buttons
+const addIcon = require('../assets/add-icon.png');
 
 /**
  * Class that provides a taskbar and wrapper to render different pages
@@ -57,7 +57,7 @@ class PageButton extends Component {
   render() {
     return (
       <button className="customize-button" onClick={this.onClickMethod}>
-            <img src={this.icon} className="customize-button" alt="add-icon" />
+          <img src={this.icon} className="customize-button" alt="add-icon" />
       </button>
     )
   }

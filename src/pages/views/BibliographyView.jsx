@@ -34,13 +34,11 @@ export default class BibliographyView extends Component {
           }
         </ScrollableArea>
         </div>
-          <div>
-            <div styles={[styles.buttonContainer, styles.bottom]}>
-              <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
-              {document.queryCommandSupported('copy')
-                ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
-                : null}
-            </div>
+          <div style={{...styles.buttonContainer, ...styles.bottom}}>
+            <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
+            {document.queryCommandSupported('copy')
+              ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
+              : null}
           </div>
         <div id="copyArea" contentEditable="true" style={styles.copyArea} />
       </div>
@@ -77,6 +75,7 @@ const styles = {
     whiteSpace: 'pre'
   },
   bottom: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: '20px'
   }
 }
