@@ -7,19 +7,13 @@ import BibliographyView from '../views/BibliographyView';
 import { toAPA, toMLA, toChicago, toHarvard } from '../../services/Converter';
 import { getCorrectedCurrentDate, } from '../../services/Utils';
 
-const metascraper = require('metascraper')([
-  require('metascraper-author')(),
-  require('metascraper-date')(),
-  require('metascraper-publisher')(),
-  require('metascraper-title')(),
-  require('metascraper-url')()
-]);
-
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
  * @prop {Function} updateStyle Method to update selected style globally
  */
 class BibliographyPage extends Component {
+  metascraper = null;
+
   addCitation = async () => {
     const { bibliography } = this.props.store;
     chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
@@ -29,7 +23,16 @@ class BibliographyPage extends Component {
         if(html === undefined || err) {
           metadata = { url };
         } else {
-          metadata = await metascraper({ html, url });
+          if(!this.metascraper) {
+            this.metascraper = require('metascraper')([
+              require('metascraper-author')(),
+              require('metascraper-date')(),
+              require('metascraper-publisher')(),
+              require('metascraper-title')(),
+              require('metascraper-url')()
+            ]);
+          }
+          metadata = await this.metascraper({ html, url });
         }
         let dateString = metadata.date;
         if(dateString) dateString = new Date(dateString);
