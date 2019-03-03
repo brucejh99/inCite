@@ -26,7 +26,7 @@ class Navigator extends Component {
     }
 
     return (
-      <div>
+      <div> {/* TODO: there should be no bar. Navigator should be a hidden component. */}
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('BibliographyList')} />
           <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Bibliography')} />
@@ -34,8 +34,6 @@ class Navigator extends Component {
             <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
             null }
         </div>
-
-        <h1 className="splash">inCite</h1>
         <Suspense fallback={null}>
             {currentPage}
         </Suspense>
