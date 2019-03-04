@@ -48,7 +48,8 @@ const styles = {
         backgroundColor: '#fff1aa',
     },
     citation: {
-        width: '295px'
+        width: '295px',
+        wordWrap: 'break-word'
     },
     buttonContainer: {
         width: '30px',
