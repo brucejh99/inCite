@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import './BibliographyView.css';
 import { Button } from '@material-ui/core';
-import { inject, observer } from 'mobx-react';
 import StyleButton from '../../components/StyleButton'
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
 
-class BibliographyView extends Component {
+export default class BibliographyView extends Component {
   render() {
     const { bibliography, deleteItem, editItem, style, updateStyle } = this.props;
 
     return (
-      <div className="body">
-        <div className="button-container">
+      <div style={styles.body}>
+        <div style={styles.buttonContainer}>
             <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
             <StyleButton style={style} buttonStyle='APA' updateStyle={updateStyle} />
             <StyleButton style={style} buttonStyle='Chicago' updateStyle={updateStyle} />
             <StyleButton style={style} buttonStyle='Harvard' updateStyle={updateStyle} />
         </div>
-        <div className="list-container">
+        <div style={styles.listContainer}>
         <ScrollableArea
             width={345}
             height={300}
@@ -36,18 +34,48 @@ class BibliographyView extends Component {
           }
         </ScrollableArea>
         </div>
-          <div>
-            <div className="button-container bottom-button">
-              <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
-              {document.queryCommandSupported('copy')
-                ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
-                : null}
-            </div>
+          <div style={{...styles.buttonContainer, ...styles.bottom}}>
+            <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
+            {document.queryCommandSupported('copy')
+              ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
+              : null}
           </div>
-        <div id="copyArea" contentEditable="true" />
+        <div id="copyArea" contentEditable="true" style={styles.copyArea} />
       </div>
     );
   }
 }
 
-export default inject('store')(observer(BibliographyView));
+const styles = {
+  body: {
+    width: '400px',
+    background: 'white',
+    padding: 0,
+    margin: 0
+  },
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  listContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    border: 'none',
+    margin: '20px 0px'
+  },
+  copyArea: {
+    fontFamily: 'Times New Roman, Times, serif',
+    fontSize: '12pt',
+    lineHeight: 2,
+    position: 'fixed',
+    left: '-10000px',
+    top: '10000px',
+    whiteSpace: 'pre'
+  },
+  bottom: {
+    justifyContent: 'center',
+    marginBottom: '20px'
+  }
+}

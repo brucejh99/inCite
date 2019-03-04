@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './CitationView.css';
 import FormField from '../../components/FormField';
 
 export default class CitationView extends Component {
@@ -26,7 +25,7 @@ export default class CitationView extends Component {
     return (
       <div>
         <form onSubmit={updateBibliography}>
-          <div className="table">
+          <div style={styles.table}>
             <FormField
               fieldName="Website"
               inputType="text"
@@ -76,11 +75,24 @@ export default class CitationView extends Component {
               onChange={(field, value) => updateURL(value)}
             />
           </div>
-          <div className="add-citation">
+          <div style={styles.addButton}>
             <input type="submit" value={'Update'} /><br />
           </div>
         </form>
       </div>
     );
+  }
+}
+
+const styles = {
+  table: {
+    display: 'table',
+    margin: '0 25px',
+    marginTop: '25px',
+    borderCollapse: 'collapse'
+  },
+  addButton: {
+    paddingTop: '10px',
+    textAlign: 'center'
   }
 }

@@ -6,7 +6,7 @@ const BibliographyPage = React.lazy(() => import('../pages/screens/BibliographyS
 const Citation = React.lazy(() => import('../pages/screens/CitationScreen'));
 const BibliographyListPage = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
 
-const addIcon = require('../assets/add-icon.png'); // update to better buttons
+const addIcon = require('../assets/add-icon.png');
 
 /**
  * Class that provides a taskbar and wrapper to render different pages
@@ -26,7 +26,7 @@ class Navigator extends Component {
     }
 
     return (
-      <div>
+      <div> {/* TODO: there should be no bar. Navigator should be a hidden component. */}
         <div className="customize-bar">
           <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('BibliographyList')} />
           <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Bibliography')} />
@@ -34,8 +34,6 @@ class Navigator extends Component {
             <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
             null }
         </div>
-
-        <h1 className="splash">inCite</h1>
         <Suspense fallback={null}>
             {currentPage}
         </Suspense>
@@ -59,7 +57,7 @@ class PageButton extends Component {
   render() {
     return (
       <button className="customize-button" onClick={this.onClickMethod}>
-            <img src={this.icon} className="customize-button" alt="add-icon" />
+          <img src={this.icon} className="customize-button" alt="add-icon" />
       </button>
     )
   }
