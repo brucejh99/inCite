@@ -27,7 +27,7 @@ export default class BibliographyListView extends Component {
                     <br />
                     <input type="submit" value="Create New Bibliography" />
                 </form>
-                <Button style={styles.button}>
+                <Button height={34} width={199} hoverable={true} style={styles.button}>
                     Button!
                 </Button>
             </div>
@@ -39,7 +39,7 @@ const styles = {
     body: {
         width: '400px',
         height: '550px',
-        background: 'linear-gradient(191.76 deg, rgba(255, 168, 0, 0) 15.19%, rgba(232, 39, 186, 0.615317) 104.2%, #8F00FF 152.47%), #FFE455',
+        background: 'linear-gradient(191.76deg, rgba(255, 168, 0, 0) 15.19%, rgba(232, 39, 186, 0.615317) 104.2%, #8F00FF 152.47%), #FFE455',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -54,9 +54,6 @@ const styles = {
         fontSize: '64pt'
     },
     button: {
-        height: '34px',
-        width: '199px',
-        color: 'white',
         backgroundColor: '#C3790B',
         border: 'none'
     }
