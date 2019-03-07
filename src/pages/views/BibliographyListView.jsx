@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FancyList from '../../components/FancyList';
+import ScrollableArea from '../../components/ScrollableArea';
 import Button from '../../components/Button';
 
 require('../../assets/style.css');
@@ -17,19 +17,32 @@ export default class BibliographyListView extends Component {
         return (
             <div style={styles.body}>
                 <h1 style={styles.header}>inCite</h1>
-                <FancyList
-                    data={bibliography}
-                    onClick={selectBib}
-                    delete={deleteBib}
-                />
+                <ScrollableArea
+                    width={250}
+                    height={240}
+                    borderWidth={0}
+                >
+                <div style={styles.container}>
+                    {bibliography.map(bib => (
+                        <Button
+                            width={200}
+                            height={34}
+                            fontSize={14}
+                            margin={10}
+                            hoverable={true}
+                            onClick={() => selectBib(bib)}
+                            style={styles.button}
+                        >
+                            {bib}
+                        </Button>
+                    ))}
+                </div>
+                </ScrollableArea>
                 <form onSubmit={submitName}>
                     Name: <input type="text" name="name" value={name} onChange={editName}/>
                     <br />
                     <input type="submit" value="Create New Bibliography" />
                 </form>
-                <Button height={34} width={199} hoverable={true} style={styles.button}>
-                    Button!
-                </Button>
             </div>
         )
     }
@@ -43,7 +56,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        overflow: 'hidden'
     },
     header: {
         width: '100%',
@@ -53,8 +67,18 @@ const styles = {
         color: 'white',
         fontSize: '64pt'
     },
+    container: {
+        width: '250px',
+        height: '240px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignContent: 'flex-start'
+    },
     button: {
-        backgroundColor: '#C3790B',
+        backgroundColor: '#e5ac34',
+        color: 'white',
+        fontFamily: 'Nunito Sans',
         border: 'none'
     }
 }

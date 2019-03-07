@@ -9,16 +9,22 @@ export default class Button extends Component {
         button: {
             height: `${this.props.height}px`,
             width: `${this.props.width}px`,
+            fontSize: this.props.fontSize ? `${this.props.fontSize}px` : '12px',
+            margin: this.props.margin ? `${this.props.margin}px` : '0',
             textDecoration: 'none',
             textAlign: 'center',
             borderRadius: '0px 10px',
             cursor: 'pointer',
-            transition: 'height 0.5s width 0.5s',
+            transition: 'all 0.25s',
             ...this.props.style
         },
         expanded: {
-            height: `${this.props.height * 1.1}px`,
-            width: `${this.props.width * 1.1}px`
+            height: `${this.props.height * 1.05}px`,
+            width: `${this.props.width * 1.05}px`,
+            fontSize: this.props.fontSize ? `${this.props.fontSize * 1.05}px` : '12.6px',
+            margin: this.props.margin
+                ? `${this.props.margin - 0.025 * this.props.height}px ${this.props.margin - 0.025 * this.props.width}px`
+                : '0'
         }
     }
 
@@ -40,11 +46,5 @@ export default class Button extends Component {
                 {children}
         </button>
         )
-    }
-}
-
-const styles = {
-    expanded: {
-
     }
 }
