@@ -36,6 +36,14 @@ class Navigator extends Component {
         </div>
         <Suspense fallback={null}>
             {currentPage}
+            {/* TODO: performance test this prerender strategy: */}
+            <Suspense fallback={null}>
+              <div hidden={true}>
+                <BibliographyListScreen />
+                <BibliographyScreen />
+                <CitationScreen />
+              </div>
+          </Suspense>
         </Suspense>
       </div>
     );
