@@ -14,6 +14,7 @@ export default class Button extends Component {
             textDecoration: 'none',
             textAlign: 'center',
             borderRadius: '0px 10px',
+            outline: 'none',
             cursor: 'pointer',
             transition: 'all 0.25s',
             ...this.props.style

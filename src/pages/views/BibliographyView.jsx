@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import Button from '../../components/Button';
 import StyleButton from '../../components/StyleButton'
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
@@ -35,9 +35,27 @@ export default class BibliographyView extends Component {
         </ScrollableArea>
         </div>
           <div style={{...styles.buttonContainer, ...styles.bottom}}>
-            <Button variant="outlined" color="primary" onClick={this.props.add}>Add</Button>
+            <Button
+              height={34}
+              width={75}
+              fontSize={14}
+              margin={3}
+              hoverable={true}
+              onClick={this.props.add}
+              style={styles.addButton}>
+                Add
+            </Button>
             {document.queryCommandSupported('copy')
-              ? <Button variant="outlined" color="primary" onClick={this.props.copy}>Copy</Button>
+              ? <Button
+                  height={34}
+                  width={75}
+                  fontSize={14}
+                  margin={3}
+                  hoverable={true}
+                  onClick={this.props.copy}
+                  style={styles.copyButton}>
+                    Copy
+                </Button>
               : null}
           </div>
         <div id="copyArea" contentEditable="true" style={styles.copyArea} />
@@ -75,7 +93,22 @@ const styles = {
     whiteSpace: 'pre'
   },
   bottom: {
+    height: '40px',
     justifyContent: 'center',
     marginBottom: '20px'
+  },
+  addButton: {
+    backgroundColor: 'white',
+    color: '#F69970',
+    fontFamily: 'Nunito Sans',
+    fontWeight: '900',
+    border: '1px solid #F69970'
+  },
+  copyButton: {
+    backgroundColor: '#F69970',
+    color: 'white',
+    fontFamily: 'Nunito Sans',
+    fontWeight: '900',
+    border: 'none'
   }
 }
