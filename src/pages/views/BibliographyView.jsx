@@ -1,28 +1,52 @@
 import React, { Component } from 'react';
 import Button from '../../components/Button';
-import StyleButton from '../../components/StyleButton'
+import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
 
 export default class BibliographyView extends Component {
   render() {
-    const { bibliography, deleteItem, editItem, style, updateStyle } = this.props;
+    const { bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
 
     return (
       <div style={styles.body}>
         <div style={styles.buttonContainer}>
-            <StyleButton style={style} buttonStyle='MLA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='APA' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='Chicago' updateStyle={updateStyle} />
-            <StyleButton style={style} buttonStyle='Harvard' updateStyle={updateStyle} />
+          <SelectableButton
+            selected={bibStyle === 'MLA'}
+            onClick={() => updateStyle('MLA')}
+            style={styles.styleButton}
+          >
+            MLA
+          </SelectableButton>
+          <SelectableButton
+            selected={bibStyle === 'APA'}
+            onClick={() => updateStyle('APA')}
+            style={styles.styleButton}
+          >
+            APA
+          </SelectableButton>
+          <SelectableButton
+            selected={bibStyle === 'Chicago'}
+            onClick={() => updateStyle('Chicago')}
+            style={styles.styleButton}
+          >
+            Chicago
+          </SelectableButton>
+          <SelectableButton
+            selected={bibStyle === 'Harvard'}
+            onClick={() => updateStyle('Harvard')}
+            style={styles.styleButton}
+          >
+            Harvard
+          </SelectableButton>
         </div>
         <div style={styles.listContainer}>
         <ScrollableArea
             width={345}
             height={300}
             backgroundColor='white'
-            borderColor='#fff1aa'
-            borderWidth={2}
+            borderColor='#FFE455'
+            borderWidth={1}
             curved={true}
         >
           {bibliography.map(item => (
@@ -63,15 +87,28 @@ const styles = {
   },
   buttonContainer: {
     width: '100%',
+    padding: '0px 28px',
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'left'
+  },
+  styleButton: {
+    height: '34px',
+    width: '75px',
+    fontSize: '14px',
+    fontFamily: 'Nunito Sans',
+    fontWeight: '900',
+    color: '#FFE455',
+    backgroundColor: 'white',
+    marginLeft: '-1px',
+    border: '1px solid #FFE455',
+    borderRadius: '0px 10px 0px 0px'
   },
   listContainer: {
     width: '100%',
     display: 'flex',
+    marginTop: '-1px',
     justifyContent: 'center',
-    border: 'none',
-    margin: '20px 0px'
+    border: 'none'
   },
   copyArea: {
     fontFamily: 'Times New Roman, Times, serif',
@@ -85,7 +122,7 @@ const styles = {
   bottom: {
     height: '40px',
     justifyContent: 'center',
-    marginBottom: '20px'
+    margin: '20px 0px'
   },
   bottomButton: {
     height: '34px',

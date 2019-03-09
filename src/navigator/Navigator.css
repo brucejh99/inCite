@@ -13,3 +13,13 @@
     margin: 0px;
     display: flex;
 }
+
+@font-face {
+    font-family: "Nunito Sans";
+    src: url("../assets/NunitoSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Oleo Script";
+    src: url("../assets/OleoScript-Bold.ttf");
+}

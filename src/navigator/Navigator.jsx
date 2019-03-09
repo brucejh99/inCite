@@ -34,16 +34,8 @@ class Navigator extends Component {
             <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
             null }
         </div>
-        <Suspense fallback={null}>
+        <Suspense fallback={null}> {/* TODO: make a loading screen */}
             {currentPage}
-            {/* TODO: performance test this prerender strategy: */}
-            <Suspense fallback={null}>
-              <div hidden={true}>
-                <BibliographyListScreen />
-                <BibliographyScreen />
-                <CitationScreen />
-              </div>
-          </Suspense>
         </Suspense>
       </div>
     );

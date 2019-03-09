@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import ScrollableArea from '../../components/ScrollableArea';
 import ExpandableButton from '../../components/ExpandableButton';
 
-require('../../assets/style.css');
-
 export default class BibliographyListView extends Component {
     render() {
         const {
