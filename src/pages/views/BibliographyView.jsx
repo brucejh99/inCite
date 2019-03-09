@@ -36,24 +36,14 @@ export default class BibliographyView extends Component {
         </div>
           <div style={{...styles.buttonContainer, ...styles.bottom}}>
             <Button
-              height={34}
-              width={75}
-              fontSize={14}
-              margin={3}
-              hoverable={true}
               onClick={this.props.add}
-              style={styles.addButton}>
+              style={styles.bottomButton}>
                 Add
             </Button>
             {document.queryCommandSupported('copy')
               ? <Button
-                  height={34}
-                  width={75}
-                  fontSize={14}
-                  margin={3}
-                  hoverable={true}
                   onClick={this.props.copy}
-                  style={styles.copyButton}>
+                  style={styles.bottomButton}>
                     Copy
                 </Button>
               : null}
@@ -97,18 +87,15 @@ const styles = {
     justifyContent: 'center',
     marginBottom: '20px'
   },
-  addButton: {
+  bottomButton: {
+    height: '34px',
+    width: '75px',
     backgroundColor: 'white',
     color: '#F69970',
+    fontSize: '14px',
+    margin: '0px 3px',
     fontFamily: 'Nunito Sans',
     fontWeight: '900',
     border: '1px solid #F69970'
-  },
-  copyButton: {
-    backgroundColor: '#F69970',
-    color: 'white',
-    fontFamily: 'Nunito Sans',
-    fontWeight: '900',
-    border: 'none'
   }
 }

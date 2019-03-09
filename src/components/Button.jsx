@@ -7,31 +7,21 @@ export default class Button extends Component {
 
     styles = {
         button: {
-            height: `${this.props.height}px`,
-            width: `${this.props.width}px`,
-            fontSize: this.props.fontSize ? `${this.props.fontSize}px` : '12px',
-            margin: this.props.margin ? `${this.props.margin}px` : '0',
             textDecoration: 'none',
             textAlign: 'center',
             borderRadius: '0px 10px',
             outline: 'none',
             cursor: 'pointer',
-            transition: 'all 0.25s',
             ...this.props.style
         },
-        expanded: {
-            height: `${this.props.height * 1.05}px`,
-            width: `${this.props.width * 1.05}px`,
-            fontSize: this.props.fontSize ? `${this.props.fontSize * 1.05}px` : '12.6px',
-            margin: this.props.margin
-                ? `${this.props.margin - 0.025 * this.props.height}px ${this.props.margin - 0.025 * this.props.width}px`
-                : '0'
+        hovered: {
+            backgroundColor: this.props.style.color,
+            color: this.props.style.backgroundColor
         }
     }
 
     render() {
         const {
-            hoverable = false,
             onClick,
             children
         } = this.props;
@@ -41,8 +31,8 @@ export default class Button extends Component {
             onClick={onClick}
             onMouseEnter={() => this.setState({ hovered: true })}
             onMouseLeave={() => this.setState({ hovered: false })}
-            style={hoverable && hovered 
-                ? {...this.styles.button, ...this.styles.expanded} 
+            style={hovered 
+                ? {...this.styles.button, ...this.styles.hovered} 
                 : this.styles.button}>
                 {children}
         </button>

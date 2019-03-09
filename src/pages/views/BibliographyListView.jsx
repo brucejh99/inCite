@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ScrollableArea from '../../components/ScrollableArea';
-import Button from '../../components/Button';
+import ExpandableButton from '../../components/ExpandableButton';
 
 require('../../assets/style.css');
 
@@ -24,7 +24,7 @@ export default class BibliographyListView extends Component {
                 >
                 <div style={styles.container}>
                     {bibliography.map(bib => (
-                        <Button
+                        <ExpandableButton
                             width={200}
                             height={34}
                             fontSize={14}
@@ -34,7 +34,7 @@ export default class BibliographyListView extends Component {
                             style={styles.button}
                         >
                             {bib}
-                        </Button>
+                        </ExpandableButton>
                     ))}
                 </div>
                 </ScrollableArea>
