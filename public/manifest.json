@@ -7,6 +7,11 @@
     "default_popup": "index.html",
     "default_title": "inCite"
   },
+  "icons": {
+    "16": "app-icon.png",
+    "48": "app-icon.png",
+    "128": "app-icon.png"
+  },
   "permissions": [
     "storage",
     "activeTab",

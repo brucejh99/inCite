@@ -76,7 +76,7 @@ class BibliographyPage extends Component {
     const { bibliography } = this.props.store;
     return (
       <BibliographyView
-        style={bibliography.bibStyle}
+        bibStyle={bibliography.bibStyle}
         updateStyle={bibliography.updateStyle}
         bibliography={bibliography.renderCitations}
         add={this.addCitation}

@@ -2,9 +2,9 @@ import React, { Component, Suspense } from 'react';
 import { observer, inject } from 'mobx-react';
 import './Navigator.css';
 
-const BibliographyPage = React.lazy(() => import('../pages/screens/BibliographyScreen'));
-const Citation = React.lazy(() => import('../pages/screens/CitationScreen'));
-const BibliographyListPage = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
+const BibliographyScreen = React.lazy(() => import('../pages/screens/BibliographyScreen'));
+const CitationScreen = React.lazy(() => import('../pages/screens/CitationScreen'));
+const BibliographyListScreen = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
 
 const addIcon = require('../assets/add-icon.png');
 
@@ -16,13 +16,13 @@ class Navigator extends Component {
     const { navigation, bibliography } = this.props.store;
     let currentPage;
     if (navigation.page.bibliographyListPage) {
-      currentPage = <BibliographyListPage />;
+      currentPage = <BibliographyListScreen />;
     } else if (navigation.page.bibliographyPage) {
-      currentPage = <BibliographyPage />;
+      currentPage = <BibliographyScreen />;
     } else if (navigation.page.citationPage) {
-      currentPage = <Citation />;
+      currentPage = <CitationScreen />;
     } else {
-      currentPage = <BibliographyListPage />;
+      currentPage = <BibliographyListScreen />;
     }
 
     return (
@@ -34,7 +34,7 @@ class Navigator extends Component {
             <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
             null }
         </div>
-        <Suspense fallback={null}>
+        <Suspense fallback={null}> {/* TODO: make a loading screen */}
             {currentPage}
         </Suspense>
       </div>
