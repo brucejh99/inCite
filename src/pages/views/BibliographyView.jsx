@@ -10,7 +10,7 @@ export default class BibliographyView extends Component {
 
     return (
       <div style={styles.body}>
-        <div style={styles.buttonContainer}>
+        <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
             selected={bibStyle === 'MLA'}
             onClick={() => updateStyle('MLA')}
@@ -87,7 +87,6 @@ const styles = {
   },
   buttonContainer: {
     width: '100%',
-    padding: '0px 28px',
     display: 'flex',
     justifyContent: 'left'
   },
