@@ -19,9 +19,9 @@ export default class FormField extends Component {
   
     render() {
       return (
-        <label className="tr">
-          <span className="td table-name">{this.props.fieldName}</span>
-          <span className="td table-field">
+        <label style={styles.tr}>
+          <span style={{...styles.td, ...styles.tableName}}>{this.props.fieldName}</span>
+          <span style={styles.td}>
             <input className={this.props.fieldName} type={this.props.inputType}
               name={this.props.name} placeholder={this.props.fieldName}
               value={this.props.value} onChange={this.onFieldChange}/>
@@ -29,4 +29,19 @@ export default class FormField extends Component {
         </label>
       )
     }
+}
+
+const styles = {
+  tr: {
+    display: 'table-row',
+    borderBottom: '15px solid transparent'
+  },
+  td: {
+    display: 'table-cell'
+  },
+  tableName: {
+    width: '90px',
+    paddingRight: '20px',
+    textAlign: 'left'
+  }
 }
