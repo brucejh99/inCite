@@ -22,9 +22,10 @@ export default class FormField extends Component {
         <label style={styles.tr}>
           <span style={{...styles.td, ...styles.tableName}}>{this.props.fieldName}</span>
           <span style={styles.td}>
-            <input className={this.props.fieldName} type={this.props.inputType}
+            <input type={this.props.inputType}
               name={this.props.name} placeholder={this.props.fieldName}
-              value={this.props.value} onChange={this.onFieldChange}/>
+              value={this.props.value} onChange={this.onFieldChange}
+              style={styles.textbox} />
           </span>
         </label>
       )
@@ -43,5 +44,10 @@ const styles = {
     width: '90px',
     paddingRight: '20px',
     textAlign: 'left'
+  },
+  textbox: {
+    padding: '5px',
+    border: '1px solid #FFE455',
+    borderRadius: '0px 10px 0px 10px'
   }
 }
