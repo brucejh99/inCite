@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import Title from '../../components/Title';
 import Button from '../../components/Button';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
+
+const caret = require('../../assets/caret.svg');
 
 export default class BibliographyView extends Component {
   render() {
@@ -10,6 +13,13 @@ export default class BibliographyView extends Component {
 
     return (
       <div style={styles.body}>
+        <div style={styles.header}>
+          <Title>
+            Bibliography
+          </Title>
+          <img src={caret} alt='Dropdown' style={styles.dropdown} />
+          {/* TODO: implement dropdown on click */}
+        </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
             selected={bibStyle === 'MLA'}
@@ -79,11 +89,24 @@ export default class BibliographyView extends Component {
 }
 
 const styles = {
+  header: {
+    width: '100%',
+    height: '70px',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 30px'
+  },
   body: {
     width: '400px',
     background: 'white',
     padding: 0,
     margin: 0
+  },
+  dropdown: {
+    height: '22px',
+    width: '18.5px',
+    margin: '0px 8px',
+    cursor: 'pointer'
   },
   buttonContainer: {
     width: '100%',

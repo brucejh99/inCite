@@ -1,19 +1,18 @@
 import React, { Component, Suspense } from 'react';
 import { observer, inject } from 'mobx-react';
-import './Navigator.css';
+import '../assets/styles.css';
 
 const BibliographyScreen = React.lazy(() => import('../pages/screens/BibliographyScreen'));
 const CitationScreen = React.lazy(() => import('../pages/screens/CitationScreen'));
 const BibliographyListScreen = React.lazy(() => import('../pages/screens/BibliographyListScreen'));
 
-const addIcon = require('../assets/add-icon.png');
-
 /**
- * Class that provides a taskbar and wrapper to render different pages
+ * Class that wraps the application to render the selected page and load global assets
  */
 class Navigator extends Component {
+  // TODO: deprecate navigation to BibliographyListScreen
   render() {
-    const { navigation, bibliography } = this.props.store;
+    const { navigation } = this.props.store;
     let currentPage;
     if (navigation.page.bibliographyListPage) {
       currentPage = <BibliographyListScreen />;
@@ -26,40 +25,10 @@ class Navigator extends Component {
     }
 
     return (
-      <div>
-        <div className="customize-bar">
-          <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('BibliographyList')} />
-          <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Bibliography')} />
-          {bibliography.bibStyle !== null ?
-            <PageButton icon={addIcon} onClickMethod={() => navigation.navigate('Citation')} /> :
-            null }
-        </div>
-        <Suspense fallback={null}>
-            {currentPage}
-        </Suspense>
-      </div>
+      <Suspense fallback={null}>
+          {currentPage}
+      </Suspense>
     );
-  }
-}
-
-/**
- * Button class to that navigate between pages
- * @prop {Image} icon Image displayed on button
- * @prop {Function} onClickMethod Function called when the button is clicked
- */
-class PageButton extends Component {
-  constructor(props) {
-    super(props);
-    this.icon = props.icon;
-    this.onClickMethod = props.onClickMethod;
-  }
-
-  render() {
-    return (
-      <button className="customize-button" onClick={this.onClickMethod}>
-          <img src={this.icon} className="customize-button" alt="add-icon" />
-      </button>
-    )
   }
 }
 

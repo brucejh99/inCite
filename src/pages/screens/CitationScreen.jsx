@@ -27,7 +27,7 @@ class Citation extends Component {
   }
 
   render() {
-    const { citation } = this.props.store;
+    const { citation, navigation } = this.props.store;
     return (
       <CitationView
         website={citation.citation.website}
@@ -45,6 +45,7 @@ class Citation extends Component {
         updateURL={citation.updateURL}
         toHTMLDate={this.toHTMLDate}
         updateBibliography={this.updateBibliography}
+        navigateBack={() => navigation.navigate('Bibliography')}
     />
     );
   }
