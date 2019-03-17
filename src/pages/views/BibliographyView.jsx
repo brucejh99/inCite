@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
+import Dropdown from '../../components/Dropdown';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
 
-const caret = require('../../assets/caret.svg');
-
 export default class BibliographyView extends Component {
   render() {
-    const { bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
+    const { bibliographyName, bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
 
     return (
       <div style={styles.body}>
         <div style={styles.header}>
           <Title>
-            Bibliography
+            {bibliographyName}
           </Title>
-          <img src={caret} alt='Dropdown' style={styles.dropdown} />
-          {/* TODO: implement dropdown on click */}
+          <Dropdown buttonStyle={styles.dropdown} />
         </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
@@ -105,8 +103,7 @@ const styles = {
   dropdown: {
     height: '22px',
     width: '18.5px',
-    margin: '0px 8px',
-    cursor: 'pointer'
+    margin: '0px 8px'
   },
   buttonContainer: {
     width: '100%',
