@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
-import ScrollableArea from './ScrollableArea';
+import Dropdown from 'react-dropdown-select';
 
 const caret = require('../assets/caret.svg');
 
-export default class Dropdown extends Component {
+export default class MyDropdown extends Component {
     state = {
         active: false
     }
 
     render() {
+        const { buttonStyle } = this.props;
+        const { active } = this.state;
         return (
             <div style={styles.body}>
-                <img
-                    src={caret}
-                    alt='Dropdown'
-                    onClick={() => this.setState({ active: !this.state.active })}
-                    style={this.props.buttonStyle}
-                />
-                {this.state.active ? 
-                    <div style={styles.dropdown}>
-                        <ScrollableArea
-                            width={200}
-                            height={250}
-                            backgroundColor='red'
-                            borderColor='black'
-                            borderWidth={1}
-                        >
-                        <div style={{height: '50px', backgroundColor: 'green'}} />
-                        </ScrollableArea>
-                    </div> : null}
+                <div style={styles.container}>
+                    <img
+                        src={caret}
+                        alt='Dropdown'
+                        onClick={() => this.setState({ active: !active })}
+                        style={buttonStyle}
+                    />
+                    <div style={active ? {...styles.dropdown, ...styles.visible} : styles.dropdown}>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -39,10 +33,17 @@ const styles = {
         position: 'relative',
         cursor: 'pointer'
     },
-    dropdown: {
+    container: {
         position: 'absolute',
-        right: '0px',
-        top: '35px',
-        transition: 'all 250 ease-in-out'
+        top: '-10px'
+    },
+    dropdown: { // TODO: this transition style should be used for dropdown instead of container div itself
+        height: '0px',
+        left: '0px',
+        backgroundColor: 'orange',
+        transition: 'all 0.25s'
+    },
+    visible: {
+        height: '100px'
     }
 }

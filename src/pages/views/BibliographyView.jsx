@@ -16,7 +16,7 @@ export default class BibliographyView extends Component {
           <Title>
             {bibliographyName}
           </Title>
-          <Dropdown buttonStyle={styles.dropdown} />
+          <Dropdown buttonStyle={styles.dropdownButton} />
         </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
@@ -100,7 +100,7 @@ const styles = {
     padding: 0,
     margin: 0
   },
-  dropdown: {
+  dropdownButton: {
     height: '22px',
     width: '18.5px',
     margin: '0px 8px'
