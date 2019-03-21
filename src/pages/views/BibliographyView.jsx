@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Title from '../../components/Title';
+import Dropdown from 'react-dropdown-select';
 import Button from '../../components/Button';
-import Dropdown from '../../components/Dropdown';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
@@ -9,14 +8,17 @@ import CitationListItem from '../../components/CitationListItem';
 export default class BibliographyView extends Component {
   render() {
     const { bibliographyName, bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
+    const options = ['one', 'two', 'three'];
 
     return (
       <div style={styles.body}>
         <div style={styles.header}>
-          <Title>
-            {bibliographyName}
-          </Title>
-          <Dropdown buttonStyle={styles.dropdownButton} />
+          <Dropdown
+            placeholder={bibliographyName}
+            options={options}
+            color='#FFE455'
+            style={styles.dropdown}
+          />
         </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
@@ -100,10 +102,11 @@ const styles = {
     padding: 0,
     margin: 0
   },
-  dropdownButton: {
-    height: '22px',
-    width: '18.5px',
-    margin: '0px 8px'
+  dropdown: {
+    width: '335px',
+    border: 'none',
+    fontFamily: 'Oleo Script',
+    fontSize: '36px'
   },
   buttonContainer: {
     width: '100%',
