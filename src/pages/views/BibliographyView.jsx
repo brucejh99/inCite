@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
+import Title from '../../components/Title';
 import Button from '../../components/Button';
+import Dropdown from '../../components/Dropdown';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
 
 export default class BibliographyView extends Component {
   render() {
-    const { bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
+    const { bibliographyName, bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
 
     return (
       <div style={styles.body}>
+        <div style={styles.header}>
+          <Title>
+            {bibliographyName}
+          </Title>
+          <Dropdown buttonStyle={styles.dropdownButton} />
+        </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
             selected={bibStyle === 'MLA'}
@@ -79,11 +87,23 @@ export default class BibliographyView extends Component {
 }
 
 const styles = {
+  header: {
+    width: '100%',
+    height: '70px',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 30px'
+  },
   body: {
     width: '400px',
     background: 'white',
     padding: 0,
     margin: 0
+  },
+  dropdownButton: {
+    height: '22px',
+    width: '18.5px',
+    margin: '0px 8px'
   },
   buttonContainer: {
     width: '100%',

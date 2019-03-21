@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import FormField from '../../components/FormField';
 import Button from '../../components/Button';
+import Title from '../../components/Title';
+
+const backIcon = require('../../assets/back-icon.svg');
 
 export default class CitationView extends Component {
   render() {
@@ -20,11 +23,22 @@ export default class CitationView extends Component {
         updateDateRetrieved,
         updateURL,
         toHTMLDate,
-        updateBibliography
+        updateBibliography,
+        navigateBack
     } = this.props;
 
     return (
       <div>
+        <div style={styles.header}>
+          <img
+            src={backIcon}
+            alt='Back'
+            onClick={navigateBack}
+            style={styles.backButton} />
+          <Title>
+            Edit Citation
+          </Title>
+        </div>
         <div style={styles.table}>
           <FormField
             fieldName="Website"
@@ -88,9 +102,22 @@ export default class CitationView extends Component {
 }
 
 const styles = {
+  header: {
+    width: '400px',
+    height: '70px',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 17px'
+  },
+  backButton: {
+    height: '18.5px',
+    width: '22px',
+    marginRight: '10px',
+    cursor: 'pointer'
+  },
   table: {
     display: 'table',
-    margin: '0 25px',
+    margin: '0 30px',
     marginTop: '25px',
     borderCollapse: 'collapse'
   },

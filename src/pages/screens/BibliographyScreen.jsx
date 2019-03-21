@@ -78,6 +78,7 @@ class BibliographyPage extends Component {
       <BibliographyView
         bibStyle={bibliography.bibStyle}
         updateStyle={bibliography.updateStyle}
+        bibliographyName={bibliography.activeBibName.substr(2)}
         bibliography={bibliography.renderCitations}
         add={this.addCitation}
         copy={this.copyCitations}
