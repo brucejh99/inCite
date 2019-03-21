@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-dropdown-select';
 
 const caret = require('../assets/caret.svg');
 
