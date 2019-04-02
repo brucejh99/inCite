@@ -15,7 +15,6 @@
     "number-to-words": "^1.2.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-dropdown-select": "^2.2.3",
     "react-scripts": "^2.1.5",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
