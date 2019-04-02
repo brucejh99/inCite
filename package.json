@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "metascraper": "^4.10.1",
+    "metascraper": "^5.0.2",
     "metascraper-author": "^4.7.0",
     "metascraper-date": "^4.7.0",
     "metascraper-publisher": "^4.7.0",
