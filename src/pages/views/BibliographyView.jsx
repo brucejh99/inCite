@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-dropdown-select';
 import Button from '../../components/Button';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
@@ -13,12 +12,12 @@ export default class BibliographyView extends Component {
     return (
       <div style={styles.body}>
         <div style={styles.header}>
-          <Dropdown
+          {/* <Dropdown
             placeholder={bibliographyName}
             options={options}
             color='#FFE455'
             style={styles.dropdown}
-          />
+          /> */}
         </div>
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
