@@ -1,10 +1,22 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import Button from '../../components/Button';
 import SelectableButton from '../../components/SelectableButton';
 import ScrollableArea from '../../components/ScrollableArea';
 import CitationListItem from '../../components/CitationListItem';
+=======
+import React, { PureComponent } from 'react';
+import {
+  Title,
+  Button,
+  Dropdown,
+  SelectableButton,
+  ScrollableArea,
+  CitationListItem
+} from '../../components';
+>>>>>>> master
 
-export default class BibliographyView extends Component {
+export default class BibliographyView extends PureComponent {
   render() {
     const { bibliographyName, bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
     const options = ['one', 'two', 'three'];
@@ -50,22 +62,22 @@ export default class BibliographyView extends Component {
           </SelectableButton>
         </div>
         <div style={styles.listContainer}>
-        <ScrollableArea
+          <ScrollableArea
             width={345}
             height={300}
             backgroundColor='white'
             borderColor='#FFE455'
             borderWidth={1}
             curved={true}
-        >
-          {bibliography.map(item => (
+          >
+            {bibliography.map(item => (
               <CitationListItem
                 citationObject={item}
                 deleteCitation={() => deleteItem(item)}
                 editCitation={() => editItem(item)} />
             ))
-          }
-        </ScrollableArea>
+            }
+          </ScrollableArea>
         </div>
           <div style={{...styles.buttonContainer, ...styles.bottom}}>
             <Button

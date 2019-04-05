@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
-import FormField from '../../components/FormField';
-import Button from '../../components/Button';
-import Title from '../../components/Title';
+import React, { PureComponent } from 'react';
+import {
+  DateField,
+  FormField,
+  Button,
+  Title
+} from '../../components';
 
 const backIcon = require('../../assets/back-icon.svg');
 
-export default class CitationView extends Component {
+export default class CitationView extends PureComponent {
   render() {
     const {
-        website,
-        article,
-        author,
-        publisher,
-        datePublished,
-        dateRetrieved,
-        url,
-        updateWebsite,
-        updateArticle,
-        updateAuthor,
-        updatePublisher,
-        updateDatePublished,
-        updateDateRetrieved,
-        updateURL,
-        toHTMLDate,
-        updateBibliography,
-        navigateBack
+      website,
+      article,
+      author,
+      publisher,
+      datePublished,
+      dateRetrieved,
+      url,
+      updateWebsite,
+      updateArticle,
+      updateAuthor,
+      updatePublisher,
+      updateDatePublished,
+      updateDateRetrieved,
+      updateURL,
+      toHTMLDate,
+      updateBibliography,
+      navigateBack
     } = this.props;
 
     return (
@@ -47,7 +50,8 @@ export default class CitationView extends Component {
             value={website}
             onChange={(field, value) => updateWebsite(value)}
           />
-          <FormField fieldName="Article"
+          <FormField
+            fieldName="Article"
             inputType="text"
             name="article"
             value={article}
@@ -67,19 +71,17 @@ export default class CitationView extends Component {
             value={publisher}
             onChange={(field, value) => updatePublisher(value)}
           />
-          <FormField
+          <DateField
             fieldName="Date Published"
-            inputType="date"
             name="datePublished"
-            value={toHTMLDate(datePublished)}
-            onChange={(field, value) => updateDatePublished(value)}
+            date={toHTMLDate(datePublished)}
+            onDateChange={(field, value) => updateDatePublished(value)}
           />
-          <FormField
+          <DateField
             fieldName="Date Retrieved"
-            inputType="date"
             name="dateRetrieved"
             value={toHTMLDate(dateRetrieved)}
-            onChange={(field, value) => updateDateRetrieved(value)}
+            onDateChange={(field, value) => updateDateRetrieved(value)}
           />
           <FormField
             fieldName="URL"
@@ -92,7 +94,8 @@ export default class CitationView extends Component {
         <div style={styles.buttonContainer}>
           <Button
             onClick={updateBibliography}
-            style={styles.button}>
+            style={styles.button}
+          >
             Update
           </Button>
         </div>
@@ -107,25 +110,25 @@ const styles = {
     height: '70px',
     display: 'flex',
     alignItems: 'center',
-    padding: '0px 17px'
   },
   backButton: {
     height: '18.5px',
     width: '22px',
+    marginLeft: '17px',
     marginRight: '10px',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   table: {
     display: 'table',
     margin: '0 30px',
     marginTop: '25px',
-    borderCollapse: 'collapse'
+    borderCollapse: 'collapse',
   },
   buttonContainer: {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    margin: '20px 0px'
+    margin: '20px 0px',
   },
   button: {
     height: '34px',
@@ -136,6 +139,6 @@ const styles = {
     margin: '0px 3px',
     fontFamily: 'Nunito Sans',
     fontWeight: '900',
-    border: '1px solid #F69970'
+    border: '1px solid #F69970',
   }
 }
