@@ -1,27 +1,49 @@
 import React, { Component } from 'react';
+import DropdownItem from './DropdownItem';
+import Title from './Title';
 
 const caret = require('../assets/caret.svg');
 
-export default class MyDropdown extends Component {
+export default class Dropdown extends Component {
     state = {
         active: false
     }
 
+    onClick = option => {
+        this.props.onSelectBibliography(option);
+        this.setState({ active: false });
+    }
+
     render() {
-        const { buttonStyle } = this.props;
+        const { value, options } = this.props;
         const { active } = this.state;
         return (
-            <div style={styles.body}>
-                <div style={styles.container}>
+            <div
+                onClick={() => this.setState({ active: !active })}
+                style={{...styles.body, ...this.props.style}}
+            >
+                <div style={styles.headerContainer}>
+                    <Title style={styles.title}>
+                        {value}
+                    </Title>
                     <img
                         src={caret}
                         alt='Dropdown'
-                        onClick={() => this.setState({ active: !active })}
-                        style={buttonStyle}
+                        style={styles.icon}
                     />
-                    <div style={active ? {...styles.dropdown, ...styles.visible} : styles.dropdown}>
-                    </div>
                 </div>
+                {active ?
+                    <div style={styles.dropdown}>
+                        {options.map(option => 
+                            <DropdownItem
+                                value={option}
+                                onClick={() => this.onClick(option)}
+                            />
+                        )}
+                    </div>
+                    :
+                    null
+                }
             </div>
         )
     }
@@ -30,19 +52,31 @@ export default class MyDropdown extends Component {
 const styles = {
     body: {
         position: 'relative',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        display: 'flex',
+        flexWrap: 'wrap'
     },
-    container: {
-        position: 'absolute',
-        top: '-10px'
+    title: {
+        width: '317px'
     },
-    dropdown: { // TODO: this transition style should be used for dropdown instead of container div itself
-        height: '0px',
-        left: '0px',
-        backgroundColor: 'orange',
-        transition: 'all 0.25s'
+    headerContainer: {
+        height: '30px',
+        padding: '10px 0px',
+        display: 'flex',
+        alignItems: 'center'
     },
-    visible: {
-        height: '100px'
+    dropdown: {
+        maxHeight: '600px',
+        width: '100%',
+        overflowY: 'auto'
+    },
+    icon: {
+        verticalAlign: 'center'
+    },
+    option: {
+        width: '100%',
+        padding: '2.5px 2.5px',
+        fontFamily: 'Nunito Sans',
+        fontSize: '14px'
     }
 }

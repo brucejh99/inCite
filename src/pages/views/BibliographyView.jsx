@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import {
-  Title,
   Button,
   Dropdown,
   SelectableButton,
@@ -10,16 +9,26 @@ import {
 
 export default class BibliographyView extends PureComponent {
   render() {
-    const { bibliographyName, bibliography, deleteItem, editItem, bibStyle, updateStyle } = this.props;
+    const {
+      bibliographyName,
+      bibliography,
+      bibliographyList,
+      onSelectBibliography,
+      deleteItem,
+      editItem,
+      bibStyle,
+      updateStyle
+    } = this.props;
 
     return (
       <div style={styles.body}>
-        <div style={styles.header}>
-          <Title>
-            {bibliographyName}
-          </Title>
-          <Dropdown buttonStyle={styles.dropdownButton} />
-        </div>
+        <Dropdown
+          value={bibliographyName}
+          options={bibliographyList}
+          onSelectBibliography={onSelectBibliography}
+          color='#FFE455'
+          style={styles.dropdown}
+        />
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
           <SelectableButton
             selected={bibStyle === 'MLA'}
@@ -89,23 +98,17 @@ export default class BibliographyView extends PureComponent {
 }
 
 const styles = {
-  header: {
-    width: '100%',
-    height: '70px',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0px 30px'
-  },
   body: {
     width: '400px',
     background: 'white',
     padding: 0,
     margin: 0
   },
-  dropdownButton: {
-    height: '22px',
-    width: '18.5px',
-    margin: '0px 8px'
+  dropdown: {
+    width: '340px',
+    height: '50px',
+    padding: '10px 30px',
+    border: 'none'
   },
   buttonContainer: {
     width: '100%',
@@ -128,6 +131,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     marginTop: '-1px',
+    marginLeft: '1px',
     justifyContent: 'center',
     border: 'none'
   },

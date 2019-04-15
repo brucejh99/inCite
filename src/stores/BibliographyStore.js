@@ -95,9 +95,10 @@ const BibliographyStoreModel = types
   }))
   .views(self => ({
     get activeBibName() {
+      if(self.name) return self.name.substr(2);
       const bibs = localStorage.getItem('Bibliographies');
       if (bibs === null) return null;
-      return JSON.parse(bibs).name;
+      return JSON.parse(bibs).name.substr(2);
     },
     get bibList() {
       return self.list.toJS();
