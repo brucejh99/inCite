@@ -131,6 +131,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     marginTop: '-1px',
+    marginLeft: '1px',
     justifyContent: 'center',
     border: 'none'
   },
