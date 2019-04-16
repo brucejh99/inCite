@@ -82,10 +82,12 @@ class BibliographyPage extends Component {
         bibliography={bibliography.renderCitations}
         bibliographyList={bibliography.bibList}
         onSelectBibliography={bibliography.selectBibliography}
-        add={this.addCitation}
+        addCitation={this.addCitation}
         copy={this.copyCitations}
         editItem={this.editCitation}
         deleteItem={bibliography.deleteCitation}
+        addBibliography={bibliography.addBibliography}
+        deleteBibliography={bibliography.deleteBibliography}
       />
     );
   }

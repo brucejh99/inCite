@@ -1,5 +1,6 @@
 /* global localStorage */
 import { types } from 'mobx-state-tree';
+import Store from './Store';
 import {
   MLASort, APASort, ChicagoSort, HarvardSort,
 } from '../services/Sorter';
@@ -41,9 +42,16 @@ const BibliographyStoreModel = types
     deleteBibliography(name) {
       localStorage.removeItem(`__${name}`);
       self.list.replace(self.list.filter(bibName => bibName !== name));
-      self.name = '';
-      self.citations.replace([]);
-      localStorage.setItem('Bibliographies', JSON.stringify({ name: '', list: self.list }));
+      if(self.list.length === 0) {
+        self.name = '';
+        self.citations.replace([]);
+        localStorage.clear();
+        Store.navigation.navigate('BibliographyList');
+      } else if(self.name === name) {
+        self.name = '';
+        self.citations.replace([]);
+        localStorage.setItem('Bibliographies', JSON.stringify({ name: '', list: self.list }));
+      }
     },
     selectBibliography(name) {
       localStorage.setItem('Bibliographies', JSON.stringify({ name: `__${name}`, list: self.list }));

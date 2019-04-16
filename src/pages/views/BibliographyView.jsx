@@ -14,10 +14,14 @@ export default class BibliographyView extends PureComponent {
       bibliography,
       bibliographyList,
       onSelectBibliography,
+      addCitation,
+      copy,
       deleteItem,
       editItem,
       bibStyle,
-      updateStyle
+      updateStyle,
+      addBibliography,
+      deleteBibliography
     } = this.props;
 
     return (
@@ -25,8 +29,9 @@ export default class BibliographyView extends PureComponent {
         <Dropdown
           value={bibliographyName}
           options={bibliographyList}
+          onAdd={addBibliography}
+          onDelete={deleteBibliography}
           onSelectBibliography={onSelectBibliography}
-          color='#FFE455'
           style={styles.dropdown}
         />
         <div style={{...styles.buttonContainer, padding: '0px 28px'}}>
@@ -79,13 +84,13 @@ export default class BibliographyView extends PureComponent {
         </div>
           <div style={{...styles.buttonContainer, ...styles.bottom}}>
             <Button
-              onClick={this.props.add}
+              onClick={addCitation}
               style={styles.bottomButton}>
                 Add
             </Button>
             {document.queryCommandSupported('copy')
               ? <Button
-                  onClick={this.props.copy}
+                  onClick={copy}
                   style={styles.bottomButton}>
                     Copy
                 </Button>

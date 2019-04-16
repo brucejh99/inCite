@@ -15,7 +15,12 @@ export default class Dropdown extends Component {
     }
 
     render() {
-        const { value, options } = this.props;
+        const {
+            value,
+            options,
+            onAdd,
+            onDelete
+        } = this.props;
         const { active } = this.state;
         return (
             <div
@@ -38,8 +43,12 @@ export default class Dropdown extends Component {
                             <DropdownItem
                                 value={option}
                                 onClick={() => this.onClick(option)}
+                                onDelete={() => onDelete(option)}
                             />
                         )}
+                        {/* <DropdownItem
+                            value={}
+                        /> */}
                     </div>
                     :
                     null
