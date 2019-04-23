@@ -5,9 +5,9 @@ import Title from './Title';
 const caret = require('../assets/caret.svg');
 
 export default class Dropdown extends Component {
-    state = {
-        active: false
-    }
+  state = {
+    active: false,
+  }
 
     onItemClick = option => {
         this.props.onSelectBibliography(option);
@@ -23,10 +23,7 @@ export default class Dropdown extends Component {
         } = this.props;
         const { active, creating } = this.state;
         return (
-            <div
-                // onClick={() => this.setState({ active: !active })}
-                style={{...styles.body, ...this.props.style}}
-            >
+            <div style={{...styles.body, ...this.props.style}}>
                 <div
                     onClick={() => this.setState({ active: !active })}
                     style={active ?
@@ -110,4 +107,4 @@ const styles = {
         fontFamily: 'Nunito Sans',
         fontSize: '14px'
     }
-}
+};

@@ -7,7 +7,7 @@ import {
 
 const Citation = types.model({
   article: types.maybeNull(types.string),
-  author: types.maybeNull(types.string),
+  authors: types.optional(types.array(types.string), []),
   publisher: types.maybeNull(types.string),
   website: types.maybeNull(types.string),
   datePublished: types.maybeNull(types.Date),
@@ -42,7 +42,7 @@ const BibliographyStoreModel = types
     deleteBibliography(name) {
       localStorage.removeItem(`__${name}`);
       self.list.replace(self.list.filter(bibName => bibName !== name));
-      if(self.list.length === 0) {
+      if (self.list.length === 0) {
         self.name = '';
         self.citations.replace([]);
         localStorage.clear();
@@ -105,7 +105,7 @@ const BibliographyStoreModel = types
   }))
   .views(self => ({
     get activeBibName() {
-      if(self.name) return self.name.substr(2);
+      if (self.name) return self.name.substr(2);
       const bibs = localStorage.getItem('Bibliographies');
       if (bibs === null) return null;
       return JSON.parse(bibs).name.substr(2);

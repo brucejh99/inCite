@@ -1,13 +1,13 @@
 /* global chrome */
 import { types } from 'mobx-state-tree';
 import {
-  toAPA, toMLA, toChicago, toHarvard,
+  formatForConverter, toAPA, toMLA, toChicago, toHarvard,
 } from '../services/Converter';
 
 const CitationStoreModel = types
   .model('Citation', {
     article: types.maybeNull(types.string),
-    author: types.maybeNull(types.string),
+    authors: types.optional(types.array(types.string), []),
     website: types.maybeNull(types.string),
     publisher: types.maybeNull(types.string),
     datePublished: types.maybeNull(types.Date),
@@ -21,7 +21,7 @@ const CitationStoreModel = types
     saveCitation() {
       localStorage.setItem('CurrentCitation', JSON.stringify({
         article: self.article,
-        author: self.author,
+        authors: self.authors,
         website: self.website,
         publisher: self.publisher,
         datePublished: self.datePublished,
@@ -32,7 +32,8 @@ const CitationStoreModel = types
     },
     setCitation(citation) {
       self.article = citation.article;
-      self.author = citation.author;
+      // copy by value, not reference, for display in CitationView
+      self.authors = citation.authors.slice();
       self.website = citation.website;
       self.publisher = citation.publisher;
       self.datePublished = citation.datePublished ? new Date(citation.datePublished) : null;
@@ -45,8 +46,14 @@ const CitationStoreModel = types
       self.article = article;
       this.saveCitation();
     },
-    updateAuthor(name) {
-      self.author = name;
+    addAuthor() {
+      self.authors.push('');
+    },
+    subtractAuthor() {
+      self.authors.pop();
+    },
+    updateAuthor(name, index) {
+      self.authors[index] = name;
       this.saveCitation();
     },
     updateWebsite(site) {
@@ -71,7 +78,7 @@ const CitationStoreModel = types
     },
     clearCitation() {
       self.article = emptyCitation.article;
-      self.author = emptyCitation.author;
+      self.authors = emptyCitation.authors;
       self.website = emptyCitation.website;
       self.publisher = emptyCitation.publisher;
       self.datePublished = emptyCitation.datePublished;
@@ -85,7 +92,7 @@ const CitationStoreModel = types
     get citation() {
       const citation = {
         article: self.article,
-        author: self.author,
+        authors: self.authors.slice(), // copy by value, not reference, for mobx
         website: self.website,
         publisher: self.publisher,
         datePublished: self.datePublished,
@@ -93,17 +100,18 @@ const CitationStoreModel = types
         url: self.url,
         id: self.id,
       };
-      citation.apa = toAPA(citation);
-      citation.mla = toMLA(citation);
-      citation.chicago = toChicago(citation);
-      citation.harvard = toHarvard(citation);
+      const formattedCitation = formatForConverter(citation);
+      citation.apa = toAPA(formattedCitation);
+      citation.mla = toMLA(formattedCitation);
+      citation.chicago = toChicago(formattedCitation);
+      citation.harvard = toHarvard(formattedCitation);
       return citation;
     },
   }));
 
 export const emptyCitation = {
   article: null,
-  author: null,
+  authors: [''],
   website: null,
   publisher: null,
   datePublished: null,

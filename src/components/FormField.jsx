@@ -1,36 +1,50 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Field class to enter bibliographic information
  * @prop {String} fieldName Name of field, shown in label and placeholder
- * @prop {String} inputType Type of input (text, date etc.)
+ * @prop {String} value Value of the variable, updates the field
+ * @prop {Func} onChange Handler for when value changes
  */
 export default class FormField extends Component {
   onFieldChange = (event) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
 
-    this.props.onChange(fieldName, fieldValue);
-  }
+      const { onChange } = this.props;
+      onChange(fieldName, fieldValue);
+    }
 
-  render() {
-    return (
-      <label style={styles.tr}>
-        <span style={{...styles.td, ...styles.tableName}}>{this.props.fieldName}</span>
-        <span style={styles.td}>
-          <input
-            type={this.props.inputType}
-            name={this.props.name}
-            placeholder={this.props.fieldName}
-            value={this.props.value}
-            onChange={this.onFieldChange}
-            style={styles.textbox}
-          />
-        </span>
-      </label>
-    )
-  }
+    render() {
+      const {
+        fieldName, value,
+      } = this.props;
+
+      return (
+        <label htmlFor={fieldName} style={styles.tr}>
+          <span style={{ ...styles.td, ...styles.tableName }}>{fieldName}</span>
+          <span style={styles.td}>
+            <input
+              id={fieldName}
+              type="text"
+              name={fieldName}
+              placeholder={fieldName}
+              value={value}
+              onChange={this.onFieldChange}
+              style={styles.textbox}
+            />
+          </span>
+        </label>
+      );
+    }
 }
+
+FormField.propTypes = {
+  fieldName: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 const styles = {
   tr: {
@@ -46,8 +60,9 @@ const styles = {
     textAlign: 'left',
   },
   textbox: {
+    width: '150px',
     padding: '5px',
     border: '1px solid #FFE455',
     borderRadius: '0px 10px 0px 10px',
-  }
-}
+  },
+};

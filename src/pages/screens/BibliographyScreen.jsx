@@ -4,8 +4,10 @@ import request from 'request';
 import uuid from 'uuid/v4';
 import { observer, inject } from 'mobx-react';
 import BibliographyView from '../views/BibliographyView';
-import { toAPA, toMLA, toChicago, toHarvard } from '../../services/Converter';
-import { getCorrectedCurrentDate, } from '../../services/Utils';
+import {
+  formatForConverter, toAPA, toMLA, toChicago, toHarvard,
+} from '../../services/Converter';
+import { getCorrectedCurrentDate } from '../../services/Utils';
 
 /**
  * Bibliography page to set up new bibliography. Default page if no bibliography settings exist.
@@ -15,15 +17,16 @@ class BibliographyPage extends Component {
   metascraper = null;
 
   addCitation = async () => {
-    const { bibliography } = this.props.store;
-    chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
-      const url = tabs[0].url;
+    const { store } = this.props;
+    const { bibliography } = store;
+    chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+      const { url } = tabs[0];
       let metadata;
       request({ uri: url, timeout: 5000 }, async (err, res, html) => {
-        if(html === undefined || err) {
+        if (html === undefined || err) {
           metadata = { url };
         } else {
-          if(!this.metascraper) {
+          if (!this.metascraper) {
             this.metascraper = require('metascraper')([
               require('metascraper-author')(),
               require('metascraper-date')(),
@@ -35,28 +38,34 @@ class BibliographyPage extends Component {
           metadata = await this.metascraper({ html, url });
         }
         let dateString = metadata.date;
-        if(dateString) dateString = new Date(dateString);
+        if (dateString) dateString = new Date(dateString);
+
+        const authors = [];
+        authors.push(metadata.author ? metadata.author : '');
+
         const citation = {
           url: metadata.url || null,
           article: metadata.title || null,
-          author: metadata.author || null,
+          authors,
           website: metadata.publisher || null,
           publisher: null,
           datePublished: dateString || null,
           dateRetrieved: getCorrectedCurrentDate(),
-          id: uuid()
+          id: uuid(),
         };
-        citation.apa = toAPA(citation);
-        citation.mla = toMLA(citation);
-        citation.chicago = toChicago(citation);
-        citation.harvard = toHarvard(citation);
+        const formattedCitation = formatForConverter(citation);
+        citation.apa = toAPA(formattedCitation);
+        citation.mla = toMLA(formattedCitation);
+        citation.chicago = toChicago(formattedCitation);
+        citation.harvard = toHarvard(formattedCitation);
         bibliography.addCitation(citation);
       });
     });
   }
 
   copyCitations = () => {
-    const { bibliography } = this.props.store;
+    const { store } = this.props;
+    const { bibliography } = store;
     const copyArea = document.getElementById('copyArea');
     const copyValue = bibliography.renderCitations.map(item => item.citation);
     copyArea.innerHTML = copyValue.join('\n');
@@ -66,14 +75,16 @@ class BibliographyPage extends Component {
   }
 
   editCitation = (citationObject) => {
-    const { navigation, citation, bibliography } = this.props.store;
+    const { store } = this.props;
+    const { navigation, citation, bibliography } = store;
     const editValue = bibliography.bibCitations.find(value => value.id === citationObject.id);
     citation.setCitation(editValue);
     navigation.navigate('Citation');
   }
 
   render() {
-    const { bibliography } = this.props.store;
+    const { store } = this.props;
+    const { bibliography } = store;
     return (
       <BibliographyView
         bibStyle={bibliography.bibStyle}

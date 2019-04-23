@@ -1,37 +1,105 @@
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
+
 // used for reading months
 const monthName = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-function replaceAngleBrackets(data) {
+// Takes the citation data and replaces angle brackets to prevent html tags from
+// displaying, also removes empty author strings and trims
+export function formatForConverter(data) {
   const newData = {};
-  newData.author = data.author ? data.author.replace(/</g, '&lt;') : undefined;
+  newData.authors = data.authors.filter(author => author.length > 0)
+    .map(author => author.trim().replace(/</g, '&lt;'));
   newData.date = data.datePublished || undefined;
-  newData.publisher = data.publisher ? data.publisher.replace(/</g, '&lt;') : undefined;
-  newData.website = data.website ? data.website.replace(/</g, '&lt;') : undefined;
-  newData.title = data.article ? data.article.replace(/</g, '&lt;') : undefined;
+  newData.publisher = data.publisher ? data.publisher.trim().replace(/</g, '&lt;') : undefined;
+  newData.website = data.website ? data.website.trim().replace(/</g, '&lt;') : undefined;
+  newData.title = data.article ? data.article.trim().replace(/</g, '&lt;') : undefined;
   newData.dateAccessed = data.dateRetrieved || undefined;
-  newData.url = data.url ? data.url.replace(/</g, '&lt;') : '';
+  newData.url = data.url ? data.url.trim().replace(/</g, '&lt;') : '';
   return newData;
 }
 
+/**
+ * Formats an author for APA
+ * @param {String} author Unformatted author as 'FirstName MiddleNames LastName'
+ * @returns {String} Formatted string for multiple authors
+ */
+function formatAuthorLastFirstInitial(author) {
+  let authorString = '';
+
+  const nameArr = author.split(' ');
+  if (nameArr.length === 1) {
+    authorString += `${nameArr[0]}`;
+  } else {
+    authorString += `${nameArr[nameArr.length - 1]}, `;
+    for (let i = 0; i < nameArr.length - 1; i++) {
+      const currFirstMiddleName = nameArr[i];
+      authorString += `${currFirstMiddleName[0]}`;
+      if (i < nameArr.length - 2) {
+        authorString += '. ';
+      }
+    }
+  }
+  return authorString;
+}
+
+/*!
+Single Author
+  Last name first, followed by author initials.
+  Berndt, T. J.
+Two Authors
+  List by their last names and initials. Use the ampersand instead of "and."
+  Wegener, D. T., & Petty, R. E.
+Three to Seven Authors
+  List by last names and initials; commas separate author names,
+    while the last author name is preceded again by ampersand.
+  Kernis, M. H., Cornell, D. P., Sun, C. R., Berry, A., Harlow, T., & Bach, J. S.
+More Than Seven Authors
+  List by last names and initials; commas separate author names.
+    After the sixth author's name, use an ellipsis in place of the author names.
+    Then provide the final author name. There should be no more than seven names.
+  Miller, F. H., Choi, M. J., Angeli, L. L., Harland, A. A.,
+  Stamos, J. A., Thomas, S. T., . . . Rubin, L. H.
+
+  https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/reference_list_author_authors.html
+*/
+
+/**
+ * Formats multiple authors for APA
+ * @param {Array} authors Array of author strings
+ * @returns {String} Formatted string for multiple authors
+ */
+function formatAuthorsAPA(authors) {
+  let authorsString = '';
+
+  for (let i = 0; i < 6 && i < authors.length - 1; i++) {
+    authorsString += `${formatAuthorLastFirstInitial(authors[i])}, `;
+  }
+
+  if (authors.length > 1 && authors.length <= 7) {
+    authorsString += '& ';
+  } else if (authors.length > 7) {
+    authorsString += '. . . ';
+  }
+
+  authorsString += `${formatAuthorLastFirstInitial(authors[authors.length - 1])}. `;
+  return authorsString;
+}
+
+/**
+ * Formats a citation for APA
+ * @param {Object} data Object with citation fields
+ * @returns {String} Formatted string for APA
+ */
 export function toAPA(data) {
   let citation = '';
   const {
-    author, date, publisher, title, dateAccessed, url
-  } = replaceAngleBrackets(data);
+    authors, date, publisher, title, dateAccessed, url,
+  } = data;
 
-  if (author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length === 1) {
-      citation += `${nameArr[0]}. `;
-    } else {
-      citation += `${nameArr[nameArr.length - 1]}, `;
-      for (let i = 0; i < nameArr.length - 1; ++i) {
-        const currFirstMiddleName = nameArr[i];
-        citation += `${currFirstMiddleName[0]}. `;
-      }
-    }
+  if (authors.length > 0) {
+    citation += formatAuthorsAPA(authors);
   } else if (title) {
     const italicizedTitle = title.italics();
     citation += `${italicizedTitle}. `;
@@ -40,7 +108,7 @@ export function toAPA(data) {
     const longDate = new Date(date);
     citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}). `;
   }
-  if (author && title) {
+  if (authors.length > 0 && title) {
     citation += `${title.italics()}. `;
   }
   if (publisher) {
@@ -57,23 +125,64 @@ export function toAPA(data) {
   return citation;
 }
 
+/*!
+One author
+  Courtois, Charles A.
+Two authors
+  Martin, Jonathan A., and Christopher Jackson.
+Three or more authors
+  Fontela, Pablo, et al.
+
+https://sites.umuc.edu/library/libhow/mla_examples.cfm#authors
+*/
+
+/**
+ * Formats multiple authors for MLA
+ * @param {Array} authors Array of author strings
+ * @returns {String} Formatted string for multiple authors
+ */
+function formatAuthorsMLA(authors) {
+  let authorsString = '';
+
+  if (authors.length > 0) {
+    const nameArr = authors[0].split(' '); // Always format first author
+    if (nameArr.length === 1) {
+      authorsString += `${nameArr[0]}`;
+    } else { // 'LastName, FirstName MiddleNames'
+      authorsString += `${nameArr[nameArr.length - 1]},`;
+      for (let i = 0; i < nameArr.length - 1; i++) {
+        authorsString += ` ${nameArr[i]}`;
+      }
+    }
+
+    if (authors.length === 2) { // For second author, 'and FirstName SecondName'
+      authorsString += `, and ${authors[1]}`;
+    } else if (authors.length >= 3) { // For three or more, 'et al'
+      authorsString += ' et al';
+    }
+
+    if (authorsString[authorsString.length - 1] !== '.') {
+      authorsString += '.';
+    }
+    authorsString += ' ';
+  }
+
+  return authorsString;
+}
+
+/**
+ * Formats a citation for MLA
+ * @param {Object} data Object with citation fields
+ * @returns {String} Formatted string for MLA
+ */
 export function toMLA(data) {
   let citation = '';
   const {
-    author, date, publisher, website, title, url
-  } = replaceAngleBrackets(data);
+    authors, date, publisher, website, title, url,
+  } = data;
 
-  if (author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length === 1) {
-      citation += `${nameArr[0]}. `;
-    } else {
-      citation += `${nameArr[nameArr.length - 1]},`;
-      for (let i = 0; i < nameArr.length - 1; ++i) {
-        citation += ` ${nameArr[i]}`;
-      }
-      citation += '. ';
-    }
+  if (authors.length > 0) {
+    citation += formatAuthorsMLA(authors);
   }
   if (title) {
     citation += `"${title}." `;
@@ -97,6 +206,63 @@ export function toMLA(data) {
   return citation;
 }
 
+/*!
+Two or Three Authors
+  Orr, Catherine Margaret, and Ann Braithwaite.
+Four to Ten Authors
+  Evans, Julie, Patricia Grimshaw, David Philips, and Shurlee Swain.
+NOTE: For sources with more than ten authors or editors, include only the
+  first seven in the bibliography, followed by et al.
+
+http://libguides.uleth.ca/chicagostyle/books/multiple
+*/
+
+/**
+ * Formats multiple authors for MLA
+ * @param {Array} authors Array of author strings
+ * @returns {String} Formatted string for multiple authors
+ */
+function formatAuthorsChicago(authors) {
+  let authorsString = '';
+
+  if (authors.length > 0) {
+    const nameArr = authors[0].split(' '); // Always format first author
+    if (nameArr.length === 1) {
+      authorsString += `${nameArr[0]}`;
+    } else { // 'LastName, FirstName MiddleNames'
+      authorsString += `${nameArr[nameArr.length - 1]},`;
+      for (let i = 0; i < nameArr.length - 1; i++) {
+        authorsString += ` ${nameArr[i]}`;
+      }
+    }
+
+    if (authors.length > 1) {
+      authorsString += ', ';
+    }
+
+    for (let i = 1; i < 6 && i < authors.length - 1; i++) {
+      authorsString += `${authors[i]}, `;
+    }
+
+    // If 10 or fewer authors, show all
+    if (authors.length > 1 && authors.length <= 10) {
+      for (let i = 6; i < 10 && i < authors.length - 1; i++) {
+        authorsString += `${authors[i]}, `;
+      }
+      authorsString += `and ${authors[authors.length - 1]}`;
+    } else if (authors.length > 10) { // For more than 10, show first 7 then 'et al'
+      authorsString += `${authors[6]} et al`;
+    }
+
+    if (authorsString[authorsString.length - 1] !== '.') {
+      authorsString += '.';
+    }
+    authorsString += ' ';
+  }
+
+  return authorsString;
+}
+
 /*! Chicago Citation Style
 
 Last Name, First Name. “Page Title.” Website Title. Web Address
@@ -117,26 +283,19 @@ in italics
 http://www.bibme.org/citation-guide/chicago/website/
 */
 
+/**
+ * Formats a citation for Chicago
+ * @param {Object} data Object with citation fields
+ * @returns {String} Formatted string for Chicago
+ */
 export function toChicago(data) {
   let citation = '';
   const {
-    author, date, publisher, website, title, dateAccessed, url
-  } = replaceAngleBrackets(data);
+    authors, date, publisher, website, title, dateAccessed, url,
+  } = data;
 
-  if (author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length === 1) {
-      citation += `${nameArr[0]}. `;
-    } else {
-      citation += `${nameArr[nameArr.length - 1]}, `;
-      const firstName = nameArr[0];
-      citation += `${firstName}`;
-      for (let i = 1; i < nameArr.length - 1; ++i) {
-        const currMiddleName = nameArr[i];
-        citation += ` ${currMiddleName}`;
-      }
-      citation += '. ';
-    }
+  if (authors.length > 0) {
+    citation += formatAuthorsChicago(authors);
   } else if (publisher) {
     citation += ` ${publisher}. `;
   }
@@ -182,25 +341,38 @@ at: https://www.howandwhentoreference.com/ (Accessed: 27 May 2017)
 https://www.mendeley.com/guides/harvard-citation-guide
 */
 
+/**
+ * Formats multiple authors for Harvard
+ * @param {Array} authors Array of author strings
+ * @returns {String} Formatted string for multiple authors
+ */
+function formatAuthorsHarvard(authors) {
+  let authorsString = '';
+
+  for (let i = 0; i < authors.length - 2; i++) {
+    authorsString += `${formatAuthorLastFirstInitial(authors[i])}., `;
+  }
+
+  if (authors.length > 1) {
+    authorsString += `${formatAuthorLastFirstInitial(authors[authors.length - 2])} and `;
+  }
+  authorsString += `${formatAuthorLastFirstInitial(authors[authors.length - 1])}, `;
+  return authorsString;
+}
+
+/**
+ * Formats a citation for Harvard
+ * @param {Object} data Object with citation fields
+ * @returns {String} Formatted string for Harvard
+ */
 export function toHarvard(data) {
   let citation = '';
   const {
-    author, date, website, title, dateAccessed, url
-  } = replaceAngleBrackets(data);
+    authors, date, website, title, dateAccessed, url,
+  } = data;
 
-  if (author) {
-    const nameArr = author.split(' ');
-    if (nameArr.length === 1) {
-      citation += `${nameArr[0]}. `;
-    } else {
-      citation += `${nameArr[nameArr.length - 1]}, `;
-      const firstName = nameArr[0];
-      citation += `${firstName[0]}. `;
-      for (let i = 1; i < nameArr.length - 1; ++i) {
-        const currMiddleName = nameArr[i];
-        citation += `${currMiddleName[0]}. `;
-      }
-    }
+  if (authors.length > 0) {
+    citation += formatAuthorsHarvard(authors);
   } else if (title) {
     citation += `${title.italics()} `;
   } else if (website) {
@@ -208,11 +380,11 @@ export function toHarvard(data) {
   }
   if (date) {
     const longDate = new Date(date);
-    citation += `(${longDate.getFullYear()}) `;
+    citation += `(${longDate.getFullYear()}). `;
   }
-  if (author && title) {
+  if (authors.length > 0 && title) {
     citation += `${title.italics()} `;
-  } else if (author && website) {
+  } else if (authors.length > 0 && website) {
     citation += `${website.italics()}`;
   }
   citation += '[Online]. ';

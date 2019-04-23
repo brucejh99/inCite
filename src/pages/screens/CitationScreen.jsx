@@ -1,17 +1,17 @@
-/* global chrome */
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import CitationView from '../views/CitationView';
 
 /**
- * Citation screen. All citations must have an ID so we can determine replace vs. add based on whether or not it exists
+ * Citation screen. All citations must have an ID so we can determine replace
+ * vs. add based on whether or not it exists
  */
 class Citation extends Component {
   toHTMLDate = (date) => {
-    if(date === null) return null;
+    if (date === null) return null;
     let dateString;
     try {
-      dateString = new Date(date).toISOString().split("T")[0];
+      [dateString] = new Date(date).toISOString().split('T');
     } catch {
       dateString = '';
     }
@@ -20,25 +20,29 @@ class Citation extends Component {
 
   updateBibliography = (e) => {
     e.preventDefault();
-    const { navigation, bibliography, citation } = this.props.store;
+    const { store } = this.props;
+    const { bibliography, citation, navigation } = store;
     bibliography.replaceCitation(citation.citation);
     citation.clearCitation();
     navigation.navigate('Bibliography');
   }
 
   render() {
-    const { citation, navigation } = this.props.store;
+    const { store } = this.props;
+    const { citation, navigation } = store;
     return (
       <CitationView
         website={citation.citation.website}
         article={citation.citation.article}
-        author={citation.citation.author}
+        authors={citation.citation.authors}
         publisher={citation.citation.publisher}
         datePublished={citation.citation.datePublished}
         dateRetrieved={citation.citation.dateRetrieved}
         url={citation.citation.url}
         updateWebsite={citation.updateWebsite}
         updateArticle={citation.updateArticle}
+        addAuthor={citation.addAuthor}
+        subtractAuthor={citation.subtractAuthor}
         updateAuthor={citation.updateAuthor}
         updatePublisher={citation.updatePublisher}
         updateDatePublished={citation.updateDatePublished}
@@ -47,7 +51,7 @@ class Citation extends Component {
         toHTMLDate={this.toHTMLDate}
         updateBibliography={this.updateBibliography}
         navigateBack={() => navigation.navigate('Bibliography')}
-    />
+      />
     );
   }
 }
