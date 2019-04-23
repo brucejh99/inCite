@@ -9,7 +9,7 @@ export default class Dropdown extends Component {
         active: false
     }
 
-    onClick = option => {
+    onItemClick = option => {
         this.props.onSelectBibliography(option);
         this.setState({ active: false });
     }
@@ -21,13 +21,17 @@ export default class Dropdown extends Component {
             onAdd,
             onDelete
         } = this.props;
-        const { active } = this.state;
+        const { active, creating } = this.state;
         return (
             <div
-                onClick={() => this.setState({ active: !active })}
+                // onClick={() => this.setState({ active: !active })}
                 style={{...styles.body, ...this.props.style}}
             >
-                <div style={styles.headerContainer}>
+                <div
+                    onClick={() => this.setState({ active: !active })}
+                    style={active ?
+                    {...styles.headerContainer, ...styles.active} :
+                    styles.headerContainer}>
                     <Title style={styles.title}>
                         {value}
                     </Title>
@@ -42,13 +46,26 @@ export default class Dropdown extends Component {
                         {options.map(option => 
                             <DropdownItem
                                 value={option}
-                                onClick={() => this.onClick(option)}
+                                onClick={() => this.onItemClick(option)}
                                 onDelete={() => onDelete(option)}
                             />
                         )}
-                        {/* <DropdownItem
-                            value={}
-                        /> */}
+                        {
+                            creating ?
+                            null
+                            :
+                            <DropdownItem
+                                value='Add a new bibliography'
+                                onClick={() => {
+                                    let name = 'Bibliography ';
+                                    let number = 1;
+                                    while(options.includes(name + number)) {
+                                        number++;
+                                    }
+                                    onAdd(name + number);
+                                }}
+                            />
+                        }
                     </div>
                     :
                     null
@@ -75,9 +92,14 @@ const styles = {
         alignItems: 'center'
     },
     dropdown: {
-        maxHeight: '600px',
+        maxHeight: '400px',
         width: '100%',
         overflowY: 'auto'
+    },
+    active: {
+        border: '1px solid FFE455',
+        borderRadius: '0px 10px 0px 0px',
+        backgroundColor: 'white'
     },
     icon: {
         verticalAlign: 'center'

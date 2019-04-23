@@ -110,9 +110,9 @@ const styles = {
     margin: 0
   },
   dropdown: {
-    width: '340px',
+    width: '345px',
     height: '50px',
-    padding: '10px 30px',
+    margin: '10px 29px',
     border: 'none'
   },
   buttonContainer: {
@@ -128,7 +128,6 @@ const styles = {
     fontWeight: '900',
     color: '#FFE455',
     backgroundColor: 'white',
-    marginLeft: '-1px',
     border: '1px solid #FFE455',
     borderRadius: '0px 10px 0px 0px'
   },
