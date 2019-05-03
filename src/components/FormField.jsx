@@ -27,7 +27,7 @@ export default class FormField extends Component {
           <span style={styles.td}>
             <input
               id={fieldName}
-              type="text"
+              type='text'
               name={fieldName}
               placeholder={fieldName}
               value={value}

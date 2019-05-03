@@ -32,7 +32,6 @@ class BibliographyListPage extends Component {
       <BibliographyListView
         bibliography={bibliography.bibList}
         selectBib={this.selectBibliography}
-        deleteBib={bibliography.deleteBibliography}
         started={this.state.started}
         name={this.state.name}
         onChange={this.onChange}

@@ -73,7 +73,7 @@ export default class DateField extends PureComponent {
         <StyledCalendar onClickDay={this.onClickDay} />
         <div
           style={styles.dimmed}
-          role="presentation"
+          role='presentation'
           onClick={this.dismissCalendar}
           onKeyPress={this.dismissCalendar}
         />
@@ -85,12 +85,12 @@ export default class DateField extends PureComponent {
         <span style={{ ...styles.td, ...styles.tableName }}>{fieldName}</span>
         <span
           style={{ ...styles.td, ...styles.tableField }}
-          role="presentation"
+          role='presentation'
           onClick={e => e.preventDefault()}
         >
           <input
             id={fieldName}
-            type="text"
+            type='text'
             name={fieldName}
             placeholder={fieldName}
             value={new Date(date).toISOString().split('T')[0]}

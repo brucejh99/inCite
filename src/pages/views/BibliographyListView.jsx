@@ -81,7 +81,6 @@ export default class BibliographyListView extends Component {
     const {
       bibliography,
       selectBib,
-      deleteBib,
       started,
       name,
       onChange,
@@ -98,9 +97,9 @@ export default class BibliographyListView extends Component {
             }}
             />
             <input
-              type="text"
-              name="name"
-              placeholder="Name your bibliography"
+              type='text'
+              name='name'
+              placeholder='Name your bibliography'
               value={name}
               onChange={this.onFieldChange}
               style={styles.bibliographyNameField}
