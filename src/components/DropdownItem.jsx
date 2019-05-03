@@ -14,12 +14,13 @@ export default class DropdownItem extends Component {
             <div
                 onMouseEnter={() => this.setState({ hovered: true })} 
                 onMouseLeave={() => this.setState({ hovered: false })}
-                onClick={onClick}
+                onClick={deleteHovered ? null : onClick}
                 style={hovered ? {...styles.container, ...styles.containerHovered} : {...styles.container}}
             >
                 <div style={styles.value}>
                     {value}
                 </div>
+                {onDelete ?
                 <div style={styles.buttonContainer}>
                     <img
                         src={deleteIcon}
@@ -28,7 +29,7 @@ export default class DropdownItem extends Component {
                         onMouseLeave={() => this.setState({ deleteHovered: false })}
                         onClick={onDelete}
                         style={deleteHovered ? {...styles.icon, ...styles.iconHovered} : styles.icon} />
-                </div>
+                </div> : null}
             </div>
         );
     }
@@ -41,6 +42,9 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px',
+        borderLeft: '1px solid #FFE455',
+        borderRight: '1px solid #FFE455',
+        borderBottom: '1px solid #FFE455',
         cursor: 'pointer'
     },
     containerHovered: {
@@ -48,7 +52,8 @@ const styles = {
     },
     value: {
         fontFamily: 'Nunito Sans',
-        fontSize: '14px'
+        fontSize: '14px',
+        lineHeight: '30px'
     },
     buttonContainer: {
         width: '30px',

@@ -7,71 +7,6 @@ import {
   CitationListItem,
 } from '../../components';
 
-const styles = {
-  body: {
-    width: '400px',
-    background: 'white',
-    padding: 0,
-    margin: 0
-  },
-  dropdown: {
-    width: '340px',
-    height: '50px',
-    padding: '10px 30px',
-    border: 'none'
-  },
-  buttonContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'left'
-  },
-  styleButton: {
-    height: '34px',
-    width: '75px',
-    fontSize: '14px',
-    fontFamily: 'Nunito Sans',
-    fontWeight: '900',
-    color: '#FFE455',
-    backgroundColor: 'white',
-    marginLeft: '-1px',
-    border: '1px solid #FFE455',
-    borderRadius: '0px 10px 0px 0px',
-  },
-  listContainer: {
-    width: '100%',
-    display: 'flex',
-    marginTop: '-1px',
-    marginLeft: '1px',
-    justifyContent: 'center',
-    border: 'none',
-  },
-  copyArea: {
-    fontFamily: 'Times New Roman, Times, serif',
-    fontSize: '12pt',
-    lineHeight: 2,
-    position: 'fixed',
-    left: '-10000px',
-    top: '10000px',
-    whiteSpace: 'pre',
-  },
-  bottom: {
-    height: '40px',
-    justifyContent: 'center',
-    margin: '20px 0px',
-  },
-  bottomButton: {
-    height: '34px',
-    width: '75px',
-    backgroundColor: 'white',
-    color: '#F69970',
-    fontSize: '14px',
-    margin: '0px 3px',
-    fontFamily: 'Nunito Sans',
-    fontWeight: '900',
-    border: '1px solid #F69970',
-  },
-};
-
 export default class BibliographyView extends PureComponent {
   render() {
     const {
@@ -171,3 +106,68 @@ export default class BibliographyView extends PureComponent {
     );
   }
 }
+
+const styles = {
+  body: {
+    width: '400px',
+    background: 'white',
+    padding: 0,
+    margin: 0
+  },
+  dropdown: {
+    width: '340px',
+    height: '50px',
+    padding: '10px 30px',
+    border: 'none'
+  },
+  buttonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'left'
+  },
+  styleButton: {
+    height: '34px',
+    width: '75px',
+    fontSize: '14px',
+    fontFamily: 'Nunito Sans',
+    fontWeight: '900',
+    color: '#FFE455',
+    backgroundColor: 'white',
+    marginLeft: '-1px',
+    border: '1px solid #FFE455',
+    borderRadius: '0px 10px 0px 0px',
+  },
+  listContainer: {
+    width: '100%',
+    display: 'flex',
+    marginTop: '-1px',
+    marginLeft: '1px',
+    justifyContent: 'center',
+    border: 'none',
+  },
+  copyArea: {
+    fontFamily: 'Times New Roman, Times, serif',
+    fontSize: '12pt',
+    lineHeight: 2,
+    position: 'fixed',
+    left: '-10000px',
+    top: '10000px',
+    whiteSpace: 'pre',
+  },
+  bottom: {
+    height: '40px',
+    justifyContent: 'center',
+    margin: '20px 0px',
+  },
+  bottomButton: {
+    height: '34px',
+    width: '75px',
+    backgroundColor: 'white',
+    color: '#F69970',
+    fontSize: '14px',
+    margin: '0px 3px',
+    fontFamily: 'Nunito Sans',
+    fontWeight: '900',
+    border: '1px solid #F69970',
+  },
+};

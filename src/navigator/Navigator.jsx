@@ -10,7 +10,6 @@ const BibliographyListScreen = React.lazy(() => import('../pages/screens/Bibliog
  * Class that wraps the application to render the selected page and load global assets
  */
 class Navigator extends Component {
-  // TODO: deprecate navigation to BibliographyListScreen
   render() {
     const { navigation } = this.props.store;
     let currentPage;
