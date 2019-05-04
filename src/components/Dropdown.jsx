@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DropdownItem from './DropdownItem';
 import Title from './Title';
+import DropdownTextInput from './DropdownTextInput';
 
 const caret = require('../assets/caret.svg');
 
@@ -47,22 +48,30 @@ export default class Dropdown extends Component {
                                 onDelete={() => onDelete(option)}
                             />
                         )}
-                        {
+                        <DropdownTextInput
+                        />
+                        {/* {
                             creating ?
-                            null
+                            <DropdownItem
+                                value='Creating'
+                                onClick={() => {
+                                    console.log('creating');
+                                }}
+                            />
                             :
                             <DropdownItem
                                 value='Add a new bibliography'
                                 onClick={() => {
-                                    let name = 'Bibliography ';
-                                    let number = 1;
-                                    while(options.includes(name + number)) {
-                                        number++;
-                                    }
-                                    onAdd(name + number);
+                                    this.setState({ creating: true });
+                                    // let name = 'Bibliography ';
+                                    // let number = 1;
+                                    // while(options.includes(name + number)) {
+                                    //     number++;
+                                    // }
+                                    // onAdd(name + number);
                                 }}
                             />
-                        }
+                        } */}
                     </div>
                     :
                     null
