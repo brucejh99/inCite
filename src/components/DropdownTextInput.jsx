@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import DropdownItem from './DropdownItem';
 
+const ENTER_KEY = 'Enter';
+
 export default class DropdownTextInput extends PureComponent {
     state = {
         creating: false,
@@ -8,12 +10,17 @@ export default class DropdownTextInput extends PureComponent {
         input: ''
     }
 
-    handleSubmit = () => {
-        // execute create bibliography with input here
+    onInput = event => this.setState({ input: event.target.value });
+
+    onSubmit = event => {
+        if (event.key === ENTER_KEY) {
+            this.props.handleSubmit(this.state.input);
+        }
     }
 
     render() {
-        const { creating, hovered, input } = this.state;
+        const { creating, hovered } = this.state;
+        const { inputText } = this.props;
         return (
             creating ?
             <div
@@ -21,7 +28,13 @@ export default class DropdownTextInput extends PureComponent {
                 onMouseLeave={() => this.setState({ hovered: false })}
                 style={hovered ? {...styles.container, ...styles.containerHovered} : {...styles.container}}
             >
-            {'What up'}
+                <input
+                    type='text'
+                    placeholder={inputText}
+                    onChange={this.onInput}
+                    onKeyPress={this.onSubmit}
+                    style={styles.inputBox}
+                />
             </div>
             :
             <DropdownItem
@@ -34,6 +47,7 @@ export default class DropdownTextInput extends PureComponent {
 
 const styles = {
     container: {
+        height: '30px',
         backgroundColor: 'white',
         display: 'flex',
         justifyContent: 'space-between',
@@ -46,5 +60,9 @@ const styles = {
     },
     containerHovered: {
         backgroundColor: '#fff1aa',
+    },
+    inputBox: {
+        outline: 'none',
+        padding: '3px'
     }
 }

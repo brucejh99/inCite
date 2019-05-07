@@ -22,7 +22,7 @@ export default class Dropdown extends Component {
             onAdd,
             onDelete
         } = this.props;
-        const { active, creating } = this.state;
+        const { active } = this.state;
         return (
             <div style={{...styles.body, ...this.props.style}}>
                 <div
@@ -49,29 +49,12 @@ export default class Dropdown extends Component {
                             />
                         )}
                         <DropdownTextInput
+                            inputText={'Bibliography name'}
+                            handleSubmit={name => {
+                                onAdd(name);
+                                this.setState({ active: false });
+                            }}
                         />
-                        {/* {
-                            creating ?
-                            <DropdownItem
-                                value='Creating'
-                                onClick={() => {
-                                    console.log('creating');
-                                }}
-                            />
-                            :
-                            <DropdownItem
-                                value='Add a new bibliography'
-                                onClick={() => {
-                                    this.setState({ creating: true });
-                                    // let name = 'Bibliography ';
-                                    // let number = 1;
-                                    // while(options.includes(name + number)) {
-                                    //     number++;
-                                    // }
-                                    // onAdd(name + number);
-                                }}
-                            />
-                        } */}
                     </div>
                     :
                     null
