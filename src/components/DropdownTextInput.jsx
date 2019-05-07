@@ -7,10 +7,17 @@ export default class DropdownTextInput extends PureComponent {
     state = {
         creating: false,
         hovered: false,
-        input: ''
+        input: '',
+        message: ''
     }
 
-    onInput = event => this.setState({ input: event.target.value });
+    onInput = event => {
+        if (event.target.value.length <= 15) {
+            this.setState({ input: event.target.value });
+        } else {
+            this.setState({ message: "Let's keep it short" });
+        }
+    }
 
     onSubmit = event => {
         if (event.key === ENTER_KEY) {
@@ -62,7 +69,11 @@ const styles = {
         backgroundColor: '#fff1aa',
     },
     inputBox: {
+        width: '40%',
         outline: 'none',
-        padding: '3px'
+        padding: '5px'
+    },
+    errorMessage: {
+        width: '40%'
     }
 }
