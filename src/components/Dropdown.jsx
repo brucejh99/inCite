@@ -51,8 +51,9 @@ export default class Dropdown extends Component {
                         <DropdownTextInput
                             inputText={'Bibliography name'}
                             handleSubmit={name => {
-                                onAdd(name);
-                                this.setState({ active: false });
+                                const success = onAdd(name);
+                                if(success) this.setState({ active: false });
+                                return success;
                             }}
                         />
                     </div>

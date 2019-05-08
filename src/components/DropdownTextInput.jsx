@@ -12,7 +12,7 @@ export default class DropdownTextInput extends PureComponent {
     }
 
     onInput = event => {
-        if (event.target.value.length <= 15) {
+        if (event.target.value.length < 30) {
             this.setState({ input: event.target.value });
         } else {
             this.setState({ message: "Let's keep it short" });
@@ -20,13 +20,15 @@ export default class DropdownTextInput extends PureComponent {
     }
 
     onSubmit = event => {
+        let success = false;
         if (event.key === ENTER_KEY) {
-            this.props.handleSubmit(this.state.input);
+            success = this.props.handleSubmit(this.state.input);
+            if (!success) this.setState({ message: 'This name is already used' });
         }
     }
 
     render() {
-        const { creating, hovered } = this.state;
+        const { creating, hovered, input, message } = this.state;
         const { inputText } = this.props;
         return (
             creating ?
@@ -37,11 +39,13 @@ export default class DropdownTextInput extends PureComponent {
             >
                 <input
                     type='text'
+                    value={input}
                     placeholder={inputText}
                     onChange={this.onInput}
                     onKeyPress={this.onSubmit}
                     style={styles.inputBox}
                 />
+                <p>{message}</p>
             </div>
             :
             <DropdownItem

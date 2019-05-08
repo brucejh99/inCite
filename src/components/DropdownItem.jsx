@@ -51,6 +51,10 @@ const styles = {
         backgroundColor: '#fff1aa',
     },
     value: {
+        maxWidth: '320px',
+        overflow: 'hidden',
+        whiteSpace: 'no-wrap',
+        textOverflow: 'ellipsis',
         fontFamily: 'Nunito Sans',
         fontSize: '14px',
         lineHeight: '30px'

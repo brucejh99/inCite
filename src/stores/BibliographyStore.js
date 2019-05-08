@@ -29,6 +29,7 @@ const BibliographyStoreModel = types
   })
   .actions(self => ({
     addBibliography(name, style = null) {
+      if(self.list.includes(name)) return false;
       self.name = `__${name}`;
       self.style = style || 'MLA';
       self.citations = [];
@@ -38,6 +39,7 @@ const BibliographyStoreModel = types
         citations: [],
       }));
       localStorage.setItem('Bibliographies', JSON.stringify({ name: self.name, list: self.list }));
+      return true;
     },
     deleteBibliography(name) {
       localStorage.removeItem(`__${name}`);
@@ -52,6 +54,8 @@ const BibliographyStoreModel = types
         const bibliography = JSON.parse(localStorage.getItem(self.name));
         self.style = bibliography.style;
         self.citations.replace(bibliography.citations);
+        localStorage.setItem('Bibliographies', JSON.stringify({ name: self.name, list: self.list }));
+      } else {
         localStorage.setItem('Bibliographies', JSON.stringify({ name: self.name, list: self.list }));
       }
     },
