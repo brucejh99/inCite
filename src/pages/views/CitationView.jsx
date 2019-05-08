@@ -100,15 +100,15 @@ export default class CitationView extends PureComponent {
       <div>
         <div style={styles.header}>
           <div
-            role="button"
-            tabIndex="0"
+            role='button'
+            tabIndex='0'
             onClick={navigateBack}
             onKeyPress={navigateBack}
             style={styles.backButtonDiv}
           >
             <img
               src={backIcon}
-              alt="Back"
+              alt='Back'
               style={styles.backButton}
             />
           </div>
@@ -119,18 +119,18 @@ export default class CitationView extends PureComponent {
         </div>
         <div style={styles.table}>
           <FormField
-            fieldName="Website"
+            fieldName='Website'
             value={website}
             onChange={(field, value) => updateWebsite(value)}
           />
           <FormField
-            fieldName="Article"
+            fieldName='Article'
             value={article}
             onChange={(field, value) => updateArticle(value)}
           />
           { authors.map((author, index) => (
             <AuthorField
-              fieldName="Author"
+              fieldName='Author'
               value={author}
               index={index}
               authorsLength={authors.length}
@@ -140,22 +140,22 @@ export default class CitationView extends PureComponent {
             />
           )) }
           <FormField
-            fieldName="Publisher"
+            fieldName='Publisher'
             value={publisher}
             onChange={(field, value) => updatePublisher(value)}
           />
           <DateField
-            fieldName="Date Published"
+            fieldName='Date Published'
             date={toHTMLDate(datePublished)}
             onDateChange={(field, value) => updateDatePublished(value)}
           />
           <DateField
-            fieldName="Date Retrieved"
+            fieldName='Date Retrieved'
             value={toHTMLDate(dateRetrieved)}
             onDateChange={(field, value) => updateDateRetrieved(value)}
           />
           <FormField
-            fieldName="URL"
+            fieldName='URL'
             value={url}
             onChange={(field, value) => updateURL(value)}
           />

@@ -68,8 +68,8 @@ export default class BibliographyView extends PureComponent {
           <ScrollableArea
             width={345}
             height={300}
-            backgroundColor="white"
-            borderColor="#FFE455"
+            backgroundColor='white'
+            borderColor='#FFE455'
             borderWidth={1}
             curved
           >
@@ -101,7 +101,7 @@ export default class BibliographyView extends PureComponent {
             )
             : null}
         </div>
-        <div id="copyArea" contentEditable="true" style={styles.copyArea} />
+        <div id='copyArea' contentEditable='true' style={styles.copyArea} />
       </div>
     );
   }

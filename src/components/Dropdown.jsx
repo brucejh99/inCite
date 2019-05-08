@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DropdownItem from './DropdownItem';
 import Title from './Title';
+import DropdownTextInput from './DropdownTextInput';
 
 const caret = require('../assets/caret.svg');
 
@@ -21,7 +22,7 @@ export default class Dropdown extends Component {
             onAdd,
             onDelete
         } = this.props;
-        const { active, creating } = this.state;
+        const { active } = this.state;
         return (
             <div style={{...styles.body, ...this.props.style}}>
                 <div
@@ -47,22 +48,14 @@ export default class Dropdown extends Component {
                                 onDelete={() => onDelete(option)}
                             />
                         )}
-                        {
-                            creating ?
-                            null
-                            :
-                            <DropdownItem
-                                value='Add a new bibliography'
-                                onClick={() => {
-                                    let name = 'Bibliography ';
-                                    let number = 1;
-                                    while(options.includes(name + number)) {
-                                        number++;
-                                    }
-                                    onAdd(name + number);
-                                }}
-                            />
-                        }
+                        <DropdownTextInput
+                            inputText={'Bibliography name'}
+                            handleSubmit={name => {
+                                const success = onAdd(name);
+                                if(success) this.setState({ active: false });
+                                return success;
+                            }}
+                        />
                     </div>
                     :
                     null

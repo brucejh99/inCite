@@ -63,7 +63,7 @@ export default class AuthorField extends Component {
           <span style={styles.td}>
             <input
               id={`fieldName ${index}`}
-              type="text"
+              type='text'
               name={fieldName}
               placeholder={fieldName}
               value={value}
