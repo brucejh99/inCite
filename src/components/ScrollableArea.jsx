@@ -19,7 +19,7 @@ export default class ScrollableArea extends Component {
     height: `${this.props.height}px`,
     width: `${this.props.width}px`,
     backgroundColor: this.props.backgroundColor,
-    borderRadius: this.props.curved ? '0px 8px' : '0px',
+    borderRadius: this.props.curved ? '0px 10px' : '0px',
     marginTop: `${this.props.borderWidth}px`,
     overflow: 'hidden'
   }

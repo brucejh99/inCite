@@ -14,11 +14,8 @@ import { getCorrectedCurrentDate } from '../../services/Utils';
  * @prop {Function} updateStyle Method to update selected style globally
  */
 class BibliographyPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      parsing: false
-    }
+  state = {
+    parsing: false
   }
 
   metascraper = null;
@@ -67,9 +64,9 @@ class BibliographyPage extends Component {
         citation.chicago = toChicago(formattedCitation);
         citation.harvard = toHarvard(formattedCitation);
         bibliography.addCitation(citation);
+        this.setState({ parsing: false });
       });
-    });
-    this.setState({ parsing: false });
+    })
   }
 
   copyCitations = () => {
@@ -93,6 +90,7 @@ class BibliographyPage extends Component {
 
   render() {
     const { store } = this.props;
+    const { parsing } = this.state;
     const { bibliography } = store;
     return (
       <BibliographyView
@@ -108,6 +106,7 @@ class BibliographyPage extends Component {
         deleteItem={bibliography.deleteCitation}
         addBibliography={bibliography.addBibliography}
         deleteBibliography={bibliography.deleteBibliography}
+        parsing={parsing}
       />
     );
   }
