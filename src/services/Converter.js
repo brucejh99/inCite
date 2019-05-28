@@ -117,10 +117,10 @@ export function toAPA(data) {
   citation += 'Retrieved ';
   if (dateAccessed) {
     const longDate = new Date(dateAccessed);
-    citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()})`;
+    citation += `(${longDate.getFullYear()}, ${monthName[longDate.getMonth()]} ${longDate.getDate()}), `;
   }
   if (url) {
-    citation += `, from ${url}`;
+    citation += `from ${url}`;
   }
   return citation;
 }

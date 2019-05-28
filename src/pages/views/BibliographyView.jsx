@@ -21,7 +21,8 @@ export default class BibliographyView extends PureComponent {
       bibStyle,
       updateStyle,
       addBibliography,
-      deleteBibliography
+      deleteBibliography,
+      parsing
     } = this.props;
 
     return (
@@ -34,35 +35,38 @@ export default class BibliographyView extends PureComponent {
           onSelectBibliography={onSelectBibliography}
           style={styles.dropdown}
         />
-        <div style={{ ...styles.buttonContainer, padding: '0px 28px' }}>
-          <SelectableButton
-            selected={bibStyle === 'MLA'}
-            onClick={() => updateStyle('MLA')}
-            style={styles.styleButton}
-          >
-            MLA
-          </SelectableButton>
-          <SelectableButton
-            selected={bibStyle === 'APA'}
-            onClick={() => updateStyle('APA')}
-            style={styles.styleButton}
-          >
-            APA
-          </SelectableButton>
-          <SelectableButton
-            selected={bibStyle === 'Chicago'}
-            onClick={() => updateStyle('Chicago')}
-            style={styles.styleButton}
-          >
-            Chicago
-          </SelectableButton>
-          <SelectableButton
-            selected={bibStyle === 'Harvard'}
-            onClick={() => updateStyle('Harvard')}
-            style={styles.styleButton}
-          >
-            Harvard
-          </SelectableButton>
+        <div style={styles.listHeader}>
+          <div>
+            <SelectableButton
+              selected={bibStyle === 'MLA'}
+              onClick={() => updateStyle('MLA')}
+              style={styles.styleButton}
+            >
+              MLA
+            </SelectableButton>
+            <SelectableButton
+              selected={bibStyle === 'APA'}
+              onClick={() => updateStyle('APA')}
+              style={styles.styleButton}
+            >
+              APA
+            </SelectableButton>
+            <SelectableButton
+              selected={bibStyle === 'Chicago'}
+              onClick={() => updateStyle('Chicago')}
+              style={styles.styleButton}
+            >
+              Chicago
+            </SelectableButton>
+            <SelectableButton
+              selected={bibStyle === 'Harvard'}
+              onClick={() => updateStyle('Harvard')}
+              style={styles.styleButton}
+            >
+              Harvard
+            </SelectableButton>
+          </div>
+          {parsing ? <div style={styles.activityIndicator} /> : null}
         </div>
         <div style={styles.listContainer}>
           <ScrollableArea
@@ -120,8 +124,14 @@ const styles = {
     padding: '10px 30px',
     border: 'none'
   },
+  listHeader: {
+    width: '344px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0px 28px'
+  },
   buttonContainer: {
-    width: '100%',
+    width: 'auto',
     display: 'flex',
     justifyContent: 'left'
   },
@@ -136,6 +146,13 @@ const styles = {
     marginLeft: '-1px',
     border: '1px solid #FFE455',
     borderRadius: '0px 10px 0px 0px',
+  },
+  activityIndicator: {
+    height: '20px',
+    width: '20px',
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    margin: '0px 14px'
   },
   listContainer: {
     width: '100%',
