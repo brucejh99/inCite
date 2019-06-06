@@ -1,4 +1,3 @@
-/* global chrome */
 import { types } from 'mobx-state-tree';
 import {
   formatForConverter, toAPA, toMLA, toChicago, toHarvard,
