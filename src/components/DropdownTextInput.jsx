@@ -13,7 +13,7 @@ export default class DropdownTextInput extends PureComponent {
 
     onInput = event => {
         if (event.target.value.length < 30) {
-            this.setState({ input: event.target.value });
+            this.setState({ input: event.target.value, message: '' });
         } else {
             this.setState({ message: "Let's keep it short" });
         }
