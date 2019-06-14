@@ -64,5 +64,6 @@ const styles = {
     padding: '5px',
     border: '1px solid #FFE455',
     borderRadius: '0px 10px 0px 10px',
+    outline: 'none'
   },
 };
