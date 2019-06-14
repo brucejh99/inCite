@@ -38,6 +38,7 @@ export default class DropdownTextInput extends PureComponent {
                 style={hovered ? {...styles.container, ...styles.containerHovered} : {...styles.container}}
             >
                 <input
+                    ref={input => input.focus()}
                     type='text'
                     value={input}
                     placeholder={inputText}
@@ -50,7 +51,9 @@ export default class DropdownTextInput extends PureComponent {
             :
             <DropdownItem
                 value='Add a new bibliography'
-                onClick={() => this.setState({ creating: true })}
+                onClick={() => {
+                    this.setState({ creating: true });
+                }}
             />
         );
     }
