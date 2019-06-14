@@ -8,13 +8,14 @@ export default ({ children, style }) => (
 
 const styles = {
     title: {
+        height: '50px',
         width: '317px',
+        whiteSpace: 'nowrap',
         overflow: 'hidden',
-        whiteSpace: 'no-wrap',
+        textOverflow: 'ellipsis',
         color: '#FFE455',
         fontFamily: 'Oleo Script',
         fontSize: '36px',
-        textOverflow: 'ellipsis',
         margin: 0
     }
 }

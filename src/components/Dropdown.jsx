@@ -30,7 +30,7 @@ export default class Dropdown extends Component {
                     style={active ?
                     {...styles.headerContainer, ...styles.active} :
                     styles.headerContainer}>
-                    <Title style={styles.title}>
+                    <Title>
                         {value}
                     </Title>
                     <img
@@ -49,7 +49,7 @@ export default class Dropdown extends Component {
                             />
                         )}
                         <DropdownTextInput
-                            inputText={'Bibliography name'}
+                            inputText={'Name your bibliography'}
                             handleSubmit={name => {
                                 const success = onAdd(name);
                                 if(success) this.setState({ active: false });
@@ -71,9 +71,6 @@ const styles = {
         cursor: 'pointer',
         display: 'flex',
         flexWrap: 'wrap'
-    },
-    title: {
-        width: '317px'
     },
     headerContainer: {
         height: '30px',

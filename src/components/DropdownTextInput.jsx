@@ -6,7 +6,6 @@ const ENTER_KEY = 'Enter';
 export default class DropdownTextInput extends PureComponent {
     state = {
         creating: false,
-        hovered: false,
         input: '',
         message: ''
     }
@@ -28,17 +27,15 @@ export default class DropdownTextInput extends PureComponent {
     }
 
     render() {
-        const { creating, hovered, input, message } = this.state;
+        const { creating, input, message } = this.state;
         const { inputText } = this.props;
         return (
             creating ?
             <div
-                onMouseEnter={() => this.setState({ hovered: true })} 
-                onMouseLeave={() => this.setState({ hovered: false })}
-                style={hovered ? {...styles.container, ...styles.containerHovered} : {...styles.container}}
+                style={styles.container}
             >
                 <input
-                    ref={input => input.focus()}
+                    ref={input => input && input.focus()}
                     type='text'
                     value={input}
                     placeholder={inputText}
@@ -51,9 +48,7 @@ export default class DropdownTextInput extends PureComponent {
             :
             <DropdownItem
                 value='Add a new bibliography'
-                onClick={() => {
-                    this.setState({ creating: true });
-                }}
+                onClick={() => this.setState({ creating: true })}
             />
         );
     }
@@ -72,15 +67,10 @@ const styles = {
         borderBottom: '1px solid #FFE455',
         cursor: 'pointer'
     },
-    containerHovered: {
-        backgroundColor: '#fff1aa',
-    },
     inputBox: {
-        width: '40%',
+        width: '50%',
+        border: 'none',
         outline: 'none',
-        padding: '5px'
+        padding: '5px',
     },
-    errorMessage: {
-        width: '40%'
-    }
 }
