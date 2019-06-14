@@ -10,7 +10,7 @@ const backIcon = require('../../assets/back-icon.svg');
 const styles = {
   header: {
     width: '400px',
-    height: '70px',
+    height: '85px',
     display: 'flex',
     alignItems: 'center',
   },
@@ -28,14 +28,15 @@ const styles = {
   table: {
     width: '100%',
     display: 'table',
-    margin: '25px 30px',
+    margin: '0px 30px',
     borderCollapse: 'collapse',
   },
   buttonContainer: {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    margin: '20px 0px',
+    marginTop: '5px',
+    marginBottom: '25px',
   },
   button: {
     height: '34px',
