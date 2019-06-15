@@ -1,9 +1,14 @@
 @font-face {
     font-family: "Nunito Sans";
-    src: url("../assets/NunitoSans-Regular.ttf");
+    src: url("./NunitoSans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Nunito Sans Bold";
+    src: url("./NunitoSans-Bold.ttf");
 }
 
 @font-face {
     font-family: "Oleo Script";
-    src: url("../assets/OleoScript-Bold.ttf");
+    src: url("./OleoScript-Bold.ttf");
 }
