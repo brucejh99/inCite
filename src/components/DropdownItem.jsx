@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import deleteIcon from '../assets/delete-icon.svg';
+import { LIGHT_THEME, YELLOW, LIGHT_YELLOW } from '../assets/colors';
 
 export default class DropdownItem extends Component {
     state = {
@@ -37,18 +38,18 @@ export default class DropdownItem extends Component {
 
 const styles = {
     container: {
-        backgroundColor: 'white',
+        backgroundColor: LIGHT_THEME,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px',
-        borderLeft: '1px solid #FFE455',
-        borderRight: '1px solid #FFE455',
-        borderBottom: '1px solid #FFE455',
+        borderLeft: '1px solid ' + YELLOW,
+        borderRight: '1px solid ' + YELLOW,
+        borderBottom: '1px solid ' + YELLOW,
         cursor: 'pointer'
     },
     containerHovered: {
-        backgroundColor: '#fff1aa',
+        backgroundColor: LIGHT_YELLOW,
     },
     value: {
         maxWidth: '320px',

@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react';
 import DropdownItem from './DropdownItem';
+import { YELLOW } from '../assets/colors';
 
 const ENTER_KEY = 'Enter';
 
 export default class DropdownTextInput extends PureComponent {
     state = {
         creating: false,
-        hovered: false,
         input: '',
         message: ''
     }
 
     onInput = event => {
         if (event.target.value.length < 30) {
-            this.setState({ input: event.target.value });
+            this.setState({ input: event.target.value, message: '' });
         } else {
             this.setState({ message: "Let's keep it short" });
         }
@@ -28,16 +28,15 @@ export default class DropdownTextInput extends PureComponent {
     }
 
     render() {
-        const { creating, hovered, input, message } = this.state;
+        const { creating, input, message } = this.state;
         const { inputText } = this.props;
         return (
             creating ?
             <div
-                onMouseEnter={() => this.setState({ hovered: true })} 
-                onMouseLeave={() => this.setState({ hovered: false })}
-                style={hovered ? {...styles.container, ...styles.containerHovered} : {...styles.container}}
+                style={styles.container}
             >
                 <input
+                    ref={input => input && input.focus()}
                     type='text'
                     value={input}
                     placeholder={inputText}
@@ -64,20 +63,15 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px',
-        borderLeft: '1px solid #FFE455',
-        borderRight: '1px solid #FFE455',
-        borderBottom: '1px solid #FFE455',
+        borderLeft: '1px solid ' + YELLOW,
+        borderRight: '1px solid ' + YELLOW,
+        borderBottom: '1px solid ' + YELLOW,
         cursor: 'pointer'
     },
-    containerHovered: {
-        backgroundColor: '#fff1aa',
-    },
     inputBox: {
-        width: '40%',
+        width: '50%',
+        border: 'none',
         outline: 'none',
-        padding: '5px'
+        padding: '5px',
     },
-    errorMessage: {
-        width: '40%'
-    }
 }

@@ -7,6 +7,7 @@ export default class Button extends Component {
 
   styles = {
     button: {
+      fontFamily: 'Nunito Sans Bold',
       textDecoration: 'none',
       textAlign: 'center',
       borderRadius: '0 10px',
@@ -23,6 +24,7 @@ export default class Button extends Component {
   render() {
     const {
       onClick,
+      invertOnHover = true,
       children,
     } = this.props;
     const { hovered } = this.state;
@@ -31,7 +33,9 @@ export default class Button extends Component {
         onClick={onClick}
         onMouseEnter={() => this.setState({ hovered: true })}
         onMouseLeave={() => this.setState({ hovered: false })}
-        style={hovered 
+        onFocus={() => this.setState({ hovered: true })}
+        onBlur={() => this.setState({ hovered: false })}
+        style={hovered && invertOnHover
           ? { ...this.styles.button, ...this.styles.hovered }
           : this.styles.button}>
           {children}

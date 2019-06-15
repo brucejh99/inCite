@@ -27,15 +27,16 @@ export default class StyleButton extends Component {
         } = this.props;
         const { hovered } = this.state;
         return (
-        <button
-            onClick={onClick}
-            onMouseEnter={() => this.setState({ hovered: true })}
-            onMouseLeave={() => this.setState({ hovered: false })}
-            style={hovered || this.props.selected
-                ? {...this.styles.button, ...this.styles.hovered} 
-                : this.styles.button}>
-                {children}
-        </button>
+            <button
+                onClick={onClick}
+                onMouseEnter={() => this.setState({ hovered: true })}
+                onMouseLeave={() => this.setState({ hovered: false })}
+                tabindex='-1'
+                style={hovered || this.props.selected
+                    ? {...this.styles.button, ...this.styles.hovered} 
+                    : this.styles.button}>
+                    {children}
+            </button>
         )
     }
 }

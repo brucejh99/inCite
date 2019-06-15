@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, ScrollableArea, ExpandableButton } from '../../components';
+import { Button } from '../../components';
+import { ORANGE, ORANGE_TRANSPARENT, GRADIENT } from '../../assets/colors';
 
 const styles = {
   body: {
     width: '400px',
     height: '550px',
-    background: 'linear-gradient(191.76deg, rgba(255, 168, 0, 0) 15.19%, rgba(232, 39, 186, 0.615317) 104.2%, #8F00FF 152.47%), #FFE455',
+    background: GRADIENT,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -15,7 +16,6 @@ const styles = {
   header: {
     width: '100%',
     margin: 0,
-    marginTop: '150px',
     textAlign: 'center',
     fontFamily: 'Oleo Script',
     color: 'white',
@@ -24,11 +24,10 @@ const styles = {
   startButton: {
     height: '34px',
     width: '200px',
-    backgroundColor: '#C3790B69',
+    backgroundColor: ORANGE_TRANSPARENT,
     color: 'white',
     fontSize: '14px',
     margin: '0px 3px',
-    fontFamily: 'Nunito Sans',
     border: 'none',
   },
   createBibliographyDiv: {
@@ -37,34 +36,20 @@ const styles = {
   createButton: {
     height: '34px',
     width: '80px',
-    backgroundColor: '#C3790B69',
+    backgroundColor: ORANGE_TRANSPARENT,
     color: 'white',
     fontSize: '14px',
     margin: '10px 3px 0px',
-    fontFamily: 'Nunito Sans',
     border: 'none',
   },
   bibliographyNameField: {
     width: '200px',
     padding: '5px',
-    color: '#C3790B',
-    backgroundColor: '#0000',
+    color: ORANGE,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     border: 'none',
-    borderBottom: '3px solid #C3790B69',
-  },
-  container: {
-    width: '250px',
-    height: '240px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-  },
-  button: {
-    backgroundColor: '#e5ac34',
-    color: 'white',
-    fontFamily: 'Nunito Sans',
-    border: 'none',
+    borderBottom: '3px solid ' + ORANGE_TRANSPARENT,
+    outline: 'none',
   },
 };
 
@@ -79,8 +64,6 @@ export default class BibliographyListView extends Component {
 
   render() {
     const {
-      bibliography,
-      selectBib,
       started,
       name,
       onChange,
@@ -93,13 +76,14 @@ export default class BibliographyListView extends Component {
         { started ? (
           <div style={styles.createBibliographyDiv}>
             <style dangerouslySetInnerHTML={{
-              __html: 'input::placeholder { color: #C3790B; }'
+              __html: `input::placeholder { color: ${ORANGE}; }`
             }}
             />
             <input
               type='text'
               name='name'
               placeholder='Name your bibliography'
+              autoComplete='off'
               value={name}
               onChange={this.onFieldChange}
               style={styles.bibliographyNameField}
@@ -107,6 +91,7 @@ export default class BibliographyListView extends Component {
             <br />
             <Button
               onClick={submitName}
+              invertOnHover={false}
               style={styles.createButton}
             >
               Create
@@ -115,34 +100,12 @@ export default class BibliographyListView extends Component {
         ) : (
           <Button
             onClick={() => onChange('started', true)}
+            invertOnHover={false}
             style={styles.startButton}
           >
             Start a new citation
           </Button>
         )}
-
-
-        <ScrollableArea
-          width={250}
-          height={240}
-          borderWidth={0}
-        >
-          <div style={styles.container}>
-            {bibliography.map(bib => (
-              <ExpandableButton
-                width={200}
-                height={34}
-                fontSize={14}
-                margin={10}
-                hoverable
-                onClick={() => selectBib(bib)}
-                style={styles.button}
-              >
-                {bib}
-              </ExpandableButton>
-            ))}
-          </div>
-        </ScrollableArea>
       </div>
     );
   }

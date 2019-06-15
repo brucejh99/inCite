@@ -6,6 +6,7 @@ import {
   ScrollableArea,
   CitationListItem,
 } from '../../components';
+import { LIGHT_THEME, RED, YELLOW } from '../../assets/colors';
 
 export default class BibliographyView extends PureComponent {
   render() {
@@ -72,8 +73,8 @@ export default class BibliographyView extends PureComponent {
           <ScrollableArea
             width={345}
             height={300}
-            backgroundColor='white'
-            borderColor='#FFE455'
+            backgroundColor={LIGHT_THEME}
+            borderColor={YELLOW}
             borderWidth={1}
             curved
           >
@@ -122,6 +123,7 @@ const styles = {
     width: '340px',
     height: '50px',
     padding: '10px 30px',
+    marginTop: '2px',
     border: 'none'
   },
   listHeader: {
@@ -138,13 +140,13 @@ const styles = {
   styleButton: {
     height: '34px',
     width: '75px',
-    fontSize: '14px',
     fontFamily: 'Nunito Sans',
+    fontSize: '14px',
     fontWeight: '900',
-    color: '#FFE455',
+    color: YELLOW,
     backgroundColor: 'white',
     marginLeft: '-1px',
-    border: '1px solid #FFE455',
+    border: '1px solid ' + YELLOW,
     borderRadius: '0px 10px 0px 0px',
   },
   activityIndicator: {
@@ -180,11 +182,9 @@ const styles = {
     height: '34px',
     width: '75px',
     backgroundColor: 'white',
-    color: '#F69970',
+    color: RED,
     fontSize: '14px',
     margin: '0px 3px',
-    fontFamily: 'Nunito Sans',
-    fontWeight: '900',
-    border: '1px solid #F69970',
+    border: '1px solid ' + RED,
   },
 };

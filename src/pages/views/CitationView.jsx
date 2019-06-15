@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   AuthorField, DateField, FormField, Button, Title,
 } from '../../components';
+import { RED } from '../../assets/colors';
 
 
 const backIcon = require('../../assets/back-icon.svg');
@@ -10,7 +11,7 @@ const backIcon = require('../../assets/back-icon.svg');
 const styles = {
   header: {
     width: '400px',
-    height: '70px',
+    height: '85px',
     display: 'flex',
     alignItems: 'center',
   },
@@ -28,25 +29,24 @@ const styles = {
   table: {
     width: '100%',
     display: 'table',
-    margin: '25px 30px',
+    margin: '0px 30px',
     borderCollapse: 'collapse',
   },
   buttonContainer: {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    margin: '20px 0px',
+    marginTop: '5px',
+    marginBottom: '25px',
   },
   button: {
     height: '34px',
     width: '75px',
     backgroundColor: 'white',
-    color: '#F69970',
+    color: RED,
     fontSize: '14px',
     margin: '0px 3px',
-    fontFamily: 'Nunito Sans',
-    fontWeight: '900',
-    border: '1px solid #F69970',
+    border: '1px solid ' + RED,
   },
 };
 

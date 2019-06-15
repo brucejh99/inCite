@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import deleteIcon from '../assets/delete-icon.svg';
+import { LIGHT_YELLOW } from '../assets/colors';
 
 const styles = {
   container: {
@@ -12,7 +13,7 @@ const styles = {
     cursor: 'pointer',
   },
   containerHovered: {
-    backgroundColor: '#fff1aa',
+    backgroundColor: LIGHT_YELLOW,
   },
   citation: {
     width: '295px',
