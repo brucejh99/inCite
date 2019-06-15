@@ -91,6 +91,7 @@ export default class BibliographyListView extends Component {
             <br />
             <Button
               onClick={submitName}
+              invertOnHover={false}
               style={styles.createButton}
             >
               Create
@@ -99,6 +100,7 @@ export default class BibliographyListView extends Component {
         ) : (
           <Button
             onClick={() => onChange('started', true)}
+            invertOnHover={false}
             style={styles.startButton}
           >
             Start a new citation

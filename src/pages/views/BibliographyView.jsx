@@ -123,6 +123,7 @@ const styles = {
     width: '340px',
     height: '50px',
     padding: '10px 30px',
+    marginTop: '2px',
     border: 'none'
   },
   listHeader: {
@@ -183,7 +184,6 @@ const styles = {
     backgroundColor: 'white',
     color: RED,
     fontSize: '14px',
-    fontWeight: '900',
     margin: '0px 3px',
     border: '1px solid ' + RED,
   },

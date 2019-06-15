@@ -24,6 +24,7 @@ export default class Button extends Component {
   render() {
     const {
       onClick,
+      invertOnHover = true,
       children,
     } = this.props;
     const { hovered } = this.state;
@@ -34,7 +35,7 @@ export default class Button extends Component {
         onMouseLeave={() => this.setState({ hovered: false })}
         onFocus={() => this.setState({ hovered: true })}
         onBlur={() => this.setState({ hovered: false })}
-        style={hovered 
+        style={hovered && invertOnHover
           ? { ...this.styles.button, ...this.styles.hovered }
           : this.styles.button}>
           {children}
