@@ -27,9 +27,8 @@ export default class Dropdown extends Component {
             <div style={{...styles.body, ...this.props.style}}>
                 <div
                     onClick={() => this.setState({ active: !active })}
-                    style={active ?
-                    {...styles.headerContainer, ...styles.active} :
-                    styles.headerContainer}>
+                    style={styles.headerContainer}
+                >
                     <Title>
                         {value}
                     </Title>
@@ -83,18 +82,7 @@ const styles = {
         width: '100%',
         overflowY: 'auto'
     },
-    active: {
-        border: '1px solid FFE455',
-        borderRadius: '0px 10px 0px 0px',
-        backgroundColor: 'white'
-    },
     icon: {
         verticalAlign: 'center'
-    },
-    option: {
-        width: '100%',
-        padding: '2.5px 2.5px',
-        fontFamily: 'Nunito Sans',
-        fontSize: '14px'
     }
 };

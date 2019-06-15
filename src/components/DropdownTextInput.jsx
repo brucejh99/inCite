@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import DropdownItem from './DropdownItem';
+import { YELLOW } from '../assets/colors';
 
 const ENTER_KEY = 'Enter';
 
@@ -62,9 +63,9 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px',
-        borderLeft: '1px solid #FFE455',
-        borderRight: '1px solid #FFE455',
-        borderBottom: '1px solid #FFE455',
+        borderLeft: '1px solid ' + YELLOW,
+        borderRight: '1px solid ' + YELLOW,
+        borderBottom: '1px solid ' + YELLOW,
         cursor: 'pointer'
     },
     inputBox: {

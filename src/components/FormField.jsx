@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { YELLOW } from '../assets/colors';
 
 /**
  * Field class to enter bibliographic information
@@ -62,7 +63,7 @@ const styles = {
   textbox: {
     width: '150px',
     padding: '5px',
-    border: '1px solid #FFE455',
+    border: '1px solid ' + YELLOW,
     borderRadius: '0px 10px 0px 10px',
     outline: 'none'
   },

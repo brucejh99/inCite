@@ -7,6 +7,7 @@ export default class Button extends Component {
 
   styles = {
     button: {
+      fontFamily: 'Nunito Sans Bold',
       textDecoration: 'none',
       textAlign: 'center',
       borderRadius: '0 10px',

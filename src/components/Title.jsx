@@ -1,4 +1,5 @@
 import React from 'react';
+import { YELLOW } from '../assets/colors';
 
 export default ({ children, style }) => (
     <h1 style={{...styles.title, ...style }}>
@@ -13,7 +14,7 @@ const styles = {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        color: '#FFE455',
+        color: YELLOW,
         fontFamily: 'Oleo Script',
         fontSize: '36px',
         margin: 0

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import StyledCalendar from './StyledCalendar';
+import { YELLOW } from '../assets/colors';
 
 const styles = {
   tr: {
@@ -20,7 +21,7 @@ const styles = {
   textbox: {
     width: '150px',
     padding: '5px',
-    border: '1px solid #FFE455',
+    border: '1px solid ' + YELLOW,
     borderRadius: '0px 10px 0px 10px',
     outline: 'none'
   },

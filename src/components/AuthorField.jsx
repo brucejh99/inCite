@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '.';
+import { RED, YELLOW } from '../assets/colors';
 
 const styles = {
   tr: {
@@ -18,7 +19,7 @@ const styles = {
   textbox: {
     width: '150px',
     padding: '5px',
-    border: '1px solid #FFE455',
+    border: '1px solid ' + YELLOW,
     borderRadius: '0px 10px 0px 10px',
     outline: 'none'
   },
@@ -26,12 +27,12 @@ const styles = {
     height: '25px',
     width: '25px',
     backgroundColor: 'white',
-    color: '#F69970',
+    color: RED,
     fontSize: '14px',
     margin: '0px 3px',
     fontFamily: 'Nunito Sans',
     fontWeight: '900',
-    border: '1px solid #F69970',
+    border: '1px solid ' + RED,
   },
 };
 
