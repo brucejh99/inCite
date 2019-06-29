@@ -41,9 +41,22 @@ export default class CitationListIem extends Component {
     deleteHovered: false,
   }
 
+  componentDidMount() {
+    const { isLatest } = this.props;
+    this.setState({ allHovered: this.props.isLatest });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { isLatest } = this.props;
+    if (isLatest !== nextProps.isLatest) {
+      this.setState({ allHovered: nextProps.isLatest });
+    }
+  }
+
   render() {
-    const { citationObject, deleteCitation, editCitation } = this.props;
+    const { citationObject, deleteCitation, editCitation, isLatest } = this.props;
     const { allHovered, deleteHovered } = this.state;
+
     return (
       <div
         onMouseEnter={() => this.setState({ allHovered: true })}
@@ -59,7 +72,7 @@ export default class CitationListIem extends Component {
           <img
             src={deleteIcon}
             alt='Delete'
-            onMouseEnter={() => this.setState({ deleteHovered: true })} 
+            onMouseEnter={() => this.setState({ deleteHovered: true })}
             onMouseLeave={() => this.setState({ deleteHovered: false })}
             onClick={deleteCitation}
             style={deleteHovered ? {...styles.icon, ...styles.iconHovered} : styles.icon}

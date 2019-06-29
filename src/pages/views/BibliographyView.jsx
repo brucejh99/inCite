@@ -14,6 +14,7 @@ export default class BibliographyView extends PureComponent {
       bibliographyName,
       bibliography,
       bibliographyList,
+      latestId,
       onSelectBibliography,
       addCitation,
       copy,
@@ -83,6 +84,7 @@ export default class BibliographyView extends PureComponent {
                 citationObject={item}
                 deleteCitation={() => deleteItem(item)}
                 editCitation={() => editItem(item)}
+                isLatest={item.id === latestId}
               />
             ))
             }

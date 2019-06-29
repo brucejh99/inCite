@@ -99,6 +99,7 @@ class BibliographyPage extends Component {
         bibliographyName={bibliography.activeBibName}
         bibliography={bibliography.renderCitations}
         bibliographyList={bibliography.bibList}
+        latestId={bibliography.bibLatestId}
         onSelectBibliography={bibliography.selectBibliography}
         addCitation={this.addCitation}
         copy={this.copyCitations}

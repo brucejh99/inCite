@@ -26,6 +26,7 @@ const BibliographyStoreModel = types
     list: types.array(types.string),
     style: types.maybeNull(types.string),
     citations: types.array(Citation),
+    latestId: types.maybeNull(types.string),
   })
   .actions(self => ({
     addBibliography(name, style = null) {
@@ -86,6 +87,7 @@ const BibliographyStoreModel = types
     },
     addCitation(newCitation) {
       self.citations.push(newCitation);
+      self.latestId = newCitation.id;
       localStorage.setItem(self.name, JSON.stringify({
         style: self.style,
         citations: self.citations,
@@ -122,6 +124,9 @@ const BibliographyStoreModel = types
     },
     get bibCitations() {
       return self.citations.toJS();
+    },
+    get bibLatestId() {
+      return self.latestId;
     },
     get renderCitations() {
       let sortedBibliography = [];
