@@ -124,10 +124,11 @@ const styles = {
     margin: 0
   },
   dropdown: {
-    width: '340px',
+    width: '347.5px',
     height: '50px',
-    padding: '10px 30px',
+    padding: '10px 25px',
     marginTop: '2px',
+    marginLeft: '2px',
     border: 'none'
   },
   listHeader: {

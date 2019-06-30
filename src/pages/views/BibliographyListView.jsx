@@ -5,7 +5,7 @@ import { ORANGE, ORANGE_TRANSPARENT, GRADIENT } from '../../assets/colors';
 const styles = {
   body: {
     width: '400px',
-    height: '550px',
+    height: '487px',
     background: GRADIENT,
     display: 'flex',
     flexDirection: 'column',

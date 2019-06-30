@@ -15,7 +15,7 @@ const styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         color: YELLOW,
-        fontFamily: 'Oleo Script',
+        fontFamily: 'Nunito Sans Bold',
         fontSize: '36px',
         margin: 0
     }

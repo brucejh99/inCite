@@ -73,9 +73,11 @@ const styles = {
     },
     headerContainer: {
         height: '30px',
+        width: '100%',
         padding: '10px 0px',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     dropdown: {
         maxHeight: '400px',
