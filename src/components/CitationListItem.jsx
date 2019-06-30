@@ -43,7 +43,7 @@ export default class CitationListIem extends Component {
 
   componentDidMount() {
     const { isLatest } = this.props;
-    this.setState({ allHovered: this.props.isLatest });
+    this.setState({ allHovered: isLatest });
   }
 
   componentWillReceiveProps(nextProps) {

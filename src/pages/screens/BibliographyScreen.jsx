@@ -85,6 +85,7 @@ class BibliographyPage extends Component {
     const { navigation, citation, bibliography } = store;
     const editValue = bibliography.bibCitations.find(value => value.id === citationObject.id);
     citation.setCitation(editValue);
+    bibliography.setLatestId(citation.id);
     navigation.navigate('Citation');
   }
 

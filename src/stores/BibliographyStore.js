@@ -108,6 +108,9 @@ const BibliographyStoreModel = types
         citations: self.citations,
       }));
     },
+    setLatestId(id) {
+      self.latestId = id;
+    },
   }))
   .views(self => ({
     get activeBibName() {
