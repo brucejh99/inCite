@@ -7,4 +7,4 @@ export default () => (
   <Provider store={Store}>
     <Navigator />
   </Provider>
-)
+);

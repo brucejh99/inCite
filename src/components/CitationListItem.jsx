@@ -54,7 +54,7 @@ export default class CitationListIem extends Component {
   }
 
   render() {
-    const { citationObject, deleteCitation, editCitation, isLatest } = this.props;
+    const { citationObject, deleteCitation, editCitation } = this.props;
     const { allHovered, deleteHovered } = this.state;
 
     return (

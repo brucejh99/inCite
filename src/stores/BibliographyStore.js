@@ -30,7 +30,7 @@ const BibliographyStoreModel = types
   })
   .actions(self => ({
     addBibliography(name, style = null) {
-      if(self.list.includes(name)) return false;
+      if (self.list.includes(name)) return false;
       self.name = `__${name}`;
       self.style = style || 'MLA';
       self.citations = [];
@@ -50,7 +50,7 @@ const BibliographyStoreModel = types
         self.citations.replace([]);
         localStorage.clear();
         Store.navigation.navigate('BibliographyList');
-      } else if(self.name === `__${name}`) {
+      } else if (self.name === `__${name}`) {
         self.name = `__${self.list[0]}`;
         const bibliography = JSON.parse(localStorage.getItem(self.name));
         self.style = bibliography.style;

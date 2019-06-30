@@ -8,7 +8,7 @@ export const GRADIENT = 'linear-gradient(191.76deg, rgba(255, 168, 0, 0) 15.19%,
 // red used on most buttons on the bottom on the pages
 export const RED = '#F69970';
 // orange used on intro page buttons and input field
-export const ORANGE = '#C3790B'
+export const ORANGE = '#C3790B';
 export const ORANGE_TRANSPARENT = '#C3790B69';
 // standard yellow used on most pages
 export const YELLOW = '#FFD600';
