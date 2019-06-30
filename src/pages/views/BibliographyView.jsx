@@ -8,6 +8,8 @@ import {
 } from '../../components';
 import { LIGHT_THEME, RED, YELLOW } from '../../assets/colors';
 
+const loadingGIF = require('../../assets/bookflippp.gif');
+
 export default class BibliographyView extends PureComponent {
   render() {
     const {
@@ -68,7 +70,7 @@ export default class BibliographyView extends PureComponent {
               Harvard
             </SelectableButton>
           </div>
-          {parsing ? <div style={styles.activityIndicator} /> : null}
+          {parsing ? <img src={loadingGIF} alt={'Loading...'} style={styles.activityIndicator} /> : null}
         </div>
         <div style={styles.listContainer}>
           <ScrollableArea
@@ -149,14 +151,14 @@ const styles = {
     backgroundColor: 'white',
     marginLeft: '-1px',
     border: '1px solid ' + YELLOW,
-    borderRadius: '0px 10px 0px 0px',
+    borderRadius: '0px 12px 0px 0px',
   },
   activityIndicator: {
-    height: '20px',
-    width: '20px',
-    alignSelf: 'center',
-    backgroundColor: 'red',
-    margin: '0px 14px'
+    height: '30px',
+    width: '30px',
+    alignSelf: 'top',
+    paddingTop: '-4px',
+    marginRight: '10px'
   },
   listContainer: {
     width: '100%',
