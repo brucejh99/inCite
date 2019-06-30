@@ -17,6 +17,6 @@ const styles = {
         color: YELLOW,
         fontFamily: 'Nunito Sans Bold',
         fontSize: '36px',
-        margin: 0
+        marginLeft: '-2px'
     }
 }
