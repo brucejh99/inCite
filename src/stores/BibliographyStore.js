@@ -66,6 +66,7 @@ const BibliographyStoreModel = types
       self.name = `__${name}`;
       self.style = style;
       self.citations.replace(citations);
+      self.latestId = null;
     },
     updateName(name) {
       localStorage.removeItem(self.name);
