@@ -29,7 +29,7 @@ const styles = {
   table: {
     width: '100%',
     display: 'table',
-    margin: '21.5px 30px',
+    margin: '0px 30px',
     borderCollapse: 'collapse',
   },
   buttonContainer: {
