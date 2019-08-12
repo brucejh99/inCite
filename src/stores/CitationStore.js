@@ -31,7 +31,7 @@ const CitationStoreModel = types
     },
     setCitation(citation) {
       self.article = citation.article;
-      // copy by value, not reference, for display in CitationView
+      // copy by value for display in CitationView
       self.authors = citation.authors.slice();
       self.website = citation.website;
       self.publisher = citation.publisher;
@@ -91,7 +91,7 @@ const CitationStoreModel = types
     get citation() {
       const citation = {
         article: self.article,
-        authors: self.authors.slice(), // copy by value, not reference, for mobx
+        authors: self.authors.slice(),
         website: self.website,
         publisher: self.publisher,
         datePublished: self.datePublished,
