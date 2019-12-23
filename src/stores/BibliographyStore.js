@@ -112,6 +112,9 @@ const BibliographyStoreModel = types
     setLatestId(id) {
       self.latestId = id;
     },
+    checkCitationUrlExists(url) {
+      return ((self.citations.filter(citation => citation.url === url)).length > 0);
+    },
   }))
   .views(self => ({
     get activeBibName() {

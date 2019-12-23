@@ -59,6 +59,11 @@ class BibliographyPage extends Component {
           id: uuid(),
         };
         const formattedCitation = formatForConverter(citation);
+
+        // TODO: add modal to prompt user
+        // checkCitationUrlExists returns a boolean
+        console.log(bibliography.checkCitationUrlExists(formattedCitation.url));
+
         citation.apa = toAPA(formattedCitation);
         citation.mla = toMLA(formattedCitation);
         citation.chicago = toChicago(formattedCitation);
