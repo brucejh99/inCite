@@ -5,6 +5,7 @@ import {
   SelectableButton,
   ScrollableArea,
   CitationListItem,
+  Modal,
 } from '../../components';
 import { LIGHT_THEME, RED, YELLOW } from '../../assets/colors';
 
@@ -31,6 +32,7 @@ export default class BibliographyView extends PureComponent {
 
     return (
       <div style={styles.body}>
+        <Modal />
         <Dropdown
           value={bibliographyName}
           options={bibliographyList}
