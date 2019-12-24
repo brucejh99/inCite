@@ -124,7 +124,10 @@ const BibliographyStoreModel = types
         }));
       }
       self.isDuplicate = false;
-    }
+    },
+    checkCitationUrlExists(url) {
+      return ((self.citations.filter(citation => citation.url === url)).length > 0);
+    },
   }))
   .views(self => ({
     get activeBibName() {
