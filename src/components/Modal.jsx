@@ -22,8 +22,12 @@ const styles = {
     },
     modal: {
         display: 'flex',
+        flexWrap: 'wrap',
+        padding: '10px 10px',
+        justifyContent: 'center',
+        alignContent: 'center',
         backgroundColor: 'white',
-        border: '1px solid ' + YELLOW,
+        border: `1px solid ${YELLOW}`,
         borderRadius: '0 10px',
         zIndex: '2'
     }

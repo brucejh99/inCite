@@ -15,6 +15,7 @@ import { getCorrectedCurrentDate } from '../../services/Utils';
  */
 class BibliographyPage extends Component {
   state = {
+    lastCitation: null,
     parsing: false
   }
 
@@ -60,16 +61,12 @@ class BibliographyPage extends Component {
         };
         const formattedCitation = formatForConverter(citation);
 
-        // TODO: add modal to prompt user
-        // checkCitationUrlExists returns a boolean
-        console.log(bibliography.checkCitationUrlExists(formattedCitation.url));
-
         citation.apa = toAPA(formattedCitation);
         citation.mla = toMLA(formattedCitation);
         citation.chicago = toChicago(formattedCitation);
         citation.harvard = toHarvard(formattedCitation);
         bibliography.addCitation(citation);
-        this.setState({ parsing: false });
+        this.setState({ parsing: false, lastCitation: citation });
       });
     })
   }
@@ -96,7 +93,7 @@ class BibliographyPage extends Component {
 
   render() {
     const { store } = this.props;
-    const { parsing } = this.state;
+    const { lastCitation, parsing } = this.state;
     const { bibliography } = store;
     return (
       <BibliographyView
@@ -113,6 +110,8 @@ class BibliographyPage extends Component {
         deleteItem={bibliography.deleteCitation}
         addBibliography={bibliography.addBibliography}
         deleteBibliography={bibliography.deleteBibliography}
+        isDuplicate={bibliography.duplicate}
+        resolveDuplicate={() => bibliography.resolveDuplicate(lastCitation)}
         parsing={parsing}
       />
     );
