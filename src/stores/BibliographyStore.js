@@ -18,6 +18,7 @@ const Citation = types.model({
   mla: types.string,
   chicago: types.string,
   harvard: types.string,
+  isDuplicate: types.boolean
 });
 
 const BibliographyStoreModel = types
@@ -112,6 +113,21 @@ const BibliographyStoreModel = types
     setLatestId(id) {
       self.latestId = id;
     },
+    resolveDuplicate(res, newCitation) {
+      if(res == 'update') {
+        // update
+        self.citations.replace(self.citations.filter(citation => citation.id !== newCitation.id));
+        self.citations.push(newCitation);
+        localStorage.setItem(self.name, JSON.stringify({
+          style: self.style,
+          citations: self.citations,
+        }));
+      }
+      self.isDuplicate = false;
+    },
+    checkCitationUrlExists(url) {
+      return ((self.citations.filter(citation => citation.url === url)).length > 0);
+    },
   }))
   .views(self => ({
     get activeBibName() {
@@ -177,6 +193,7 @@ export const emptyBibliography = {
   style: null,
   citations: [],
   list: [],
+  isDuplicate: false
 };
 
 export default BibliographyStoreModel;
