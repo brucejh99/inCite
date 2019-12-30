@@ -53,7 +53,6 @@ export default class BibliographyView extends PureComponent {
             </div>
           </Modal>
         : null}
-        {console.log(isDuplicate)}
         <Dropdown
           value={bibliographyName}
           options={bibliographyList}
@@ -148,10 +147,9 @@ const styles = {
   },
   modalText: {
     margin: '5% 0%',
-    color: YELLOW,
+    color: 'black',
     fontFamily: 'Nunito Sans',
     fontSize: '14px',
-    fontWeight: '900',
     textAlign: 'center'
   },
   modalButtonContainer: {

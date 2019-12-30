@@ -111,7 +111,7 @@ class BibliographyPage extends Component {
         addBibliography={bibliography.addBibliography}
         deleteBibliography={bibliography.deleteBibliography}
         isDuplicate={bibliography.duplicate}
-        resolveDuplicate={() => bibliography.resolveDuplicate(lastCitation)}
+        resolveDuplicate={res => bibliography.resolveDuplicate(res, lastCitation)}
         parsing={parsing}
       />
     );
