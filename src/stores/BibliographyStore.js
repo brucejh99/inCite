@@ -88,7 +88,7 @@ const BibliographyStoreModel = types
       }));
     },
     addCitation(newCitation) {
-      const isDuplicate = (self.citations.filter(citation => citation.url === newCitation.url).length > 0) ? true : false;
+      const isDuplicate = self.citations.filter(citation => citation.url === newCitation.url).length > 0;
       if(isDuplicate) {
         self.isDuplicate = true;
       } else {
@@ -119,7 +119,7 @@ const BibliographyStoreModel = types
       self.latestId = id;
     },
     resolveDuplicate(res, newCitation) {
-      if(res == 'update') {
+      if(res === 'update') {
         self.citations.replace(self.citations.filter(citation => citation.url !== newCitation.url));
         self.citations.push(newCitation);
         localStorage.setItem(self.name, JSON.stringify({
