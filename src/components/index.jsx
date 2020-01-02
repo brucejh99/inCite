@@ -5,6 +5,7 @@ export { default as DateField } from './DateField';
 export { default as Dropdown } from './Dropdown';
 export { default as DropdownTextInput } from './DropdownTextInput';
 export { default as FormField } from './FormField';
+export { default as Modal } from './Modal';
 export { default as ScrollableArea } from './ScrollableArea';
 export { default as SelectableButton } from './SelectableButton';
 export { default as StyledCalendar } from './StyledCalendar';
