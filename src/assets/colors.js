@@ -13,3 +13,5 @@ export const ORANGE_TRANSPARENT = '#C3790B69';
 // standard yellow used on most pages
 export const YELLOW = '#FFD600';
 export const LIGHT_YELLOW = '#fff1aa';
+// semi-transparent grey for modal
+export const GREY_TRANSPARENT = 'rgba(0, 0, 0, 0.4)';

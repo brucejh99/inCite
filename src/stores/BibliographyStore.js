@@ -17,8 +17,7 @@ const Citation = types.model({
   apa: types.string,
   mla: types.string,
   chicago: types.string,
-  harvard: types.string,
-  isDuplicate: types.boolean
+  harvard: types.string
 });
 
 const BibliographyStoreModel = types
@@ -28,6 +27,7 @@ const BibliographyStoreModel = types
     style: types.maybeNull(types.string),
     citations: types.array(Citation),
     latestId: types.maybeNull(types.string),
+    isDuplicate: types.boolean
   })
   .actions(self => ({
     addBibliography(name, style = null) {
@@ -88,12 +88,17 @@ const BibliographyStoreModel = types
       }));
     },
     addCitation(newCitation) {
-      self.citations.push(newCitation);
-      self.latestId = newCitation.id;
-      localStorage.setItem(self.name, JSON.stringify({
-        style: self.style,
-        citations: self.citations,
-      }));
+      const isDuplicate = self.citations.filter(citation => citation.url === newCitation.url).length > 0;
+      if(isDuplicate) {
+        self.isDuplicate = true;
+      } else {
+        self.citations.push(newCitation);
+        self.latestId = newCitation.id;
+        localStorage.setItem(self.name, JSON.stringify({
+          style: self.style,
+          citations: self.citations,
+        }));
+      }
     },
     replaceCitation(newCitation) {
       self.citations.replace(self.citations.filter(citation => citation.id !== newCitation.id));
@@ -114,9 +119,8 @@ const BibliographyStoreModel = types
       self.latestId = id;
     },
     resolveDuplicate(res, newCitation) {
-      if(res == 'update') {
-        // update
-        self.citations.replace(self.citations.filter(citation => citation.id !== newCitation.id));
+      if(res === 'update') {
+        self.citations.replace(self.citations.filter(citation => citation.url !== newCitation.url));
         self.citations.push(newCitation);
         localStorage.setItem(self.name, JSON.stringify({
           style: self.style,
@@ -124,10 +128,7 @@ const BibliographyStoreModel = types
         }));
       }
       self.isDuplicate = false;
-    },
-    checkCitationUrlExists(url) {
-      return ((self.citations.filter(citation => citation.url === url)).length > 0);
-    },
+    }
   }))
   .views(self => ({
     get activeBibName() {
@@ -186,6 +187,9 @@ const BibliographyStoreModel = types
       }
       return sortedBibliography;
     },
+    get duplicate() {
+      return self.isDuplicate;
+    }
   }));
 
 export const emptyBibliography = {

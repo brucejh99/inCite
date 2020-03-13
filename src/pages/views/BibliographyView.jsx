@@ -5,6 +5,7 @@ import {
   SelectableButton,
   ScrollableArea,
   CitationListItem,
+  Modal,
 } from '../../components';
 import { LIGHT_THEME, RED, YELLOW } from '../../assets/colors';
 
@@ -26,11 +27,32 @@ export default class BibliographyView extends PureComponent {
       updateStyle,
       addBibliography,
       deleteBibliography,
+      isDuplicate,
+      resolveDuplicate,
       parsing
     } = this.props;
 
     return (
       <div style={styles.body}>
+        {isDuplicate ?
+          <Modal>
+            <p style={styles.modalText}>You are already citing this url in this bibliography. Would you like to replace it?</p>
+            <div style={styles.buttonContainer}>
+              <Button
+                onClick={() => resolveDuplicate('update')}
+                style={styles.modalButton}
+              >
+                Replace
+              </Button>
+              <Button
+                onClick={() => resolveDuplicate('cancel')}
+                style={styles.modalButton}
+              >
+                Cancel
+              </Button>
+            </div>
+          </Modal>
+        : null}
         <Dropdown
           value={bibliographyName}
           options={bibliographyList}
@@ -122,6 +144,27 @@ const styles = {
     background: 'white',
     padding: 0,
     margin: 0
+  },
+  modalText: {
+    margin: '5% 0%',
+    color: 'black',
+    fontFamily: 'Nunito Sans',
+    fontSize: '14px',
+    textAlign: 'center'
+  },
+  modalButtonContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  modalButton: {
+    height: '34px',
+    width: '75px',
+    backgroundColor: 'white',
+    color: RED,
+    fontSize: '14px',
+    margin: '0px 3px',
+    border: `1px solid ${RED}`,
   },
   dropdown: {
     width: '347.5px',
