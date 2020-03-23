@@ -34,17 +34,18 @@ class BibliographyPage extends Component {
           require('metascraper-url')()
         ]);
       }
-      try {
-        chrome.tabs.executeScript(id, {
-          code: 'document.documentElement.innerHTML',
-          allFrames: true,
-        }, async (result) => {
+      chrome.tabs.executeScript(id, {
+        code: 'document.documentElement.innerHTML',
+        allFrames: true,
+      }, async (result) => {
+        if (chrome.runtime.lastError) {
+          // error getting HTML
+          this.storeMetadata({ url });
+        } else {
           metadata = await this.metascraper({ html: result[0], url });
           this.storeMetadata(metadata);
-        });
-      } catch(err) {
-        this.storeMetadata({ url });
-      }
+        }
+      });
     });
   }
 
