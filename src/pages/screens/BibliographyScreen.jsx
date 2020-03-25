@@ -1,6 +1,5 @@
 /* global chrome */
 import React, { Component } from 'react';
-import request from 'request';
 import uuid from 'uuid/v4';
 import { observer, inject } from 'mobx-react';
 import BibliographyView from '../views/BibliographyView';
@@ -23,52 +22,31 @@ class BibliographyPage extends Component {
 
   addCitation = () => {
     this.setState({ parsing: true });
-    const { store } = this.props;
-    const { bibliography } = store;
     chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
-      const { url } = tabs[0];
+      const { id, url } = tabs[0];
       let metadata;
-      request({ uri: url, timeout: 5000 }, async (err, res, html) => {
-        if (html === undefined || err) {
-          metadata = { url };
+      if (!this.metascraper) {
+        this.metascraper = require('metascraper')([
+          require('metascraper-author')(),
+          require('metascraper-date')(),
+          require('metascraper-publisher')(),
+          require('metascraper-title')(),
+          require('metascraper-url')()
+        ]);
+      }
+      chrome.tabs.executeScript(id, {
+        code: 'document.documentElement.innerHTML',
+        allFrames: true,
+      }, async (result) => {
+        if (chrome.runtime.lastError) {
+          // error getting HTML
+          this.storeMetadata({ url });
         } else {
-          if (!this.metascraper) {
-            this.metascraper = require('metascraper')([
-              require('metascraper-author')(),
-              require('metascraper-date')(),
-              require('metascraper-publisher')(),
-              require('metascraper-title')(),
-              require('metascraper-url')()
-            ]);
-          }
-          metadata = await this.metascraper({ html, url });
+          metadata = await this.metascraper({ html: result[0], url });
+          this.storeMetadata(metadata);
         }
-        let dateString = metadata.date;
-        if (dateString) dateString = new Date(dateString);
-
-        const authors = [];
-        authors.push(metadata.author ? metadata.author : '');
-
-        const citation = {
-          url: metadata.url || null,
-          article: metadata.title || null,
-          authors,
-          website: metadata.publisher || null,
-          publisher: null,
-          datePublished: dateString || null,
-          dateRetrieved: getCorrectedCurrentDate(),
-          id: uuid(),
-        };
-        const formattedCitation = formatForConverter(citation);
-
-        citation.apa = toAPA(formattedCitation);
-        citation.mla = toMLA(formattedCitation);
-        citation.chicago = toChicago(formattedCitation);
-        citation.harvard = toHarvard(formattedCitation);
-        bibliography.addCitation(citation);
-        this.setState({ parsing: false, lastCitation: citation });
       });
-    })
+    });
   }
 
   copyCitations = () => {
@@ -89,6 +67,39 @@ class BibliographyPage extends Component {
     citation.setCitation(editValue);
     bibliography.setLatestId(citation.id);
     navigation.navigate('Citation');
+  }
+
+  storeMetadata = metadata => {
+    const { bibliography } = this.props.store;
+    
+    let dateString = metadata.date;
+    if (dateString) dateString = new Date(dateString);
+
+    const authors = [];
+    authors.push(metadata.author ? metadata.author : '');
+
+    const citation = {
+      url: metadata.url || null,
+      article: metadata.title || null,
+      authors,
+      website: metadata.publisher || null,
+      publisher: null,
+      datePublished: dateString || null,
+      dateRetrieved: getCorrectedCurrentDate(),
+      id: uuid(),
+    };
+    const formattedCitation = formatForConverter(citation);
+
+    // TODO: add modal to prompt user
+    // checkCitationUrlExists returns a boolean
+    // console.log(bibliography.checkCitationUrlExists(formattedCitation.url));
+
+    citation.apa = toAPA(formattedCitation);
+    citation.mla = toMLA(formattedCitation);
+    citation.chicago = toChicago(formattedCitation);
+    citation.harvard = toHarvard(formattedCitation);
+    bibliography.addCitation(citation);
+    this.setState({ parsing: false, lastCitation: citation });
   }
 
   render() {
